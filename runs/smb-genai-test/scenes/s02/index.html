@@ -34,10 +34,10 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="27.78" data-width="1920" data-height="1080">
-      <audio id="vo" src="vo.wav" data-start="0.5" data-duration="26.479" data-track-index="9"></audio>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.42" data-width="1920" data-height="1080">
+      <audio id="vo" src="vo.wav" data-start="0.5" data-duration="26.117" data-track-index="9"></audio>
 
-      <div id="content" class="clip" data-start="0" data-duration="27.78" data-track-index="0">
+      <div id="content" class="clip" data-start="0" data-duration="27.42" data-track-index="0">
         <div class="stage">
           <div class="eyebrow">Benefits and barriers</div>
           <h1 class="headline">Is it paying off?</h1>
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div id="captions" class="clip" data-start="0" data-duration="27.78" data-track-index="1" data-layout-allow-overlap>
+      <div id="captions" class="clip" data-start="0" data-duration="27.42" data-track-index="1" data-layout-allow-overlap>
         <div class="captions">
           <p class="cap" id="c-n1">In a 2025 Goldman Sachs survey, 85 percent of AI users said it raised their productivity.</p>
           <p class="cap" id="c-n2">Gusto found four in five users saw productivity gains of 20 percent or more.</p>
@@ -64,12 +64,12 @@
       // ---- TIMING (copied from scenes.json) ----
       const TIMING = {
         offset: 0.5,
-        duration: 27.78,
+        duration: 27.42,
         lines: [
-          { id: "n1", start: 0.0, end: 7.573 },
-          { id: "n2", start: 7.923, end: 13.342 },
-          { id: "n3", start: 13.692, end: 18.983 },
-          { id: "n5", start: 19.333, end: 26.479 },
+          { id: "n1", start: 0.0, end: 7.211 },
+          { id: "n2", start: 7.561, end: 12.979 },
+          { id: "n3", start: 13.329, end: 18.62 },
+          { id: "n5", start: 18.97, end: 26.117 },
         ],
       };
       const at = (id) => TIMING.offset + TIMING.lines.find((l) => l.id === id).start;

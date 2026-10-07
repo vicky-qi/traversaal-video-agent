@@ -9,11 +9,15 @@ import re
 import sys
 from pathlib import Path
 
-# Kokoro rate in *spoken* words (numbers expanded: "2025" = 2, "58 percent" = 3).
-# Measured on the first 60s test run: ~145 spoken wpm at speed 0.9. Plain prose runs faster
-# (~180), number- and acronym-heavy lines slower (~130), so this is only an estimate;
-# the measured voiceover (tools/voiceover.py) is what decides final length.
-WPM_AT_SPEED_1 = 161
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from speech_text import load_lexicon, to_speech  # noqa: E402
+
+
+# Kokoro rate in spoken words, counted on the text the voice actually reads (tools/speech_text.py:
+# "2025" -> "twenty twenty-five", "ROI" -> "R-O-I"). Measured: ~152 wpm at speed 0.9 for
+# fact-heavy narration, ~179 for plain prose. This is only an estimate; the measured
+# voiceover (tools/voiceover.py) decides final length.
+WPM_AT_SPEED_1 = 172
 MAX_WORDS_PER_LINE = 40
 VISUAL_TYPES = {"title", "key_points", "stat", "quote", "chart", "comparison", "timeline"}
 
@@ -30,35 +34,12 @@ for f in sorted((run / "research").glob("*.json")):
 
 
 
-def number_words(n):
-    """How many words TTS uses to say an integer."""
-    if 1900 <= n <= 2099:
-        return 2  # years: "twenty twenty-five"
-    if n < 20:
-        return 1
-    if n < 100:
-        return 1 if n % 10 == 0 else 2
-    if n < 1000:
-        return 2 + (number_words(n % 100) if n % 100 else 0)
-    if n < 1_000_000:
-        return number_words(n // 1000) + 1 + (number_words(n % 1000) if n % 1000 else 0)
-    return 3
+LEXICON = load_lexicon(run)
 
 
 def spoken_words(text):
-    count = 0
-    for tok in text.split():
-        t = tok.strip('.,:;!?"()')
-        m = re.fullmatch(r"\$?(\d[\d,]*)(\.\d+)?(%)?", t)
-        if not m:
-            count += 1 + t.count("-")
-            continue
-        count += number_words(int(m.group(1).replace(",", "")))
-        if m.group(2):
-            count += len(m.group(2))  # "point" + each digit
-        if m.group(3):
-            count += 1  # "percent"
-    return count
+    spoken, _ = to_speech(text, LEXICON)
+    return len([w for w in re.split(r"[\s\-]+", spoken) if re.search(r"\w", w)])
 
 
 errors, warnings = [], []

@@ -68,8 +68,8 @@
       "audio": "scenes/s01/vo.wav",
       "timing": {
         "vo_offset_s": 0.5,
-        "audio_duration_s": 26.927,
-        "scene_duration_s": 28.23,
+        "audio_duration_s": 26.202,
+        "scene_duration_s": 27.5,
         "lines": [
           {
             "id": "n1",
@@ -79,17 +79,19 @@
           {
             "id": "n3",
             "start": 3.721,
-            "end": 11.251
+            "end": 10.974,
+            "spoken_as": "In twenty twenty-five, 58 percent of small businesses told the US Chamber they use generative AI."
           },
           {
             "id": "n4",
-            "start": 11.601,
-            "end": 19.26
+            "start": 11.324,
+            "end": 18.535,
+            "spoken_as": "Census data put it lower: about 18 percent of all firms used any AI at the end of twenty twenty-five."
           },
           {
             "id": "n5",
-            "start": 19.61,
-            "end": 26.927
+            "start": 18.885,
+            "end": 26.202
           }
         ]
       }
@@ -153,28 +155,29 @@
       "audio": "scenes/s02/vo.wav",
       "timing": {
         "vo_offset_s": 0.5,
-        "audio_duration_s": 26.479,
-        "scene_duration_s": 27.78,
+        "audio_duration_s": 26.117,
+        "scene_duration_s": 27.42,
         "lines": [
           {
             "id": "n1",
             "start": 0.0,
-            "end": 7.573
+            "end": 7.211,
+            "spoken_as": "In a twenty twenty-five Goldman Sachs survey, 85 percent of AI users said it raised their productivity."
           },
           {
             "id": "n2",
-            "start": 7.923,
-            "end": 13.342
+            "start": 7.561,
+            "end": 12.979
           },
           {
             "id": "n3",
-            "start": 13.692,
-            "end": 18.983
+            "start": 13.329,
+            "end": 18.62
           },
           {
             "id": "n5",
-            "start": 19.333,
-            "end": 26.479
+            "start": 18.97,
+            "end": 26.117
           }
         ]
       }

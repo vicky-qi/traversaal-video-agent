@@ -40,11 +40,13 @@ A run folder `runs/<slug>/` containing `brief.json` and `research/*.json`. On a 
 `sources`, `audio` and `timing` are filled in by tools later; leave `sources` as `[]` and do not add the others.
 
 ## Length (measured, not guessed)
-Count **spoken** words: numbers are said in full, so "2025" is 2 words ("twenty twenty-five"), "58 percent" is 3, "1,480" is 4. The voice says about **145 spoken words per minute** at speed 0.9 (faster for plain prose, slower for lines dense with numbers, acronyms and names), plus 0.35 s between sentences and 1.3 s per scene for lead-in and hold. For a scene:
+Count **spoken** words: the voice says numbers and acronyms in full, so "2025" is 3 words ("twenty twenty-five"), "58 percent" is 3, "1,480" is 5, "ROI" is 3 letters. `check_script.py` counts them exactly the way the voice reads them. The voice says about **155 spoken words per minute** at speed 0.9 (faster for plain prose, slower for lines dense with numbers and names), plus 0.35 s between sentences and 1.3 s per scene for lead-in and hold. For a scene:
 
-spoken words ≈ (target_duration_s − 1.3 − 0.35 × sentences) × 2.4
+spoken words ≈ (target_duration_s − 1.3 − 0.35 × sentences) × 2.5
 
-So a 30 s scene with 4 sentences is about 65 spoken words. Split `brief.target_duration_s` evenly across `brief.scene_count` scenes unless the story needs otherwise. Aim slightly short: numbers make lines run long, rarely short.
+So a 30 s scene with 4 sentences is about 68 spoken words. Split `brief.target_duration_s` evenly across `brief.scene_count` scenes unless the story needs otherwise. Aim slightly short: numbers make lines run long, rarely short.
+
+Write normally for the captions ("$2.3B", "2024-2025", "ROI" are fine); `tools/speech_text.py` rewrites them for the voice. If a name will be mispronounced, add it to `templates/pronunciations.json`.
 
 Prefer fewer numbers per sentence (one key figure per sentence is easier to follow by ear and to fit on screen).
 

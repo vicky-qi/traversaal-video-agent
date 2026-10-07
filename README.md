@@ -7,7 +7,8 @@ UCLA Anderson MSBA capstone, sponsored by Traversaal.ai.
 ```
 prompt ─▶ intake ─▶ research (one agent per question, parallel) ─▶ script
        ─▶ length fit (measure real voiceover, trim) ─▶ fact-check (revise until every line is supported)
-       ─▶ voiceover ─▶ scene builder (one HyperFrames file per scene, parallel) ─▶ render + stitch ─▶ MP4
+       ─▶ voiceover (pronunciation review, TTS, audio checks) ─▶ scene builder (one HyperFrames file per scene, parallel)
+       ─▶ render + stitch ─▶ MP4
 ```
 
 Everything runs locally. Voiceover uses Kokoro-82M, an open TTS model that runs on your laptop for free. The only cost is Claude usage.
@@ -76,6 +77,7 @@ runs/<slug>/
   research/q1.json    researcher: facts with source URL + verbatim excerpt (one file per question)
   scenes.json         script: scenes, narration lines, cited fact ids, on-screen items, measured timing
   factcheck.json      fact-checker: verdict per line + source checks
+  pronunciations.json voiceover: respellings for this video's names and terms (optional)
   scenes/s01/         one HyperFrames project per scene: index.html + vo.wav
   renders/s01.mp4     rendered scenes
   <slug>.mp4          final stitched video
@@ -88,6 +90,8 @@ Audio, renders, and MP4s are git-ignored; the JSON files are small and worth com
 
 ```bash
 tools/env.sh python tools/voiceover.py runs/<slug>                 # re-voice (only changed lines are regenerated)
+tools/env.sh python tools/sync_timing.py runs/<slug>               # move built scenes onto the new timing
+tools/env.sh python tools/speech_text.py "ROI rose 3x in 2025"     # preview how the voice will read a sentence
 tools/env.sh npx hyperframes preview runs/<slug>/scenes/s02        # open one scene in HyperFrames Studio
 tools/env.sh python tools/assemble.py runs/<slug> --only s02       # re-render one scene and re-stitch
 ```
@@ -96,7 +100,7 @@ tools/env.sh python tools/assemble.py runs/<slug> --only s02       # re-render o
 
 ## 3. How it works
 
-### Agents (`.claude/agents/`)
+### Agents (`.claude/agents/`): six subagents
 
 | Agent | Model | Reads → writes | Job |
 |---|---|---|---|
@@ -104,6 +108,7 @@ tools/env.sh python tools/assemble.py runs/<slug> --only s02       # re-render o
 | `researcher` | Sonnet | `brief.json` → `research/<qid>.json` | One per question, in parallel. Every fact must come from a page it actually opened, with a ≤ 25-word verbatim excerpt. |
 | `scriptwriter` | Opus | brief + research → `scenes.json` | Spoken narration split into scenes. Every factual sentence cites fact ids. Also does trim and revision passes. |
 | `fact-checker` | Opus | `scenes.json` + research → `factcheck.json` | Re-opens every source, judges each line `supported` / `overstated` / `unsupported` / `uncited`. Never edits the script. |
+| `voiceover` | Sonnet | `scenes.json` → `scenes/<id>/vo.wav`, `pronunciations.json` | Reads how each sentence will be pronounced (phonemes), respells names and terms the voice gets wrong, generates the audio, then checks loudness, dropped words and pacing. Never changes the wording. |
 | `scene-builder` | Sonnet | `scenes.json` + `templates/` → `scenes/<id>/index.html` | One per scene, in parallel. Times every on-screen change to the measured voiceover, then runs `hyperframes check` and looks at snapshots. |
 
 The orchestrator is the skill `.claude/skills/make-video/SKILL.md`. It only sequences agents, runs tools, and enforces the loops: at most 2 trim rounds, at most 2 fact-check revision rounds (then unsupported lines are deleted), and 1 repair attempt per failed scene.
@@ -117,13 +122,17 @@ The deterministic steps are small Python scripts, so agents never improvise them
 | `env.sh` | Runs a command inside the `video` conda env. |
 | `new_run.py` | Creates `runs/<slug>/`. |
 | `check_script.py` | Validates `scenes.json`: structure, every cited fact exists, estimated length. |
-| `voiceover.py` | TTS per sentence → measured timings in `scenes.json`; exits 2 if the total is > 15% off target. |
+| `speech_text.py` | Rewrites narration for the voice only: "2025" → "twenty twenty-five", "$2.3B" → "2 point 3 billion dollars", "ROI" → "R-O-I", "2024-2025" → "… to …". Captions keep the original. Add custom respellings in `templates/pronunciations.json`. |
+| `voiceover.py` | TTS per sentence (4 in parallel, unchanged sentences cached) → loudness-normalized to −16 LUFS → measured timings in `scenes.json`; exits 2 if the total is > 15% off target. |
+| `check_voice.py` | Checks generated audio: −16 LUFS loudness, no long gaps inside narration, plausible speaking rate per line. |
+| `sync_timing.py` | After a re-voice, updates already-built scenes to the new timing without rebuilding them. |
 | `assemble.py` | `hyperframes check` + render per scene, verify durations, stitch with FFmpeg. |
 | `log_stage.py` | Appends a stage result to `run_log.json`. |
 
 ### Key design rules
 - **Audio first.** Visuals are timed to the measured voiceover, never the reverse.
-- **Measured length beats estimates.** TTS reads numbers in full ("2025" → "twenty twenty-five"), so a number-heavy script runs ~25% longer than a word count suggests. The pipeline measures real audio and trims before fact-checking.
+- **Measured length beats estimates.** The voice reads numbers and acronyms in full, so length is estimated on the exact text the voice reads (~155 spoken words per minute), and the real audio is measured and trimmed before fact-checking.
+- **The voice reads a speech version, the screen shows the written version.** `speech_text.py` fixes forms the voice gets wrong (found by inspecting Kokoro's phonemes); the fact-checked wording is never changed.
 - **Nothing unverified is voiced.** Fact-check runs on the final wording.
 - **One scene = one standalone HyperFrames project**, so a broken scene is fixed and re-rendered alone.
 - **One shared style** (`templates/style-guide.md`, reference scene `templates/key_points.html`) so scenes look like one video.
@@ -133,7 +142,7 @@ The deterministic steps are small Python scripts, so agents never improvise them
 ## 4. Repo layout
 
 ```
-.claude/agents/        the five subagents
+.claude/agents/        the six subagents
 .claude/skills/        make-video orchestrator
 tools/                 deterministic helpers (see above)
 templates/             style guide, reference scene, hyperframes.json
@@ -153,6 +162,7 @@ environment.yml        conda env spec
 | `/make-video` or agents not found | Start a new Claude Code session in the repo root. |
 | Render fails on Chrome | `tools/env.sh npx hyperframes browser ensure`, or install Google Chrome. |
 | Scene check reports `nested_structure_needs_subcomposition` | Expected warning for standalone scenes; ignore. |
+| A name or term is mispronounced | Add it to `templates/pronunciations.json` (e.g. `"Traversaal": "Traver-sahl"`), check with `tools/speech_text.py`, re-run `voiceover.py` + `sync_timing.py` + `assemble.py`. |
 
 ## 6. Decisions and results
 - [docs/step1-results.md](docs/step1-results.md): why HyperFrames over Remotion (Apache-2.0 license vs Remotion's ≤ 3-person free tier; built-in TTS and checks), first prototype.

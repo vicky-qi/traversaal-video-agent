@@ -38,10 +38,10 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="28.23" data-width="1920" data-height="1080">
-      <audio id="vo" src="vo.wav" data-start="0.5" data-duration="26.927" data-track-index="9"></audio>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.5" data-width="1920" data-height="1080">
+      <audio id="vo" src="vo.wav" data-start="0.5" data-duration="26.202" data-track-index="9"></audio>
 
-      <div id="content" class="clip" data-start="0" data-duration="28.23" data-track-index="0">
+      <div id="content" class="clip" data-start="0" data-duration="27.5" data-track-index="0">
         <div class="stage">
           <div class="eyebrow" id="eyebrow">Generative AI at small businesses</div>
           <h1 class="headline" id="headline">Is generative AI paying off for small businesses?</h1>
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <div id="captions" class="clip" data-start="0" data-duration="28.23" data-track-index="1" data-layout-allow-overlap>
+      <div id="captions" class="clip" data-start="0" data-duration="27.5" data-track-index="1" data-layout-allow-overlap>
         <div class="captions">
           <p class="cap" id="c-n1">Is generative AI paying off for small businesses?</p>
           <p class="cap" id="c-n3">In 2025, 58 percent of small businesses told the US Chamber they use generative AI.</p>
@@ -86,12 +86,12 @@
       // ---- TIMING (copied from scenes.json) ----
       const TIMING = {
         offset: 0.5,
-        duration: 28.23,
+        duration: 27.5,
         lines: [
           { id: "n1", start: 0.0, end: 3.371 },
-          { id: "n3", start: 3.721, end: 11.251 },
-          { id: "n4", start: 11.601, end: 19.26 },
-          { id: "n5", start: 19.61, end: 26.927 },
+          { id: "n3", start: 3.721, end: 10.974 },
+          { id: "n4", start: 11.324, end: 18.535 },
+          { id: "n5", start: 18.885, end: 26.202 },
         ],
       };
       const at = (id) => TIMING.offset + TIMING.lines.find((l) => l.id === id).start;

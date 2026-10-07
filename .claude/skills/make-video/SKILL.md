@@ -50,11 +50,11 @@ This runs after the length fit, so it checks the final wording.
 3. Otherwise use the **scriptwriter**: "Run folder: $RUN. Revision pass: fix the lines flagged in factcheck.json." Run `check_script.py`, then go back to 1.
 4. After 2 revision rounds, if lines still fail, have the scriptwriter **delete** every line that is not `supported`, run `check_script.py` again, and record the deletions in the log note. Unverified claims never go to voiceover.
 
-## 6. Final voiceover
-```bash
-tools/env.sh python tools/voiceover.py $RUN
-```
-This re-voices only lines changed by fact-check and fills the final `timing` in `scenes.json`. A `LENGTH` warning here is logged, not looped on. Log `voiceover`.
+## 6. Voiceover
+Use the **voiceover** subagent: "Run folder: $RUN." It reviews how every sentence will be pronounced (fixing names and terms in `$RUN/pronunciations.json`), generates the audio with `tools/voiceover.py`, and verifies it with `tools/check_voice.py` (loudness, dropped words, pacing). It never changes the narration wording; the voice reads a speech version (years, money, acronyms rewritten), and captions keep the original.
+Check that its reply says the voice check passed. If it reports a line that cannot be made to sound right, send that line to the **scriptwriter** to reword, then run a **fresh fact-checker** on the result and repeat this step. Log `voiceover` with the respellings it added and the measured total; a `LENGTH` warning here is logged, not looped on.
+
+If the voiceover is ever regenerated **after** scenes are built (e.g. a late wording fix), run `tools/env.sh python tools/sync_timing.py $RUN` to move the scenes onto the new timing; it lists any scene that must be rebuilt by a scene-builder instead.
 
 ## 7. Scene building (parallel)
 Launch one **scene-builder** subagent per scene, **all in the same message**: "Run folder: $RUN. Scene id: <id>."

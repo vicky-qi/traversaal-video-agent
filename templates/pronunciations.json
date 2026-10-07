@@ -1,0 +1,6 @@
+{
+  "_comment": "Exact-word respellings applied to voiceover text only (captions keep the original). Add names or terms the voice gets wrong. Check with: tools/env.sh python tools/speech_text.py \"your sentence\"",
+  "SaaS": "sass",
+  "GenAI": "gen AI",
+  "OpenAI": "Open AI"
+}
