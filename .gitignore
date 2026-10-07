@@ -1,0 +1,12 @@
+# Secrets
+.env
+
+# Large generated media: share finished videos through the team Google Drive
+runs/**/*.mp4
+runs/**/*.mov
+runs/**/audio/
+runs/**/scenes/
+
+# Tools
+node_modules/
+.DS_Store
