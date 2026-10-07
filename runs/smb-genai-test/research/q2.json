@@ -1,0 +1,77 @@
+{
+  "question_id": "q2",
+  "question": "What measured benefits (time saved, productivity or revenue gains) and costs or obstacles do small businesses report from using generative AI, per recent surveys or studies (e.g., Goldman Sachs 10,000 Small Businesses, Intuit QuickBooks, US Chamber of Commerce, Bank of America)?",
+  "answer_summary": "Small businesses using AI mostly report positive, self-reported results: Goldman Sachs found 94% of AI users see a positive impact, and Gusto found about four in five GenAI users report productivity gains of 20% or more. The main obstacles are lack of expertise and resources, data privacy and security fears, and cost worries. No source found gives a measured hours-saved figure.",
+  "facts": [
+    {
+      "id": "q2-f1",
+      "claim": "In a Gusto survey of 1,480 small and medium-sized business owners, four out of five small businesses that use generative AI reported productivity increases of 20% or more.",
+      "source_url": "https://www.cpapracticeadvisor.com/2025/07/17/main-street-meets-machine-learning-inside-the-ai-productivity-boom-at-small-businesses/165060/",
+      "source_title": "Main Street Meets Machine Learning: Inside the AI Productivity Boom at Small Businesses",
+      "publisher": "CPA Practice Advisor (reporting Gusto survey)",
+      "published": "2025-07-17",
+      "excerpt": "Four out of five small businesses that use GenAI have seen productivity increase by 20% or more.",
+      "confidence": "medium"
+    },
+    {
+      "id": "q2-f2",
+      "claim": "More than 40% of small-business generative AI users in the Gusto survey reported revenue growth of 20% or more.",
+      "source_url": "https://www.cpapracticeadvisor.com/2025/07/17/main-street-meets-machine-learning-inside-the-ai-productivity-boom-at-small-businesses/165060/",
+      "source_title": "Main Street Meets Machine Learning: Inside the AI Productivity Boom at Small Businesses",
+      "publisher": "CPA Practice Advisor (reporting Gusto survey)",
+      "published": "2025-07-17",
+      "excerpt": "More than 40% of GenAI users have seen revenue grow by 20% or more.",
+      "confidence": "medium"
+    },
+    {
+      "id": "q2-f3",
+      "claim": "In a Goldman Sachs 10,000 Small Businesses survey of 1,471 participants fielded Sept 23 to Oct 2, 2025, 94% of AI users said AI is having a positive impact on their business.",
+      "source_url": "https://markets.financialcontent.com/lightport.lightport1/article/bizwire-2025-10-28-small-business-owners-plan-to-grow-bullish-on-ai-productivity-despite-concerns-over-government-shutdown",
+      "source_title": "Small Business Owners Plan to Grow, Bullish on AI Productivity Despite Concerns Over Government Shutdown",
+      "publisher": "Goldman Sachs 10,000 Small Businesses (via Business Wire)",
+      "published": "2025-10-28",
+      "excerpt": "nearly all (94%) say it's having a positive impact on their business.",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f4",
+      "claim": "In the same Goldman Sachs survey, 85% said AI increased their efficiency and productivity.",
+      "source_url": "https://markets.financialcontent.com/lightport.lightport1/article/bizwire-2025-10-28-small-business-owners-plan-to-grow-bullish-on-ai-productivity-despite-concerns-over-government-shutdown",
+      "source_title": "Small Business Owners Plan to Grow, Bullish on AI Productivity Despite Concerns Over Government Shutdown",
+      "publisher": "Goldman Sachs 10,000 Small Businesses (via Business Wire)",
+      "published": "2025-10-28",
+      "excerpt": "85% said it has increased their efficiency and productivity",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f5",
+      "claim": "In the Goldman Sachs survey, 88% of respondents want more training and support to implement AI successfully.",
+      "source_url": "https://markets.financialcontent.com/lightport.lightport1/article/bizwire-2025-10-28-small-business-owners-plan-to-grow-bullish-on-ai-productivity-despite-concerns-over-government-shutdown",
+      "source_title": "Small Business Owners Plan to Grow, Bullish on AI Productivity Despite Concerns Over Government Shutdown",
+      "publisher": "Goldman Sachs 10,000 Small Businesses (via Business Wire)",
+      "published": "2025-10-28",
+      "excerpt": "A strong majority (88%) want more training and support to implement AI successfully",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f6",
+      "claim": "In the Gusto survey, the biggest adoption barriers were lack of technical expertise and data privacy and security fears, and 22% were worried about implementation costs.",
+      "source_url": "https://www.cpapracticeadvisor.com/2025/07/17/main-street-meets-machine-learning-inside-the-ai-productivity-boom-at-small-businesses/165060/",
+      "source_title": "Main Street Meets Machine Learning: Inside the AI Productivity Boom at Small Businesses",
+      "publisher": "CPA Practice Advisor (reporting Gusto survey)",
+      "published": "2025-07-17",
+      "excerpt": "The biggest barriers to adoption are a lack of technical expertise and fears around data privacy and security.",
+      "confidence": "medium"
+    }
+  ],
+  "conflicts": [
+    "Productivity figures differ by survey and wording: Gusto (80% of GenAI users report gains of 20%+, Gusto platform owners) versus Goldman Sachs (85% say efficiency and productivity increased, program alumni; AI generally, not only generative). They measure different things and are not directly comparable."
+  ],
+  "gaps": [
+    "No fetched source gives a measured hours-saved-per-week figure; all benefits are self-reported perceptions.",
+    "Goldman Sachs, Gusto and Thryv original pages returned 403 or were too large to fetch; Gusto figures come via CPA Practice Advisor and Goldman via the Business Wire release.",
+    "Goldman's 42% lacking resources/expertise (2025 survey) was seen only in search snippets and an ASBN fetch, so not recorded as a fact.",
+    "Intuit QuickBooks, US Chamber of Commerce and Bank of America data were not checked.",
+    "Goldman samples are program alumni and Gusto's are platform users, so they may not represent all small businesses; Goldman's survey covers AI broadly, not only generative AI."
+  ]
+}

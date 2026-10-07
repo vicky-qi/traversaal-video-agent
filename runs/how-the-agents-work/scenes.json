@@ -1,0 +1,224 @@
+{
+  "video_id": "how-the-agents-work",
+  "voice": {
+    "engine": "kokoro",
+    "voice_id": "af_heart",
+    "speed": 0.9,
+    "pause_between_sentences_s": 0.35
+  },
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "title": "From prompt to video",
+      "visual_type": "timeline",
+      "target_duration_s": 30,
+      "visual_notes": "Opens on the question as a headline, then a left-to-right pipeline timeline that lights up one stage per sentence: research, script and length fit, fact-check, scene build and stitch.",
+      "narration": [
+        {
+          "id": "n1",
+          "text": "Can a team of AI agents make a more reliable video than one prompt?",
+          "claims": [],
+          "on_screen": {
+            "kind": "headline",
+            "text": "Many agents vs one prompt?"
+          }
+        },
+        {
+          "id": "n2",
+          "text": "This repository splits the job into stages that hand off files.",
+          "claims": [
+            "q1-f2"
+          ],
+          "on_screen": {
+            "kind": "label",
+            "text": "Stages hand off files in runs/<slug>/"
+          }
+        },
+        {
+          "id": "n3",
+          "text": "After intake, one researcher per question gathers sourced facts in parallel.",
+          "claims": [
+            "q1-f1",
+            "q1-f3",
+            "q2-f3"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "Intake \u2192 parallel researchers"
+          }
+        },
+        {
+          "id": "n4",
+          "text": "A scriptwriter cites fact ids for each factual sentence, then trims if the measured audio runs long.",
+          "claims": [
+            "q3-f1",
+            "q1-f4",
+            "q3-f3"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "Script \u2192 length fit"
+          }
+        },
+        {
+          "id": "n5",
+          "text": "A fact-checker grades every line, scene builders work in parallel, and a tool renders and stitches the video.",
+          "claims": [
+            "q4-f2",
+            "q1-f6"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "Fact-check \u2192 scene builders \u2192 MP4"
+          }
+        }
+      ],
+      "sources": [
+        "CLAUDE.md",
+        "README.md",
+        ".claude/skills/make-video/SKILL.md",
+        ".claude/agents/scriptwriter.md",
+        ".claude/agents/fact-checker.md"
+      ],
+      "audio": "scenes/s01/vo.wav",
+      "timing": {
+        "vo_offset_s": 0.5,
+        "audio_duration_s": 29.069,
+        "scene_duration_s": 30.37,
+        "lines": [
+          {
+            "id": "n1",
+            "start": 0.0,
+            "end": 4.544
+          },
+          {
+            "id": "n2",
+            "start": 4.894,
+            "end": 9.267
+          },
+          {
+            "id": "n3",
+            "start": 9.617,
+            "end": 14.567
+          },
+          {
+            "id": "n4",
+            "start": 14.917,
+            "end": 21.999
+          },
+          {
+            "id": "n5",
+            "start": 22.349,
+            "end": 29.069
+          }
+        ]
+      }
+    },
+    {
+      "scene_id": "s02",
+      "title": "Why it is built this way",
+      "visual_type": "key_points",
+      "target_duration_s": 30,
+      "visual_notes": "Three design reasons appear as stacked points: verified before voiced, audio first, standalone scenes. The 40 percent overshoot shows as a stat beside the audio point; ends on the takeaway headline.",
+      "narration": [
+        {
+          "id": "n1",
+          "text": "In the first run, the fact-checker flagged two overstated lines, both genuine overgeneralizations.",
+          "claims": [
+            "q6-f4"
+          ],
+          "on_screen": {
+            "kind": "stat",
+            "text": "Overstated lines caught in round 1",
+            "value": "2"
+          }
+        },
+        {
+          "id": "n2",
+          "text": "Nothing it has not marked supported reaches the final voiceover.",
+          "claims": [
+            "q4-f4"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "Only supported lines are voiced"
+          }
+        },
+        {
+          "id": "n3",
+          "text": "The first measured voiceover ran 40 percent long, so real audio is now measured and trimmed before fact-checking.",
+          "claims": [
+            "q5-f3",
+            "q5-f2"
+          ],
+          "on_screen": {
+            "kind": "stat",
+            "text": "First voiceover vs target",
+            "value": "+40%"
+          }
+        },
+        {
+          "id": "n4",
+          "text": "Visuals are timed to the measured voice, and a broken scene is re-rendered alone.",
+          "claims": [
+            "q5-f1",
+            "q6-f1"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "Visuals timed to voice, standalone scenes"
+          }
+        },
+        {
+          "id": "n5",
+          "text": "The takeaway: small, checked hand-offs catch errors one agent would ship.",
+          "claims": [
+            "q6-f4"
+          ],
+          "on_screen": {
+            "kind": "headline",
+            "text": "Small, checked hand-offs"
+          }
+        }
+      ],
+      "sources": [
+        "docs/step2-results.md",
+        "CLAUDE.md",
+        "README.md"
+      ],
+      "audio": "scenes/s02/vo.wav",
+      "timing": {
+        "vo_offset_s": 0.5,
+        "audio_duration_s": 28.856,
+        "scene_duration_s": 30.16,
+        "lines": [
+          {
+            "id": "n1",
+            "start": 0.0,
+            "end": 6.613
+          },
+          {
+            "id": "n2",
+            "start": 6.963,
+            "end": 11.145
+          },
+          {
+            "id": "n3",
+            "start": 11.495,
+            "end": 18.919
+          },
+          {
+            "id": "n4",
+            "start": 19.269,
+            "end": 24.154
+          },
+          {
+            "id": "n5",
+            "start": 24.504,
+            "end": 28.856
+          }
+        ]
+      }
+    }
+  ]
+}

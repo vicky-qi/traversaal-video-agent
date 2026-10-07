@@ -1,0 +1,108 @@
+{
+  "pass": true,
+  "summary": "10 of 10 lines supported. All 6 cited sources verified.",
+  "sources": [
+    {
+      "url": "CLAUDE.md",
+      "status": "verified",
+      "note": "q1-f2 and q4-f4 excerpts appear verbatim in Conventions."
+    },
+    {
+      "url": "README.md",
+      "status": "verified",
+      "note": "q1-f1 excerpt is in the pipeline diagram, split across lines 8-9. q2-f3, q5-f1, q5-f2 and q6-f1 excerpts are verbatim (q6-f1 only lacks the leading '**'). The 'facts with source URL + verbatim excerpt' wording in the q2-f3 claim is on the research/q1.json line of the same run-folder listing; the excerpt itself is the scenes.json line."
+    },
+    {
+      "url": ".claude/skills/make-video/SKILL.md",
+      "status": "verified",
+      "note": "q1-f3 (step 2), q1-f4 and q3-f3 (step 4) and q1-f6 (step 8) excerpts are verbatim. Step 7 launches scene builders in parallel; step 8 credits assemble.py with rendering and stitching."
+    },
+    {
+      "url": ".claude/agents/scriptwriter.md",
+      "status": "verified",
+      "note": "q3-f1 excerpt is verbatim in Writing rules."
+    },
+    {
+      "url": ".claude/agents/fact-checker.md",
+      "status": "verified",
+      "note": "q4-f2 excerpt is verbatim in Method step 2. The file also says 'List every line'."
+    },
+    {
+      "url": "docs/step2-results.md",
+      "status": "verified",
+      "note": "q5-f3 excerpt is the stage-table row (wording 'Voiceover (measured) | **83.8 s vs 60 s target, +40%**'). q6-f4 excerpt is verbatim. The table also shows 'Fact-check round 1 | 8 supported, **2 overstated**'."
+    }
+  ],
+  "lines": [
+    {
+      "scene_id": "s01",
+      "line_id": "n1",
+      "verdict": "supported",
+      "reason": "Framing question with no factual assertion and no claims.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n2",
+      "verdict": "supported",
+      "reason": "q1-f2: 'Stages talk only through files there: prompt.txt → brief.json → ...'.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n3",
+      "verdict": "supported",
+      "reason": "q1-f1 'intake ─▶ research (one agent per question, parallel)' and q1-f3 'one researcher subagent per key question, all in the same message so they run in parallel' back the order and parallelism. 'Sourced facts' matches the README run-folder listing ('facts with source URL + verbatim excerpt') described in the q2-f3 claim.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n4",
+      "verdict": "supported",
+      "reason": "q3-f1 'Every sentence that states a fact must list the fact ids it relies on in claims' matches 'each factual sentence'. q1-f4 ('measure the real audio') and q3-f3 (trim pass with up to 2 trim rounds, sent on exit 2) support a conditional trim by the scriptwriter. 'If ... runs long' matches that condition.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n5",
+      "verdict": "supported",
+      "reason": "q4-f2: each line gets one of four verdicts. q1-f6: scene builders run in parallel, and assemble.py 'renders it to $RUN/renders/<id>.mp4, and stitches them into $RUN/<slug>.mp4'. The line now correctly credits 'a tool' with rendering.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n1",
+      "verdict": "supported",
+      "reason": "q6-f4: 'Both round-1 flags were genuine overgeneralizations'. The step2-results table for the first end-to-end run shows round 1 with '2 overstated'; later rounds flagged nothing.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n2",
+      "verdict": "supported",
+      "reason": "q4-f4: 'nothing the fact-checker has not marked supported reaches the voiceover.' 'Final voiceover' matches SKILL.md step 6 and avoids the conflict with the measuring voiceover in length fit.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n3",
+      "verdict": "supported",
+      "reason": "q5-f3 '83.8 s vs 60 s target, +40%' supports '40 percent long'. q5-f2 'The pipeline measures real audio and trims before fact-checking' supports the second clause. The causal 'so ... now' is backed by the same step2-results page, which lists the new length-fit stage and 'Fact-check now runs after the length fit' under 'What the run changed in the design'.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n4",
+      "verdict": "supported",
+      "reason": "q5-f1 'Visuals are timed to the measured voiceover, never the reverse' and q6-f1 'a broken scene is fixed and re-rendered alone'.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n5",
+      "verdict": "supported",
+      "reason": "q6-f4: the fact-check loop's flags were 'the kind of error a single agent would ship', and the docs head this 'The fact-check loop catches real problems'. The line now cites this and matches it. 'Small' is a framing adjective, not a factual claim.",
+      "suggested_fix": ""
+    }
+  ]
+}

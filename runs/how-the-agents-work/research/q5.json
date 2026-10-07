@@ -1,0 +1,74 @@
+{
+  "question_id": "q5",
+  "question": "Why does the pipeline generate audio first and time visuals to the measured audio (the timing block), and how do parallel scene-builders render standalone HyperFrames scenes before stitching?",
+  "answer_summary": "The pipeline voices the script first and measures the real audio, because TTS length cannot be predicted from word counts (numbers made a draft run 40% long). Scene-builders then key every on-screen change to the measured timing, one standalone HyperFrames project per scene in parallel, so a broken scene can be fixed and re-rendered alone before assemble.py stitches the renders.",
+  "facts": [
+    {
+      "id": "q5-f1",
+      "claim": "The repository states audio-first as a key design rule: visuals are timed to the measured voiceover, never the reverse.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README, section 3 Key design rules",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "**Audio first.** Visuals are timed to the measured voiceover, never the reverse.",
+      "confidence": "high"
+    },
+    {
+      "id": "q5-f2",
+      "claim": "Audio is measured rather than estimated because TTS reads numbers in full, making number-heavy scripts run about 25% longer than word counts suggest; the pipeline measures real audio and trims before fact-checking.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README, section 3 Key design rules",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "a number-heavy script runs ~25% longer than a word count suggests. The pipeline measures real audio and trims before fact-checking.",
+      "confidence": "high"
+    },
+    {
+      "id": "q5-f3",
+      "claim": "In the first end-to-end run, the measured voiceover was 83.8 s against a 60 s target (+40%), and a trim pass brought the final video to 56.0 s.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Voiceover (measured) | **83.8 s vs 60 s target, +40%**",
+      "confidence": "high"
+    },
+    {
+      "id": "q5-f4",
+      "claim": "The scene-builder takes the already-measured timing from scenes.json, copies it into a TIMING block, and keys every on-screen change to the line start rather than typing times by hand.",
+      "source_url": ".claude/agents/scene-builder.md",
+      "source_title": "scene-builder agent definition",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Copy `timing` into the TIMING block exactly. Key **every** on-screen change to `at(line_id)`; never type a time by hand.",
+      "confidence": "high"
+    },
+    {
+      "id": "q5-f5",
+      "claim": "The orchestrator launches one scene-builder per scene in a single message so they run in parallel, then assemble.py checks, renders each scene to renders/<id>.mp4 and stitches them into the final MP4.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video skill (orchestrator), steps 7 and 8",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Launch one **scene-builder** subagent per scene, **all in the same message**",
+      "confidence": "high"
+    },
+    {
+      "id": "q5-f6",
+      "claim": "Each scene is a standalone HyperFrames project so a broken scene can be fixed and re-rendered alone; the repair loop allows one attempt per scene via assemble.py --only.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README, section 3 Key design rules",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "**One scene = one standalone HyperFrames project**, so a broken scene is fixed and re-rendered alone.",
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [
+    "README says number-heavy scripts run ~25% longer than word counts suggest; the first run's draft was +40% over target (83.8 s vs 60 s). These are different measures (typical vs one run), not a true contradiction."
+  ],
+  "gaps": [
+    "Exact fields of the timing block (e.g. scene_duration_s, vo_offset_s, audio_duration_s) are only named in scene-builder.md; no sample filled scenes.json was read.",
+    "No stated rationale for parallel scene building beyond the run-time note that research and scene building dominate time at 7 minutes (docs/step2-results.md)."
+  ]
+}

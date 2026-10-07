@@ -1,0 +1,70 @@
+{
+  "slug": "how-the-agents-work",
+  "prompt": "How does the capstone-video-agent project work? Explain its AI agent pipeline \u2014 intake, parallel researchers, scriptwriter, length fit, fact-checker, voiceover, parallel scene-builders, render and stitch \u2014 and why it is built that way. Use this repository (README.md, CLAUDE.md, .claude/agents/*.md, .claude/skills/make-video, docs/) as the primary sources.",
+  "started_at": "2026-10-07T22:27:44+00:00",
+  "stages": [
+    {
+      "stage": "intake",
+      "status": "ok",
+      "note": "6 key questions",
+      "finished_at": "2026-10-07T22:28:06+00:00",
+      "elapsed_s": 22.7
+    },
+    {
+      "stage": "research",
+      "status": "ok",
+      "note": "36 facts from 6 questions",
+      "finished_at": "2026-10-07T22:29:15+00:00",
+      "elapsed_s": 69.5
+    },
+    {
+      "stage": "script",
+      "status": "ok",
+      "note": "2 scenes, 131 words",
+      "finished_at": "2026-10-07T22:30:09+00:00",
+      "elapsed_s": 54.2
+    },
+    {
+      "stage": "length-fit",
+      "status": "ok",
+      "note": "58.0s measured, 0 trim rounds",
+      "finished_at": "2026-10-07T22:30:45+00:00",
+      "elapsed_s": 36.5
+    },
+    {
+      "stage": "factcheck-1",
+      "status": "failed",
+      "note": "5 supported, 4 overstated, 1 uncited",
+      "finished_at": "2026-10-07T22:31:57+00:00",
+      "elapsed_s": 72.7
+    },
+    {
+      "stage": "factcheck-2",
+      "status": "ok",
+      "note": "10/10 supported",
+      "finished_at": "2026-10-07T22:33:28+00:00",
+      "elapsed_s": 91.8
+    },
+    {
+      "stage": "voiceover",
+      "status": "ok",
+      "note": "final voiceover",
+      "finished_at": "2026-10-07T22:33:46+00:00",
+      "elapsed_s": 18.1
+    },
+    {
+      "stage": "scenes",
+      "status": "ok",
+      "note": "2 scenes built",
+      "finished_at": "2026-10-07T22:35:23+00:00",
+      "elapsed_s": 97.3
+    },
+    {
+      "stage": "render",
+      "status": "ok",
+      "note": "60.57s final",
+      "finished_at": "2026-10-07T22:36:04+00:00",
+      "elapsed_s": 41.8
+    }
+  ]
+}

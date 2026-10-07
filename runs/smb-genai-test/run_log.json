@@ -1,0 +1,98 @@
+{
+  "slug": "smb-genai-test",
+  "prompt": "How are small businesses actually using generative AI, and is it paying off? Make it useful for a small-business owner deciding whether to invest.",
+  "started_at": "2026-10-07T21:43:46+00:00",
+  "stages": [
+    {
+      "stage": "intake",
+      "status": "ok",
+      "note": "2 key questions",
+      "finished_at": "2026-10-07T21:44:06+00:00",
+      "elapsed_s": 20.8
+    },
+    {
+      "stage": "research",
+      "status": "ok",
+      "note": "11 facts (q1: 5, q2: 6)",
+      "finished_at": "2026-10-07T21:46:02+00:00",
+      "elapsed_s": 116.4
+    },
+    {
+      "stage": "script",
+      "status": "ok",
+      "note": "2 scenes, 175 words",
+      "finished_at": "2026-10-07T21:46:51+00:00",
+      "elapsed_s": 49.4
+    },
+    {
+      "stage": "factcheck-1",
+      "status": "failed",
+      "note": "8 supported, 2 overstated",
+      "finished_at": "2026-10-07T21:48:16+00:00",
+      "elapsed_s": 85.7
+    },
+    {
+      "stage": "script-revision-1",
+      "status": "ok",
+      "note": "rewrote s01/n2, s02/n3",
+      "finished_at": "2026-10-07T21:48:41+00:00",
+      "elapsed_s": 25.6
+    },
+    {
+      "stage": "factcheck-2",
+      "status": "ok",
+      "note": "10/10 supported",
+      "finished_at": "2026-10-07T21:49:44+00:00",
+      "elapsed_s": 63.8
+    },
+    {
+      "stage": "voiceover",
+      "status": "ok",
+      "note": "",
+      "finished_at": "2026-10-07T21:50:20+00:00",
+      "elapsed_s": 36.7
+    },
+    {
+      "stage": "script-trim-1",
+      "status": "ok",
+      "note": "deleted 2 lines, shortened 7",
+      "finished_at": "2026-10-07T21:52:21+00:00",
+      "elapsed_s": 121.5
+    },
+    {
+      "stage": "length-fit",
+      "status": "ok",
+      "note": "56.0s measured after 1 trim",
+      "finished_at": "2026-10-07T21:53:37+00:00",
+      "elapsed_s": 76.4
+    },
+    {
+      "stage": "factcheck-3",
+      "status": "ok",
+      "note": "8/8 supported after trim",
+      "finished_at": "2026-10-07T21:53:37+00:00",
+      "elapsed_s": 0.8
+    },
+    {
+      "stage": "voiceover",
+      "status": "ok",
+      "note": "56.0s",
+      "finished_at": "2026-10-07T21:53:39+00:00",
+      "elapsed_s": 2.2
+    },
+    {
+      "stage": "scenes",
+      "status": "ok",
+      "note": "2 scenes built",
+      "finished_at": "2026-10-07T21:55:28+00:00",
+      "elapsed_s": 109.6
+    },
+    {
+      "stage": "render",
+      "status": "ok",
+      "note": "56.03s final",
+      "finished_at": "2026-10-07T21:56:29+00:00",
+      "elapsed_s": 61.1
+    }
+  ]
+}

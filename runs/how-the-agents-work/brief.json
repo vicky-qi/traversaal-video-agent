@@ -1,0 +1,60 @@
+{
+  "title": "How the Capstone Video Agent Works",
+  "topic": "How the capstone-video-agent repository turns a text prompt into a narrated, fact-checked MP4 through a chain of specialised AI agents, and why it is designed that way.",
+  "audience": "Technically curious viewers, such as business or data students and AI practitioners, who know what an LLM is but have not seen multi-agent pipelines or this repository.",
+  "angle": "Whether splitting video creation into specialised agents that hand off files (research, script, fact-check, audio-first build) makes the output more reliable than one prompt, and where each stage earns its place.",
+  "tone": "clear and neutral, like a business-school explainer",
+  "target_duration_s": 60,
+  "scene_count": 2,
+  "key_questions": [
+    {
+      "id": "q1",
+      "question": "According to README.md, CLAUDE.md and .claude/skills/make-video/SKILL.md, what are the pipeline stages in order (intake, parallel researchers, scriptwriter, length fit, fact-checker, voiceover, parallel scene-builders, render and stitch), what does each produce, and which run in parallel?",
+      "why": "Scene 1: the walkthrough of the pipeline from prompt to finished video."
+    },
+    {
+      "id": "q2",
+      "question": "How do stages hand off work through files in runs/<slug>/ (brief.json, research/<qid>.json, scenes.json, factcheck.json, vo.wav, renders, final mp4), and what does scenes.json contain?",
+      "why": "Scene 1: shows the file-based hand-off design that connects the agents."
+    },
+    {
+      "id": "q3",
+      "question": "How do the scriptwriter and length-fit steps in .claude/agents/ and docs/ keep narration within the target duration and tie each sentence to cited fact ids in claims?",
+      "why": "Scene 1 and 2: links script quality and length control to the design."
+    },
+    {
+      "id": "q4",
+      "question": "What does the fact-checker agent verify and what rule decides which narration reaches the voiceover (only claims marked supported)?",
+      "why": "Scene 2: explains why the pipeline is built for trustworthiness."
+    },
+    {
+      "id": "q5",
+      "question": "Why does the pipeline generate audio first and time visuals to the measured audio (the timing block), and how do parallel scene-builders render standalone HyperFrames scenes before stitching?",
+      "why": "Scene 2: explains the audio-first and parallel build design rationale."
+    },
+    {
+      "id": "q6",
+      "question": "What reasons do README.md and docs/ give for the multi-agent design (specialised agents, parallelism, file hand-offs, run_log.json), and what limits or trade-offs do they note?",
+      "why": "Scene 2: the why-it-is-built-this-way conclusion."
+    }
+  ],
+  "must_include": [
+    "Explanation of the pipeline stages: intake, parallel researchers, scriptwriter, length fit, fact-checker, voiceover, parallel scene-builders, render and stitch",
+    "Why the project is built this way",
+    "Primary sources are the repository files: README.md, CLAUDE.md, .claude/agents/*.md, .claude/skills/make-video, docs/"
+  ],
+  "out_of_scope": [
+    "Installation, environment setup and tools/env.sh details",
+    "Per-agent prompt wording and code-level implementation",
+    "HyperFrames style guide and visual design details",
+    "The prototypes/ folder and Step 1 experiments",
+    "Comparisons with other video-generation products",
+    "Capstone sponsor and course background beyond a passing mention"
+  ],
+  "assumptions": [
+    "The prompt's own repository files are the primary sources, so research reads local files rather than the public web; public sources are only for brief background such as HyperFrames or Kokoro TTS.",
+    "At 60 seconds and 2 scenes, scene 1 covers what the pipeline does (stage-by-stage) and scene 2 covers why it is built that way (fact-checking, audio-first timing, parallelism).",
+    "The audience is general technical learners, not the capstone sponsors.",
+    "Length fit and the other stages are described as they appear in the repository, even if some are folded into the same agent."
+  ]
+}

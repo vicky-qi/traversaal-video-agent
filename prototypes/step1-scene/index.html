@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1020; }
+      #root { width: 100%; height: 100%; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #f4f4f5; }
+
+      /* Content area sits above the caption band (bottom 200px). */
+      .stage { position: absolute; left: 0; top: 0; width: 1920px; height: 880px; padding: 120px 160px 0; }
+      .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #38bdf8; }
+      .headline { margin-top: 24px; font-size: 92px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+      .headline .dim { color: #64748b; }
+
+      #chips { margin-top: 80px; display: flex; gap: 18px; }
+      .chip { width: 82px; height: 120px; border-radius: 14px; background: #1e293b; border: 2px solid #334155;
+              display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px;
+              font-size: 22px; color: #94a3b8; font-weight: 600; }
+
+      #steps { margin-top: 72px; display: flex; gap: 40px; }
+      .step { flex: 1; height: 300px; border-radius: 24px; background: #111a2e; border: 2px solid #1e293b; padding: 44px; }
+      .step .num { width: 64px; height: 64px; border-radius: 32px; background: #1e293b; color: #94a3b8;
+                   display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 700; }
+      .step .label { margin-top: 36px; font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+      .step.on { border-color: #38bdf8; }
+      .step.on .num { background: #38bdf8; color: #0b1020; }
+
+      .captions { position: absolute; left: 0; top: 880px; width: 1920px; height: 200px;
+                  display: flex; align-items: center; justify-content: center; padding: 0 220px; }
+      .cap { position: absolute; left: 220px; right: 220px; text-align: center; font-size: 38px; line-height: 1.35;
+             color: #e2e8f0; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1920" data-height="1080">
+      <!-- Voiceover: 1s lead-in; sentence times come from scene.json timing + 1.0 -->
+      <audio id="vo" src="assets/vo/s01.wav" data-start="1" data-duration="26.838" data-track-index="9"></audio>
+
+      <!-- Part A (0 – 11.4s): the problem and the scene split -->
+      <div id="intro" class="clip" data-start="0" data-duration="11.4" data-track-index="0">
+        <div class="stage">
+          <div class="eyebrow">Prompt → Video</div>
+          <h1 class="headline" id="intro-head">One prompt. <span class="dim">Seven minutes.</span><br />Too much for one pass.</h1>
+          <div id="chips">
+            <div class="chip">1</div><div class="chip">2</div><div class="chip">3</div><div class="chip">4</div>
+            <div class="chip">5</div><div class="chip">6</div><div class="chip">7</div><div class="chip">8</div>
+            <div class="chip">9</div><div class="chip">10</div><div class="chip">11</div><div class="chip">12</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Part B (11.4 – 30s): three steps, each lit when narrated -->
+      <div id="points" class="clip" data-start="11.4" data-duration="18.6" data-track-index="1">
+        <div class="stage">
+          <div class="eyebrow">Every scene, three steps</div>
+          <h1 class="headline">How the agent works</h1>
+          <div id="steps">
+            <div class="step" id="p1"><div class="num">1</div><div class="label">Research &amp;<br />fact-check</div></div>
+            <div class="step" id="p2"><div class="num">2</div><div class="label">Script &amp;<br />voiceover</div></div>
+            <div class="step" id="p3"><div class="num">3</div><div class="label">Visuals &amp;<br />assembly</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Captions, one line per narration sentence -->
+      <div id="captions" class="clip" data-start="1" data-duration="26.6" data-track-index="2" data-layout-allow-overlap>
+        <div class="captions">
+          <p class="cap" id="c1">Turning a single prompt into a seven-minute video is too much to do in one pass.</p>
+          <p class="cap" id="c2">So our agent breaks the work into short scenes, and handles each one in three steps.</p>
+          <p class="cap" id="c3">First, it researches the topic, and checks every claim against a source.</p>
+          <p class="cap" id="c4">Next, it writes the narration for each scene, and turns it into a voiceover.</p>
+          <p class="cap" id="c5">Finally, it builds visuals timed to that voice, and stitches every scene into one finished video.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const VO = 1.0; // voiceover offset
+      const lines = [ // from scene.json timing
+        { id: "c1", start: 0.0, end: 4.949 },
+        { id: "c2", start: 5.299, end: 10.334 },
+        { id: "c3", start: 10.684, end: 15.143 },
+        { id: "c4", start: 15.493, end: 20.015 },
+        { id: "c5", start: 20.365, end: 26.488 },
+      ];
+
+      // Captions: swap exactly on sentence boundaries
+      lines.forEach((l) => {
+        tl.set("#" + l.id, { opacity: 1 }, VO + l.start);
+        tl.set("#" + l.id, { opacity: 0 }, VO + l.end + 0.3);
+      });
+
+      // Part A
+      tl.fromTo("#intro .eyebrow", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 }, 0.2);
+      tl.fromTo("#intro-head", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.4);
+      tl.fromTo("#chips .chip", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.12, ease: "back.out(1.6)" }, VO + lines[1].start + 0.2);
+      tl.to("#chips .chip", { borderColor: "#38bdf8", color: "#f4f4f5", duration: 0.3, stagger: 0.05 }, VO + 8.4);
+      tl.to("#intro .stage", { opacity: 0, duration: 0.4 }, 11.0);
+
+      // Part B
+      tl.fromTo("#points .eyebrow, #points .headline", { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: "power3.out" }, 11.4);
+      tl.fromTo("#steps .step", { opacity: 0, y: 40 },
+        { opacity: 0.35, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" }, 11.6);
+      ["p1", "p2", "p3"].forEach((p, i) => {
+        const t = VO + lines[i + 2].start;
+        tl.to("#" + p, { opacity: 1, scale: 1.04, duration: 0.4, ease: "power2.out" }, t);
+        tl.set("#" + p, { className: "step on" }, t);
+        if (i < 2) tl.to("#" + p, { scale: 1, opacity: 0.75, duration: 0.4 }, VO + lines[i + 3].start - 0.1);
+      });
+      tl.set("#p1, #p2", { opacity: 1 }, VO + lines[4].end);
+      tl.to("#p3", { scale: 1, duration: 0.4 }, VO + lines[4].end);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

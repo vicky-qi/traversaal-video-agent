@@ -1,0 +1,1 @@
+How does the capstone-video-agent project work? Explain its AI agent pipeline — intake, parallel researchers, scriptwriter, length fit, fact-checker, voiceover, parallel scene-builders, render and stitch — and why it is built that way. Use this repository (README.md, CLAUDE.md, .claude/agents/*.md, .claude/skills/make-video, docs/) as the primary sources.

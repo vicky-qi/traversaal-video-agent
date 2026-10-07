@@ -1,0 +1,85 @@
+{
+  "video_id": "step1-prototype",
+  "voice": {
+    "engine": "kokoro",
+    "voice_id": "af_heart",
+    "speed": 0.9,
+    "pause_between_sentences_s": 0.35
+  },
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "title": "How the agent works",
+      "visual_type": "key_points",
+      "target_duration_s": 30,
+      "narration": [
+        {
+          "id": "n1",
+          "text": "Turning a single prompt into a seven-minute video is too much to do in one pass.",
+          "on_screen": null
+        },
+        {
+          "id": "n2",
+          "text": "So our agent breaks the work into short scenes, and handles each one in three steps.",
+          "on_screen": null
+        },
+        {
+          "id": "n3",
+          "text": "First, it researches the topic, and checks every claim against a source.",
+          "on_screen": {
+            "point": 1,
+            "label": "Research & fact-check"
+          }
+        },
+        {
+          "id": "n4",
+          "text": "Next, it writes the narration for each scene, and turns it into a voiceover.",
+          "on_screen": {
+            "point": 2,
+            "label": "Script & voiceover"
+          }
+        },
+        {
+          "id": "n5",
+          "text": "Finally, it builds visuals timed to that voice, and stitches every scene into one finished video.",
+          "on_screen": {
+            "point": 3,
+            "label": "Visuals & assembly"
+          }
+        }
+      ],
+      "sources": [],
+      "audio": "assets/vo/s01.wav",
+      "timing": {
+        "lines": [
+          {
+            "id": "n1",
+            "start": 0.0,
+            "end": 4.949
+          },
+          {
+            "id": "n2",
+            "start": 5.299,
+            "end": 10.334
+          },
+          {
+            "id": "n3",
+            "start": 10.684,
+            "end": 15.143
+          },
+          {
+            "id": "n4",
+            "start": 15.493,
+            "end": 20.015
+          },
+          {
+            "id": "n5",
+            "start": 20.365,
+            "end": 26.488
+          }
+        ],
+        "audio_duration_s": 26.838
+      }
+    }
+  ]
+}

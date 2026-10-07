@@ -1,0 +1,74 @@
+{
+  "question_id": "q4",
+  "question": "What does the fact-checker agent verify and what rule decides which narration reaches the voiceover (only claims marked supported)?",
+  "answer_summary": "The fact-checker re-opens every cited source, confirms the excerpt is on the page, and grades each narration line supported, overstated, unsupported or uncited, without editing the script. The rule is that nothing it has not marked supported reaches the voiceover: flagged lines are revised for up to 2 rounds, then deleted. In the first test run, round 1 caught 2 overstated lines.",
+  "facts": [
+    {
+      "id": "q4-f1",
+      "claim": "The fact-checker opens every distinct source URL cited by any script line and confirms the fact's excerpt, or wording with the same meaning, is on the page; unreachable pages leave dependent facts unsupported.",
+      "source_url": ".claude/agents/fact-checker.md",
+      "source_title": "fact-checker agent definition",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "For each distinct `source_url` cited by any line, open it with WebFetch and confirm the fact's `excerpt` (or wording with the same meaning) is on the page.",
+      "confidence": "high"
+    },
+    {
+      "id": "q4-f2",
+      "claim": "Each narration line receives one of four verdicts: supported, overstated, unsupported or uncited. Overstated covers cases such as a forecast stated as fact or correlation stated as cause.",
+      "source_url": ".claude/agents/fact-checker.md",
+      "source_title": "fact-checker agent definition",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "`overstated`: the source supports a weaker or narrower claim (e.g. \"most companies\" vs \"most large US companies\"; a forecast stated as fact; correlation stated as cause",
+      "confidence": "high"
+    },
+    {
+      "id": "q4-f3",
+      "claim": "The fact-checker is read-only on the script: it judges lines and writes factcheck.json, and the scriptwriter does the fixing. The result passes only when every line is supported.",
+      "source_url": ".claude/agents/fact-checker.md",
+      "source_title": "fact-checker agent definition",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Set `pass: true` only when every line is `supported`.",
+      "confidence": "high"
+    },
+    {
+      "id": "q4-f4",
+      "claim": "The gating rule: nothing the fact-checker has not marked supported reaches the voiceover, and every factual narration sentence must cite fact ids in claims.",
+      "source_url": "CLAUDE.md",
+      "source_title": "capstone-video-agent CLAUDE.md",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Every factual narration sentence cites fact ids in `claims`; nothing the fact-checker has not marked `supported` reaches the voiceover.",
+      "confidence": "high"
+    },
+    {
+      "id": "q4-f5",
+      "claim": "The orchestrator runs the fact-check after the length fit so it checks the final wording. It allows at most 2 revision rounds, then has the scriptwriter delete every line that is not supported.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video orchestrator skill",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "After 2 revision rounds, if lines still fail, have the scriptwriter **delete** every line that is not `supported`",
+      "confidence": "high"
+    },
+    {
+      "id": "q4-f6",
+      "claim": "In the first end-to-end run, fact-check round 1 flagged 2 of 10 lines as overstated for generalizing one survey; after revision all 10 were supported. The docs call these flags genuine overgeneralizations.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Both round-1 flags were genuine overgeneralizations (one program's alumni presented as \"most owners\"), the kind of error a single agent would ship.",
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [
+    "SKILL.md step 4 runs voiceover.py (TTS) for length measurement before the fact-check, while CLAUDE.md says nothing unsupported reaches the voiceover. These are consistent only if the pre-check audio is treated as a measurement draft, and step 6 re-voices lines changed by the fact-check. The repo does not state this explicitly."
+  ],
+  "gaps": [
+    "No quantitative false-claim catch rate beyond the single test run (2 overstated lines of 10).",
+    "Repo files are undated, so published is null."
+  ]
+}

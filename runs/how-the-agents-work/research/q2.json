@@ -1,0 +1,72 @@
+{
+  "question_id": "q2",
+  "question": "How do stages hand off work through files in runs/<slug>/ (brief.json, research/<qid>.json, scenes.json, factcheck.json, vo.wav, renders, final mp4), and what does scenes.json contain?",
+  "answer_summary": "Stages never talk directly; each reads the previous stage's file in runs/<slug>/ and writes its own, from prompt.txt through brief.json, research files, scenes.json, factcheck.json, per-scene vo.wav and index.html, renders, and the final MP4. scenes.json is the central hand-off format: scenes with narration sentences, cited fact ids in claims, on-screen items, and later tool-added timing.",
+  "facts": [
+    {
+      "id": "q2-f1",
+      "claim": "Pipeline stages communicate only through files in one folder per video, runs/<slug>/, in a fixed chain from prompt.txt to the final MP4, with run_log.json recording each stage's outcome and time.",
+      "source_url": "CLAUDE.md",
+      "source_title": "capstone-video-agent CLAUDE.md",
+      "publisher": "capstone-video-agent repository (Jiaxin Wu)",
+      "published": null,
+      "excerpt": "Stages talk only through files there: `prompt.txt` → `brief.json` → `research/<qid>.json` → `scenes.json` → `factcheck.json` → `scenes/<id>/{vo.wav,index.html}` → `renders/<id>.mp4` → `<slug>.mp4`.",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f2",
+      "claim": "scenes.json is the hand-off format; audio is generated first and visuals are timed to the measured audio via a timing block, never the reverse.",
+      "source_url": "CLAUDE.md",
+      "source_title": "capstone-video-agent CLAUDE.md",
+      "publisher": "capstone-video-agent repository (Jiaxin Wu)",
+      "published": null,
+      "excerpt": "`scenes.json` is the hand-off format. Audio is generated first and visuals are timed to the measured audio (`timing` block), never the reverse.",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f3",
+      "claim": "The README describes each run-folder file by producer: researcher files hold facts with source URL and verbatim excerpt; scenes.json holds scenes, narration lines, cited fact ids, on-screen items and measured timing; factcheck.json holds a verdict per line.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README, section 'What is in a run folder'",
+      "publisher": "capstone-video-agent repository (Jiaxin Wu)",
+      "published": null,
+      "excerpt": "scenes.json         script: scenes, narration lines, cited fact ids, on-screen items, measured timing",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f4",
+      "claim": "Each scene is a narration list in scenes.json: every sentence has an id, text, a claims array of fact ids (e.g. q1-f2), and an on_screen item shown when that sentence starts; scenes also carry visual_type, target_duration_s and visual_notes, plus voice settings at the top level.",
+      "source_url": ".claude/agents/scriptwriter.md",
+      "source_title": "scriptwriter agent definition",
+      "publisher": "capstone-video-agent repository (Jiaxin Wu)",
+      "published": null,
+      "excerpt": "Every sentence gets an `on_screen` item; it is what the scene builder shows when that sentence starts.",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f5",
+      "claim": "The scriptwriter writes only the narrative fields of scenes.json; the sources, audio and timing fields are filled in later by tools, not by the agent.",
+      "source_url": ".claude/agents/scriptwriter.md",
+      "source_title": "scriptwriter agent definition",
+      "publisher": "capstone-video-agent repository (Jiaxin Wu)",
+      "published": null,
+      "excerpt": "`sources`, `audio` and `timing` are filled in by tools later; leave `sources` as `[]` and do not add the others.",
+      "confidence": "high"
+    },
+    {
+      "id": "q2-f6",
+      "claim": "The orchestrator checks that each stage's output file exists and is valid before moving on (e.g. brief.json has key_questions; each research file has at least 2 facts; each scene has index.html).",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video skill (orchestrator)",
+      "publisher": "capstone-video-agent repository (Jiaxin Wu)",
+      "published": null,
+      "excerpt": "Check that each `$RUN/research/<qid>.json` exists with at least 2 facts. Re-run a researcher once if its file is missing or empty.",
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [],
+  "gaps": [
+    "The exact JSON of the timing block (field names) is not described in the files read; only that it holds measured timings written by tools/voiceover.py.",
+    "No facts record the vo.wav hand-off beyond the path scenes/<id>/vo.wav in CLAUDE.md and README.md."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "title": "Is Generative AI Paying Off for Small Businesses?",
+  "topic": "How small businesses are using generative AI today and whether the evidence shows a return on that investment.",
+  "audience": "Small-business owners and managers deciding whether to invest in generative AI; they know what ChatGPT-style tools are but have little data on real-world results.",
+  "angle": "Small businesses are adopting generative AI mostly for low-cost content and customer-communication tasks, and the clearest payoff is time saved on those tasks, so owners should start small and measure before spending more.",
+  "tone": "clear and neutral, like a business-school explainer, with practical takeaways",
+  "target_duration_s": 60,
+  "scene_count": 2,
+  "key_questions": [
+    {
+      "id": "q1",
+      "question": "What share of US small businesses reported using generative AI in 2025, and for which tasks (e.g., marketing content, customer service, writing) do they use it most, per surveys such as the US Chamber of Commerce, Census Bureau Business Trends and Outlook Survey, or Salesforce?",
+      "why": "Scene 1: how small businesses are actually using generative AI."
+    },
+    {
+      "id": "q2",
+      "question": "What measured benefits (time saved, productivity or revenue gains) and costs or obstacles do small businesses report from using generative AI, per recent surveys or studies (e.g., Goldman Sachs 10,000 Small Businesses, Intuit QuickBooks, US Chamber of Commerce, Bank of America)?",
+      "why": "Scene 2: whether it is paying off and what an owner should do about it."
+    }
+  ],
+  "must_include": [
+    "How small businesses are actually using generative AI",
+    "Whether it is paying off",
+    "Useful guidance for a small-business owner deciding whether to invest"
+  ],
+  "out_of_scope": [
+    "Large-enterprise AI deployments",
+    "Non-generative AI and traditional automation",
+    "Comparisons of specific AI vendors and products",
+    "AI regulation, ethics, and job-loss debates",
+    "Detailed implementation tutorials"
+  ],
+  "assumptions": [
+    "Focus on US small businesses (under 500 employees) since the prompt does not specify a country.",
+    "Use the most recent available data, roughly 2024 to 2026.",
+    "Payoff is interpreted as reported time savings, productivity, and revenue or cost outcomes, not stock or valuation effects.",
+    "Scene 1 covers usage and Scene 2 covers payoff and the decision takeaway."
+  ]
+}

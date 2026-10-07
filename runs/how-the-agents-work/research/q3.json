@@ -1,0 +1,72 @@
+{
+  "question_id": "q3",
+  "question": "How do the scriptwriter and length-fit steps in .claude/agents/ and docs/ keep narration within the target duration and tie each sentence to cited fact ids in claims?",
+  "answer_summary": "The scriptwriter sizes each scene with a spoken-word formula (about 145 words per minute, numbers counted as spoken) and lists fact ids in claims for every factual sentence, which check_script.py validates. Because estimates ran short, a length-fit stage measures the real Kokoro voiceover and sends measured per-line seconds back for a trim pass when the total is more than 15% off target. The first run showed the need: 83.8 s measured vs a 60 s target, trimmed to 56.0 s.",
+  "facts": [
+    {
+      "id": "q3-f1",
+      "claim": "The scriptwriter agent must list fact ids in claims for every sentence that states a fact; purely framing sentences get an empty claims list.",
+      "source_url": ".claude/agents/scriptwriter.md",
+      "source_title": "scriptwriter agent definition",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Every sentence that states a fact must list the fact ids it relies on in `claims`.",
+      "confidence": "high"
+    },
+    {
+      "id": "q3-f2",
+      "claim": "The scriptwriter budgets length with a formula: spoken words are counted with numbers said in full, at about 145 spoken words per minute at speed 0.9, with 0.35 s per sentence gap and 1.3 s per scene lead-in and hold.",
+      "source_url": ".claude/agents/scriptwriter.md",
+      "source_title": "scriptwriter agent definition",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "spoken words ≈ (target_duration_s − 1.3 − 0.35 × sentences) × 2.4",
+      "confidence": "high"
+    },
+    {
+      "id": "q3-f3",
+      "claim": "In the length-fit stage the orchestrator generates the real voiceover and, if the measure is off target (exit 2), sends the scriptwriter measured per-line seconds for a trim pass; at most 2 trim rounds, and only changed lines are re-voiced.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video orchestrator skill",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "After 2 trim rounds, continue even if still off, and note the length in the log.",
+      "confidence": "high"
+    },
+    {
+      "id": "q3-f4",
+      "claim": "The first end-to-end run measured 83.8 s of voiceover against a 60 s target (+40%); the trim pass deleted 2 lines and shortened 7, reaching 56.0 s.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Deleted 2 lines, shortened 7 → 56.0 s",
+      "confidence": "high"
+    },
+    {
+      "id": "q3-f5",
+      "claim": "The length-fit stage was added because TTS reads numbers in full, so plain word counts underestimated length by about 25%; the trigger is a total more than 15% off target.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "TTS reads numbers in full, so word counts underestimate length by ~25%.",
+      "confidence": "high"
+    },
+    {
+      "id": "q3-f6",
+      "claim": "The tool check_script.py validates scenes.json structure, that every cited fact exists, and estimated length; the scriptwriter must rerun it until it prints PASS.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Validates `scenes.json`: structure, every cited fact exists, estimated length.",
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [],
+  "gaps": [
+    "Length fit is not a separate agent: it is an orchestrator step (tools/voiceover.py) plus a scriptwriter trim pass.",
+    "Did not read tools/*.py code; the 15% threshold comes from README.md and docs/step2-results.md descriptions."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "question_id": "q6",
+  "question": "What reasons do README.md and docs/ give for the multi-agent design (specialised agents, parallelism, file hand-offs, run_log.json), and what limits or trade-offs do they note?",
+  "answer_summary": "The repo justifies the design with specific rules: verification before voicing, measured audio length, and standalone scenes that can be fixed alone. Its first run showed the fact-check loop caught real overgeneralizations, and measured TTS ran 40% over target, which changed the pipeline. Limits noted include blocked primary sources, self-reported survey data, similar-looking scenes, and timing that is only approximate.",
+  "facts": [
+    {
+      "id": "q6-f1",
+      "claim": "README states that one scene is one standalone HyperFrames project so a broken scene can be fixed and re-rendered alone, and that nothing unverified is voiced because fact-check runs on the final wording.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README, section 3 Key design rules",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "One scene = one standalone HyperFrames project**, so a broken scene is fixed and re-rendered alone.",
+      "confidence": "high"
+    },
+    {
+      "id": "q6-f2",
+      "claim": "Stages communicate only through files in one run folder, and run_log.json records each stage's outcome and time; README says the log is kept for evaluation.",
+      "source_url": "CLAUDE.md",
+      "source_title": "capstone-video-agent CLAUDE.md, Conventions",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "One video = one folder `runs/<slug>/`. Stages talk only through files there",
+      "confidence": "high"
+    },
+    {
+      "id": "q6-f3",
+      "claim": "The README gives the reason for parallelism and bounded loops: researchers (one per question) and scene builders (one per scene) run in parallel, while the orchestrator only sequences agents and caps loops at 2 trim rounds, 2 fact-check revision rounds, and 1 repair attempt per failed scene.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README, section 3 How it works",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "It only sequences agents, runs tools, and enforces the loops: at most 2 trim rounds, at most 2 fact-check revision rounds",
+      "confidence": "high"
+    },
+    {
+      "id": "q6-f4",
+      "claim": "In the first 60-second run, fact-check round 1 flagged 2 lines as overstated, and the docs say both were genuine overgeneralizations that a single agent would likely have shipped.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Both round-1 flags were genuine overgeneralizations (one program's alumni presented as \"most owners\"), the kind of error a single agent would ship.",
+      "confidence": "high"
+    },
+    {
+      "id": "q6-f5",
+      "claim": "The first run's measured voiceover was 83.8 s against a 60 s target (+40%); because TTS reads numbers in full, word counts underestimate length by about 25%, which led to the length-fit stage and moving fact-check after it.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "**TTS reads numbers in full, so word counts underestimate length by ~25%.** \"2025\" becomes \"twenty twenty-five\".",
+      "confidence": "high"
+    },
+    {
+      "id": "q6-f6",
+      "claim": "Documented limits: several primary sources blocked automated fetching (HTTP 403) so researchers cited secondary reprints; all payoff figures were self-reported owner surveys; scene builders produced similar layouts.",
+      "source_url": "docs/step2-results.md",
+      "source_title": "Step 2 Results: Agent Pipeline, First 60-Second Run",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Several primary sources (Goldman Sachs, Gusto, Bank of America) blocked automated fetching (HTTP 403), so researchers cited reprints",
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [],
+  "gaps": [
+    "README and docs do not give an explicit stated rationale for 'specialised agents' per se (e.g. model choice Sonnet vs Opus is listed but not justified).",
+    "run_log.json purpose is only given as 'for evaluation'; its timing is noted as accurate only when the orchestrator logs immediately after each stage.",
+    "No quantitative comparison against a single-prompt baseline exists in the docs; reliability benefit is shown only by the example fact-check catches.",
+    "q6-f2 excerpt is from CLAUDE.md; the 'for evaluation' wording for run_log.json is in README.md (run folder listing) and is not separately recorded as a fact.",
+    "Docs have no published dates."
+  ]
+}

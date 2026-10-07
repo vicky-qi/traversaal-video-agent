@@ -1,0 +1,89 @@
+{
+  "pass": true,
+  "summary": "8 of 8 lines supported; all 5 cited sources verified",
+  "sources": [
+    {
+      "url": "https://www.uschamber.com/technology/artificial-intelligence/u-s-chambers-latest-empowering-small-business-report-shows-majority-of-businesses-in-all-50-states-are-embracing-ai",
+      "status": "verified",
+      "note": "Page says '58% of small businesses say they use generative AI', up from 40% in 2024. Report published August 2025."
+    },
+    {
+      "url": "https://www.federalreserve.gov/econres/notes/feds-notes/monitoring-ai-adoption-in-the-u-s-economy-20260403.html",
+      "status": "verified",
+      "note": "Wording differs slightly from the excerpt but means the same: Census Bureau survey data show 'about 18 percent of firms have adopted AI as of year-end 2025'. This is BTOS, any AI, all firms."
+    },
+    {
+      "url": "https://www.stocktitan.net/news/BAC/bof-a-report-74-of-small-and-mid-sized-business-owners-expect-qla2ztx7d7u5.html",
+      "status": "verified",
+      "note": "Excerpt found word for word. The base is the 77% of small and mid-sized owners who have integrated AI."
+    },
+    {
+      "url": "https://markets.financialcontent.com/lightport.lightport1/article/bizwire-2025-10-28-small-business-owners-plan-to-grow-bullish-on-ai-productivity-despite-concerns-over-government-shutdown",
+      "status": "verified",
+      "note": "Page has '85% said it has increased their efficiency and productivity'. It sits in a paragraph about AI users, and the survey ran Sept 23 to Oct 2, 2025."
+    },
+    {
+      "url": "https://www.cpapracticeadvisor.com/2025/07/17/main-street-meets-machine-learning-inside-the-ai-productivity-boom-at-small-businesses/165060/",
+      "status": "verified",
+      "note": "Both excerpts found word for word: the productivity sentence and the barriers sentence."
+    }
+  ],
+  "lines": [
+    {
+      "scene_id": "s01",
+      "line_id": "n1",
+      "verdict": "supported",
+      "reason": "Framing question with no factual claim and no claims.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n3",
+      "verdict": "supported",
+      "reason": "The 2025 Chamber report says '58% of small businesses say they use generative AI'. The source, figure, year and self-reported framing all match.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n4",
+      "verdict": "supported",
+      "reason": "The Fed note cites Census survey data: 'about 18 percent of firms have adopted AI as of year-end 2025'. The line correctly scopes this to all firms and any AI.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s01",
+      "line_id": "n5",
+      "verdict": "supported",
+      "reason": "BofA excerpt: owners who integrated AI use it for 'marketing (50%), content production (38%), customer service (37%)'. The order matches. 'Owners using AI' fits the base, which mixes small and mid-sized owners.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n1",
+      "verdict": "supported",
+      "reason": "Goldman Sachs 10KSB survey from Sept to Oct 2025: '85% said it has increased their efficiency and productivity'. The paragraph is about AI users. 'Raised their productivity' is a fair shortening.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n2",
+      "verdict": "supported",
+      "reason": "Excerpt: 'Four out of five small businesses that use GenAI have seen productivity increase by 20% or more.' The figure and threshold match.",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n3",
+      "verdict": "supported",
+      "reason": "Excerpt: 'The biggest barriers to adoption are a lack of technical expertise and fears around data privacy and security.'",
+      "suggested_fix": ""
+    },
+    {
+      "scene_id": "s02",
+      "line_id": "n5",
+      "verdict": "supported",
+      "reason": "Closing advice. It makes no factual claim and has no claims.",
+      "suggested_fix": ""
+    }
+  ]
+}

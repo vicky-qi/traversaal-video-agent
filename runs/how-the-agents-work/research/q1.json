@@ -1,0 +1,74 @@
+{
+  "question_id": "q1",
+  "question": "According to README.md, CLAUDE.md and .claude/skills/make-video/SKILL.md, what are the pipeline stages in order (intake, parallel researchers, scriptwriter, length fit, fact-checker, voiceover, parallel scene-builders, render and stitch), what does each produce, and which run in parallel?",
+  "answer_summary": "The /make-video orchestrator runs intake, research, script, length fit, fact-check, final voiceover, scene building and render-and-stitch in order. Research (one agent per question) and scene building (one agent per scene) run in parallel; the other stages are sequential. Each stage writes a file in runs/<slug>/, ending with the stitched <slug>.mp4.",
+  "facts": [
+    {
+      "id": "q1-f1",
+      "claim": "The README pipeline order is prompt, intake, research (one agent per question, parallel), script, length fit, fact-check, voiceover, scene builder (one HyperFrames file per scene, parallel), then render and stitch to MP4.",
+      "source_url": "README.md",
+      "source_title": "capstone-video-agent README",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "prompt ─▶ intake ─▶ research (one agent per question, parallel) ─▶ script ─▶ length fit (measure real voiceover, trim)",
+      "confidence": "high"
+    },
+    {
+      "id": "q1-f2",
+      "claim": "Stages talk only through files in one run folder, in the chain prompt.txt, brief.json, research/<qid>.json, scenes.json, factcheck.json, scenes/<id>/{vo.wav,index.html}, renders/<id>.mp4, then <slug>.mp4.",
+      "source_url": "CLAUDE.md",
+      "source_title": "capstone-video-agent CLAUDE.md",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Stages talk only through files there: `prompt.txt` → `brief.json` → `research/<qid>.json` → `scenes.json` → `factcheck.json`",
+      "confidence": "high"
+    },
+    {
+      "id": "q1-f3",
+      "claim": "In the orchestrator skill, researchers (one per key question) are launched all in the same message so they run in parallel, each writing research/<qid>.json.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video: prompt → narrated MP4",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Launch one **researcher** subagent per key question, **all in the same message** so they run in parallel",
+      "confidence": "high"
+    },
+    {
+      "id": "q1-f4",
+      "claim": "Length fit measures real audio with tools/voiceover.py and sends the scriptwriter a trim pass if the total is off, for at most 2 trim rounds, before fact-checking.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video: prompt → narrated MP4",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "The word-count estimate is rough (numbers and acronyms slow the voice), so measure the real audio:",
+      "confidence": "high"
+    },
+    {
+      "id": "q1-f5",
+      "claim": "The fact-check loop runs after length fit so it checks final wording; it allows at most 2 revision rounds, after which lines not supported are deleted so unverified claims never reach voiceover.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video: prompt → narrated MP4",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "Unverified claims never go to voiceover.",
+      "confidence": "high"
+    },
+    {
+      "id": "q1-f6",
+      "claim": "Scene building launches one scene-builder per scene in parallel; assemble.py then checks each scene, renders it to renders/<id>.mp4 and stitches them into <slug>.mp4.",
+      "source_url": ".claude/skills/make-video/SKILL.md",
+      "source_title": "make-video: prompt → narrated MP4",
+      "publisher": "capstone-video-agent repository",
+      "published": null,
+      "excerpt": "It checks each scene, renders it to `$RUN/renders/<id>.mp4`, and stitches them into `$RUN/<slug>.mp4`.",
+      "confidence": "high"
+    }
+  ],
+  "conflicts": [],
+  "gaps": [
+    "Length fit is not a separate agent; it is a tool step (voiceover.py) plus a scriptwriter trim pass.",
+    "Voiceover runs twice: once during length fit (measuring) and a final pass after fact-check; the README arrow diagram shows it once.",
+    "Fact-check, script, voiceover and render stages are sequential; the sources mark only research and scene building as parallel.",
+    "No dates on repo files."
+  ]
+}

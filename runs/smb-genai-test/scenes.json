@@ -1,0 +1,183 @@
+{
+  "video_id": "smb-genai-test",
+  "voice": {
+    "engine": "kokoro",
+    "voice_id": "af_heart",
+    "speed": 0.9,
+    "pause_between_sentences_s": 0.35
+  },
+  "scenes": [
+    {
+      "scene_id": "s01",
+      "title": "How small businesses use generative AI",
+      "visual_type": "comparison",
+      "target_duration_s": 30,
+      "visual_notes": "Open on the question as a headline, then a side-by-side of the two adoption figures (Chamber 58 percent vs Census 18 percent), then three labeled bars for the top uses.",
+      "narration": [
+        {
+          "id": "n1",
+          "text": "Is generative AI paying off for small businesses?",
+          "claims": [],
+          "on_screen": {
+            "kind": "headline",
+            "text": "Is generative AI paying off for small businesses?"
+          }
+        },
+        {
+          "id": "n3",
+          "text": "In 2025, 58 percent of small businesses told the US Chamber they use generative AI.",
+          "claims": [
+            "q1-f1"
+          ],
+          "on_screen": {
+            "kind": "stat",
+            "text": "Small businesses using generative AI, US Chamber, 2025",
+            "value": "58%"
+          }
+        },
+        {
+          "id": "n4",
+          "text": "Census data put it lower: about 18 percent of all firms used any AI at the end of 2025.",
+          "claims": [
+            "q1-f2"
+          ],
+          "on_screen": {
+            "kind": "stat",
+            "text": "All firms using any AI, Census data, end of 2025",
+            "value": "18%"
+          }
+        },
+        {
+          "id": "n5",
+          "text": "Among owners using AI, Bank of America found marketing leads, followed by content and customer service.",
+          "claims": [
+            "q1-f4"
+          ],
+          "on_screen": {
+            "kind": "bar",
+            "text": "Marketing 50% \u00b7 Content production 38% \u00b7 Customer service 37%",
+            "value": "50"
+          }
+        }
+      ],
+      "sources": [
+        "https://www.uschamber.com/technology/artificial-intelligence/u-s-chambers-latest-empowering-small-business-report-shows-majority-of-businesses-in-all-50-states-are-embracing-ai",
+        "https://www.federalreserve.gov/econres/notes/feds-notes/monitoring-ai-adoption-in-the-u-s-economy-20260403.html",
+        "https://www.stocktitan.net/news/BAC/bof-a-report-74-of-small-and-mid-sized-business-owners-expect-qla2ztx7d7u5.html"
+      ],
+      "audio": "scenes/s01/vo.wav",
+      "timing": {
+        "vo_offset_s": 0.5,
+        "audio_duration_s": 26.927,
+        "scene_duration_s": 28.23,
+        "lines": [
+          {
+            "id": "n1",
+            "start": 0.0,
+            "end": 3.371
+          },
+          {
+            "id": "n3",
+            "start": 3.721,
+            "end": 11.251
+          },
+          {
+            "id": "n4",
+            "start": 11.601,
+            "end": 19.26
+          },
+          {
+            "id": "n5",
+            "start": 19.61,
+            "end": 26.927
+          }
+        ]
+      }
+    },
+    {
+      "scene_id": "s02",
+      "title": "Is it paying off?",
+      "visual_type": "key_points",
+      "target_duration_s": 30,
+      "visual_notes": "Build a list of reported benefits, then barriers, one point per sentence; end on the takeaway as a highlighted closing line.",
+      "narration": [
+        {
+          "id": "n1",
+          "text": "In a 2025 Goldman Sachs survey, 85 percent of AI users said it raised their productivity.",
+          "claims": [
+            "q2-f4"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "85% say AI raised productivity (Goldman Sachs, 2025)",
+            "value": "85%"
+          }
+        },
+        {
+          "id": "n2",
+          "text": "Gusto found four in five users saw productivity gains of 20 percent or more.",
+          "claims": [
+            "q2-f1"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "4 in 5 report productivity gains of 20%+ (Gusto)",
+            "value": "4 in 5"
+          }
+        },
+        {
+          "id": "n3",
+          "text": "In Gusto's survey, the top barriers were missing expertise and data privacy fears.",
+          "claims": [
+            "q2-f6"
+          ],
+          "on_screen": {
+            "kind": "point",
+            "text": "Barriers: technical expertise, data privacy and security (Gusto)"
+          }
+        },
+        {
+          "id": "n5",
+          "text": "So start with one marketing or customer-service task, track the time saved, and expand only if it pays off.",
+          "claims": [],
+          "on_screen": {
+            "kind": "headline",
+            "text": "Start small. Measure. Then expand."
+          }
+        }
+      ],
+      "sources": [
+        "https://markets.financialcontent.com/lightport.lightport1/article/bizwire-2025-10-28-small-business-owners-plan-to-grow-bullish-on-ai-productivity-despite-concerns-over-government-shutdown",
+        "https://www.cpapracticeadvisor.com/2025/07/17/main-street-meets-machine-learning-inside-the-ai-productivity-boom-at-small-businesses/165060/"
+      ],
+      "audio": "scenes/s02/vo.wav",
+      "timing": {
+        "vo_offset_s": 0.5,
+        "audio_duration_s": 26.479,
+        "scene_duration_s": 27.78,
+        "lines": [
+          {
+            "id": "n1",
+            "start": 0.0,
+            "end": 7.573
+          },
+          {
+            "id": "n2",
+            "start": 7.923,
+            "end": 13.342
+          },
+          {
+            "id": "n3",
+            "start": 13.692,
+            "end": 18.983
+          },
+          {
+            "id": "n5",
+            "start": 19.333,
+            "end": 26.479
+          }
+        ]
+      }
+    }
+  ]
+}

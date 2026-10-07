@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1020; }
+      #root { width: 100%; height: 100%; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #f4f4f5; }
+
+      .stage { position: absolute; left: 0; top: 0; width: 1920px; height: 880px; padding: 120px 160px 0; }
+      .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #38bdf8; }
+      .hwrap { position: relative; margin-top: 24px; height: 100px; }
+      .headline { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 92px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+      .headline em { font-style: normal; color: #64748b; }
+      .source { position: absolute; left: 160px; top: 822px; font-size: 24px; color: #94a3b8; }
+
+      .cards { margin-top: 44px; display: flex; gap: 40px; }
+      .card { flex: 1; height: 470px; border-radius: 24px; background: #111a2e; border: 2px solid #1e293b; padding: 36px 40px; position: relative; }
+      .head { display: flex; align-items: center; gap: 20px; }
+      .card .num { flex: none; width: 56px; height: 56px; border-radius: 28px; background: #1e293b; color: #94a3b8;
+                   display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; }
+      .card .label { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+      .card.on { border-color: #38bdf8; }
+      .card.on .num { background: #38bdf8; color: #0b1020; }
+      .big { margin-top: 16px; font-size: 130px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: #38bdf8; opacity: 0; }
+      .big.warm { color: #f59e0b; }
+      .sub { margin-top: 8px; font-size: 30px; line-height: 1.25; color: #cbd5e1; opacity: 0; }
+      .body { margin-top: 16px; font-size: 30px; line-height: 1.25; color: #cbd5e1; opacity: 0; }
+      .body.first { margin-top: 20px; }
+
+      .captions { position: absolute; left: 0; top: 880px; width: 1920px; height: 200px; }
+      .cap { position: absolute; left: 220px; right: 220px; top: 50%; transform: translateY(-50%);
+             text-align: center; font-size: 38px; line-height: 1.35; color: #e2e8f0; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30.16" data-width="1920" data-height="1080">
+      <audio id="vo" src="vo.wav" data-start="0.5" data-duration="28.856" data-track-index="9"></audio>
+
+      <div id="content" class="clip" data-start="0" data-duration="30.16" data-track-index="0">
+        <div class="stage">
+          <div class="eyebrow">Why it is built this way</div>
+          <div class="hwrap">
+            <h1 class="headline" id="h1">Three design <em>reasons</em></h1>
+            <h1 class="headline" id="h2" style="opacity:0">Small, checked hand-offs</h1>
+          </div>
+          <div class="cards">
+            <div class="card" id="k1">
+              <div class="head"><div class="num">1</div><div class="label">Verified before voiced</div></div>
+              <div class="big" id="s1">2</div>
+              <div class="sub" id="t1">Overstated lines caught in round 1</div>
+              <div class="body" id="b1">Only supported lines are voiced</div>
+            </div>
+            <div class="card" id="k2">
+              <div class="head"><div class="num">2</div><div class="label">Audio first</div></div>
+              <div class="big warm" id="s2">+40%</div>
+              <div class="sub" id="t2">First voiceover vs target</div>
+              <div class="body" id="b2">Audio is measured and trimmed before fact-checking</div>
+            </div>
+            <div class="card" id="k3">
+              <div class="head"><div class="num">3</div><div class="label">Standalone scenes</div></div>
+              <div class="body first" id="b3">Visuals timed to voice, standalone scenes</div>
+            </div>
+          </div>
+          <div class="source">Source: capstone-video-agent repository, 2026</div>
+        </div>
+      </div>
+
+      <div id="captions" class="clip" data-start="0" data-duration="30.16" data-track-index="1" data-layout-allow-overlap>
+        <div class="captions">
+          <p class="cap" id="c-n1">In the first run, the fact-checker flagged two overstated lines, both genuine overgeneralizations.</p>
+          <p class="cap" id="c-n2">Nothing it has not marked supported reaches the final voiceover.</p>
+          <p class="cap" id="c-n3">The first measured voiceover ran 40 percent long, so real audio is now measured and trimmed before fact-checking.</p>
+          <p class="cap" id="c-n4">Visuals are timed to the measured voice, and a broken scene is re-rendered alone.</p>
+          <p class="cap" id="c-n5">The takeaway: small, checked hand-offs catch errors one agent would ship.</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      // ---- TIMING (copied from scenes.json) ----
+      const TIMING = {
+        offset: 0.5,
+        duration: 30.16,
+        lines: [
+          { id: "n1", start: 0.0, end: 6.613 },
+          { id: "n2", start: 6.963, end: 11.145 },
+          { id: "n3", start: 11.495, end: 18.919 },
+          { id: "n4", start: 19.269, end: 24.154 },
+          { id: "n5", start: 24.504, end: 28.856 },
+        ],
+      };
+      const at = (id) => TIMING.offset + TIMING.lines.find((l) => l.id === id).start;
+      const endOf = (id) => TIMING.offset + TIMING.lines.find((l) => l.id === id).end;
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      TIMING.lines.forEach((l) => {
+        tl.set("#c-" + l.id, { opacity: 1 }, at(l.id));
+        tl.set("#c-" + l.id, { opacity: 0 }, endOf(l.id) + 0.3);
+      });
+
+      // Entrance.
+      tl.fromTo(".eyebrow, #h1", { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out" }, 0.1);
+      tl.fromTo(".card", { opacity: 0, y: 40 },
+        { opacity: 0.35, y: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" }, 0.5);
+      tl.fromTo(".source", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+
+      const light = (card, line) => {
+        tl.fromTo("#" + card, { opacity: 0.35 }, { opacity: 1, duration: 0.4, ease: "power2.out", immediateRender: false }, Math.max(at(line), 1.4));
+        tl.set("#" + card, { className: "card on" }, Math.max(at(line), 1.4));
+      };
+      const rise = (sel, line, to = 1) =>
+        tl.fromTo(sel, { opacity: 0, y: 24 }, { opacity: to, y: 0, duration: 0.6, ease: "power3.out" }, at(line));
+
+      // n1: stat 2
+      light("k1", "n1");
+      rise("#s1", "n1");
+      rise("#t1", "n1");
+      // n2: point
+      rise("#b1", "n2");
+      // n3: stat +40%
+      light("k2", "n3");
+      rise("#s2", "n3");
+      rise("#t2", "n3");
+      tl.fromTo("#b2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, at("n3") + 0.4);
+      // n4: point
+      light("k3", "n4");
+      rise("#b3", "n4");
+      // n5: takeaway headline
+      tl.fromTo("#h1", { opacity: 1, y: 0 }, { opacity: 0, y: -20, duration: 0.4, ease: "power2.in", immediateRender: false }, at("n5"));
+      tl.fromTo("#h2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, at("n5") + 0.3);
+
+      // Exit.
+      tl.to(".stage", { opacity: 0, duration: 0.4 }, TIMING.duration - 0.4);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
