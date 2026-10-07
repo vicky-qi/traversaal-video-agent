@@ -1,0 +1,222 @@
+{
+  "topic": "How Electric Car Batteries Work",
+  "total_words": 1019,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "What's really powering an electric car?",
+      "narration": "You plug in an electric car at night, and by morning the screen shows a full battery. But what actually happened inside the car while it sat there? The answer lives in the battery, and it is simpler than it sounds. Once you understand one small idea, you can make sense of almost everything people argue about: how far the car goes, how fast it charges, how long it lasts, and what it costs.",
+      "duration_sec": 30,
+      "visual_type": "title",
+      "visual_content": {
+        "headline": "What's really powering an electric car?",
+        "subheadline": "One idea explains range, charging, lifespan and price"
+      },
+      "sources": []
+    },
+    {
+      "id": 2,
+      "title": "A fuel tank vs. a battery",
+      "narration": "A gas tank is just a container. You pour fuel in, and the engine burns it. A battery works differently. Nothing is poured in and nothing is burned. Instead, charging pushes tiny charged particles into a place where they would rather not be, a bit like winding a spring. Driving lets them flow back, and that flow powers the motor. In this video, we will follow that idea from one small cell all the way up to the whole car.",
+      "duration_sec": 35,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Split screen: a gas pump nozzle in a car's fuel tank on the left, an electric car plugged into a charger on the right",
+        "caption": "Nothing poured in, nothing burned",
+        "image_path": null
+      },
+      "sources": []
+    },
+    {
+      "id": 3,
+      "title": "Inside a single cell",
+      "narration": "Start with a single cell, the basic building block. Most electric cars use lithium-ion cells, and each one has the same few parts. On one side is the anode, usually made of graphite. On the other side is the cathode, a metal oxide that holds lithium. Between them sits a liquid called the electrolyte, which lets lithium move through it. And a thin plastic sheet, the separator, keeps the two sides from touching, because if they touched, the cell would short circuit. That is the whole recipe: two sides, a path between them, and a wall that keeps them apart.",
+      "duration_sec": 40,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "Inside a single cell",
+        "bullets": [
+          "Anode: usually graphite",
+          "Cathode: a metal oxide holding lithium",
+          "Electrolyte: the path between them",
+          "Separator: the wall in the middle"
+        ]
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "What happens when you charge and when you drive",
+      "narration": "When you plug in, the charger pushes lithium ions out of the cathode, through the electrolyte, and into the graphite of the anode, where they tuck in between layers like books slid onto a shelf. At the same time, electrons travel the long way around, through the car's wiring. When you drive, the process runs in reverse. The ions drift back to the cathode, and the electrons, forced to take the outside path, flow through the motor and turn the wheels. Charging stores the energy. Driving lets it go.",
+      "duration_sec": 40,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Simple animated diagram of a battery cell: small dots (lithium ions) moving from the cathode on the right to the anode on the left",
+        "caption": "Charging stores energy. Driving lets it go.",
+        "image_path": null
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Not every battery uses the same recipe",
+      "narration": "Not every car uses the same cathode recipe, and that choice shapes the car. One common family uses nickel, manganese and cobalt. It packs a lot of energy into little weight, which helps long-range cars, but the metals are expensive. Another family uses lithium iron phosphate. It stores less energy for its weight, but it is cheaper, lasts through many charging cycles, and is less likely to overheat. Carmakers pick between them based on what the car needs to be: long-range and premium, or affordable and durable. The chemistry is a business decision as much as an engineering one.",
+      "duration_sec": 40,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "Two common battery recipes",
+        "bullets": [
+          "Nickel-based: more energy, higher cost",
+          "Iron phosphate: cheaper, longer-lasting, cooler-running"
+        ]
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "From one cell to a whole pack",
+      "narration": "One cell on its own can only power something small, so a car uses hundreds or even thousands of them. Cells are wired together in groups called modules, and the modules are joined into one large pack. Wiring cells one after another raises the voltage, and wiring them side by side adds capacity. The finished pack is usually a flat, heavy slab under the floor of the car, which also helps keep the car steady by lowering its center of gravity.",
+      "duration_sec": 35,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Cutaway of an electric car showing a flat battery pack under the floor, made of rows of modules filled with cells",
+        "caption": "Cells, then modules, then one pack",
+        "image_path": null
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "The battery's built-in caretaker",
+      "narration": "A pack this large needs constant supervision, and that is the job of the battery management system. This small computer watches the voltage and temperature of the cells, balances them so no single cell is overworked, and decides how fast the battery may charge or discharge. Alongside it, a cooling system, often liquid running through channels in the pack, carries heat away. Together they keep the battery safe, and they are a big reason a pack can last for many years.",
+      "duration_sec": 35,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "The battery's caretaker",
+        "bullets": [
+          "Watches voltage and temperature",
+          "Balances the cells",
+          "Sets safe charging speed",
+          "Cooling carries heat away"
+        ]
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "What sets range and charging speed",
+      "narration": "Two numbers decide how an electric car feels to own. The first is pack size, measured in kilowatt-hours. A bigger pack holds more energy, so the car goes farther, but it also adds weight and cost. The second is charging power. Fast chargers push energy in quickly while the battery is fairly empty, then slow down as it fills up, which is why charging times are usually quoted from ten to eighty percent. Weather matters too. Cold slows the chemistry inside the cells, so range drops and charging takes longer in winter.",
+      "duration_sec": 40,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "bar",
+        "chart_title": "Battery size of popular electric cars",
+        "labels": [
+          "Car A",
+          "Car B",
+          "Car C"
+        ],
+        "values": [
+          60,
+          75,
+          90
+        ],
+        "unit": "kWh",
+        "source_note": "Placeholder data, not verified"
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "How batteries age",
+      "narration": "Like any battery, a car battery slowly loses capacity. Each charge and discharge causes tiny wear inside the cells, and a thin layer slowly builds up on the anode, trapping some lithium so it can no longer move. Heat, frequent fast charging, and sitting at a full charge for long periods all speed this up. The good news is that data from large fleets shows most packs age gradually rather than suddenly, and carmakers back them with warranties that promise a minimum capacity for a set number of years or miles.",
+      "duration_sec": 40,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "line",
+        "chart_title": "Capacity kept as a battery ages",
+        "labels": [
+          "Year 0",
+          "Year 5",
+          "Year 10"
+        ],
+        "values": [
+          100,
+          90,
+          80
+        ],
+        "unit": "%",
+        "source_note": "Placeholder data, not verified"
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "What a battery costs, then and now",
+      "narration": "The battery is the most expensive part of an electric car, so its price shapes the price of the car. Over the past decade, the cost of a battery pack for each kilowatt-hour it stores has fallen sharply, thanks to bigger factories, better manufacturing, and cheaper chemistries. That drop is the main reason electric cars have moved from luxury products toward the mainstream. Yet the battery still makes up a large share of what you pay, which is why every improvement in cost per kilowatt-hour matters to buyers and carmakers alike.",
+      "duration_sec": 40,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "line",
+        "chart_title": "Battery pack price per kWh",
+        "labels": [
+          "2015",
+          "2018",
+          "2021",
+          "2024"
+        ],
+        "values": [
+          400,
+          300,
+          200,
+          100
+        ],
+        "unit": "US dollars per kWh",
+        "source_note": "Placeholder data, not verified"
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 11,
+      "title": "What this means, and what comes next",
+      "narration": "Put it together, and the battery explains most of the trade-offs in an electric car. Range comes from how much energy the pack can hold. Charging speed depends on how quickly ions can safely move. Lifespan depends on how gently the cells are treated. And price follows the cost of each kilowatt-hour. That is also why carmakers are racing toward new designs, such as solid-state batteries, that promise to store more, charge faster, or cost less.",
+      "duration_sec": 35,
+      "visual_type": "quote",
+      "visual_content": {
+        "quote_text": "Placeholder: a real quote about next-generation batteries, copied exactly from 03_checked.md.",
+        "attribution": "Placeholder name, role, organization (year)"
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    },
+    {
+      "id": 12,
+      "title": "The one thing to remember",
+      "narration": "So the next time you plug in an electric car, picture what is happening inside: lithium ions moving from one side of thousands of tiny cells to the other, waiting to flow back. That single movement, multiplied across the pack and carefully managed, is what sets how far you can go, how fast you can charge, how long the battery lasts, and what it costs.",
+      "duration_sec": 30,
+      "visual_type": "title",
+      "visual_content": {
+        "headline": "One cell, one idea",
+        "subheadline": "Range, charging, lifespan and price all start here"
+      },
+      "sources": []
+    }
+  ]
+}
