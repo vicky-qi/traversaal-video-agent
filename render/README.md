@@ -4,11 +4,15 @@ Owner: Cynthia. Uses HyperFrames (see `render/comparison.md`). The `/make-video`
 
 ## One-time setup (about 10 minutes)
 
-From the repo root:
+Run this **inside the project folder** (the one that contains `environment.yml`):
 
 ```bash
 conda env create -f environment.yml
 ```
+
+- `EnvironmentFileNotFound`: you are in the wrong folder. `cd` into the project folder first.
+- `prefix already exists`: the environment is already installed. Nothing to do.
+- `conda: command not found`: install Miniconda or Anaconda first.
 
 This creates a conda environment called `video` with Node 22+, FFmpeg and Python. Every command below runs inside it through `render/env.sh`, which works even when conda is not activated (for example in the Claude desktop app). The first voiceover downloads the voice model (about 27 MB); the first render downloads HyperFrames' browser and fonts.
 

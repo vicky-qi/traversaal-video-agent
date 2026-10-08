@@ -1,7 +1,7 @@
 ---
 name: scene-builder
 description: Turns runs/<topic-slug>/04_script.json plus the finished voiceover files into render-ready scene files in runs/<topic-slug>/scenes/. Use after the script and voiceover stages, before rendering.
-tools: Read, Write, Glob, Bash
+tools: Read, Write, Bash
 ---
 
 # Scene Builder Agent
@@ -37,7 +37,7 @@ If this file and `docs/scene-format.md` disagree about a field or a `visual_cont
 
 Write everything to `runs/<topic-slug>/scenes/`:
 
-- `scene_01.json`, `scene_02.json`, ... one file per scene, named by the scene's position in the script (two digits, in script order)
+- `scene_01.json`, `scene_02.json`, ... one file per scene, named from the scene's integer `id` with two digits (`scene_{id:02d}.json`), as in `docs/scene-format.md`. Create the `scenes/` folder if it does not exist.
 - `index.json`
 
 If these files already exist for this topic, overwrite them. Never delete or edit any other file.
@@ -45,6 +45,10 @@ If these files already exist for this topic, overwrite them. Never delete or edi
 ---
 
 ## Workflow
+
+### Step 0: Check the tools
+
+From the repo root, run `render/env.sh ffprobe -version`. If it fails, stop before writing any file and tell the user to follow the setup in `render/README.md`.
 
 ### Step 1: Read and validate the script
 
@@ -58,22 +62,22 @@ If any of this fails, **stop**. Write no files. Report exactly what is wrong.
 
 ### Step 2: Match voiceover files
 
-Audio naming rule: the voiceover file for a scene is named after the scene's `id`, with extension `.mp3`, `.wav` or `.m4a`. Example: scene id `scene_01` has audio `runs/<topic-slug>/audio/scene_01.mp3`.
+Audio naming rule (from `docs/scene-format.md`): the voiceover for the scene with integer `id` 1 is `runs/<topic-slug>/audio/scene_01.<ext>`, for id 12 it is `scene_12.<ext>` (two digits; `.wav`, `.mp3` or `.m4a`). Only files directly inside `audio/` count: ignore the `audio/parts/` folder and `audio/timing.json`, which belong to the voiceover step.
 
 For every scene:
 
-- find the matching file with Glob;
+- list the top level of the folder once with `ls runs/<topic-slug>/audio/` and look for exactly `scene_NN.wav`, `scene_NN.mp3` or `scene_NN.m4a` (no other pattern);
 - if there is **no** match, record "missing audio" for that scene;
 - if there is **more than one** match (for example `scene_01.mp3` and `scene_01.wav`), record "ambiguous audio" for that scene and do not guess;
 - if there is exactly one match, measure its real duration with:
 
 ```
-ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 <audio file>
+render/env.sh ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 <audio file>
 ```
 
 Round to 2 decimals. This is the scene's `final_duration_sec`. The real audio length always overrides `duration_sec` from the script.
 
-If `ffprobe` is not available, stop and tell the user to install FFmpeg. Do not estimate durations.
+Run it from the repo root: `render/env.sh` runs FFmpeg's tools inside the project's `video` environment (see `render/README.md`). If `ffprobe` fails or returns nothing for one file, record "unreadable audio" for that scene and do not write it. Do not estimate durations.
 
 ### Step 3: Validate the visual type
 
@@ -125,7 +129,7 @@ Each `scene_NN.json`:
 
 ```json
 {
-  "id": "scene_01",
+  "id": 1,
   "order": 1,
   "title": "How EV Batteries Work",
   "narration": "Original narration, copied exactly.",
@@ -172,7 +176,7 @@ Field rules:
   "total_duration_sec": 431.7,
   "scenes": [
     {
-      "id": "scene_01",
+      "id": 1,
       "scene_file": "runs/<topic-slug>/scenes/scene_01.json",
       "audio_file": "runs/<topic-slug>/audio/scene_01.mp3",
       "final_duration_sec": 36.42,
@@ -184,7 +188,7 @@ Field rules:
 }
 ```
 
-Each entry in `problems` looks like `{"scene_id": "scene_05", "reason": "missing audio"}`. `scene_count` is the number of scenes in the script; `scenes` lists only the ones written. `total_duration_sec` is the sum of `final_duration_sec` for the scenes written.
+Each entry in `problems` looks like `{"scene_id": 5, "reason": "missing audio"}` (the integer `id` from the script). `scene_count` is the number of scenes in the script; `scenes` lists only the ones written. `total_duration_sec` is the sum of `final_duration_sec` for the scenes written, rounded to 2 decimals.
 
 ---
 
@@ -217,7 +221,7 @@ For a list of key points.
 }
 ```
 
-Required: `bullets` (a non-empty list of short strings). Optional: `heading`.
+Required: `bullets` (a list of short strings). Optional: `heading`. If the list has fewer than 2 or more than 5 items, still write the scene but add a `review_flags` entry (the format allows 2–5).
 
 ### `image`
 
@@ -243,11 +247,12 @@ For numbers the script already contains.
   "chart_title": "Battery cost per kWh",
   "labels": ["2015", "2020"],
   "values": [400, 140],
-  "unit": "USD"
+  "unit": "US dollars per kWh",
+  "source_note": "Source name, 2024"
 }
 ```
 
-Required: `chart_type` (`bar`, `line` or `pie`), `labels`, `values`. `labels` and `values` must have the same length. Optional: `chart_title`, `unit`. Use the numbers exactly as given. Never calculate, round, estimate or add data points.
+Required: `chart_type` (`bar`, `line` or `pie`), `chart_title`, `labels`, `values`, `unit`, `source_note` (as in `docs/scene-format.md`). `labels` and `values` must have the same length. Use the numbers exactly as given. Never calculate, round, estimate or add data points.
 
 ### `quote`
 
