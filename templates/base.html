@@ -1,0 +1,125 @@
+<!doctype html>
+<!--
+  Shared scene shell. render/render.py fills the three tokens:
+    __DURATION__     scene length in seconds (the measured voiceover length)
+    __SCENE_JSON__   { topic, title, visual_type, visual_content, lines, duration, source_line }
+    __TYPE_SCRIPT__  the contents of templates/<visual_type>.js
+  Style follows docs/visual-style.md (based on Jiaxin's style guide).
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1020; }
+      #root { width: 100%; height: 100%; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #f4f4f5; }
+
+      /* Content zone: top 880px. Caption band: bottom 200px. */
+      .stage { position: absolute; left: 0; top: 0; width: 1920px; height: 880px; padding: 120px 160px 0; }
+      .eyebrow { font-size: 30px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #38bdf8; }
+      .headline { margin-top: 24px; font-size: 84px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; max-width: 1600px; }
+      .sub { margin-top: 32px; font-size: 40px; line-height: 1.3; color: #cbd5e1; max-width: 1400px; }
+      .source { position: absolute; right: 160px; top: 56px; font-size: 24px; color: #94a3b8; text-align: right; max-width: 1100px; }
+
+      /* title */
+      .title-wrap { position: absolute; left: 160px; right: 160px; top: 250px; }
+      .title-wrap .headline { font-size: 108px; }
+      .title-bar { width: 140px; height: 10px; border-radius: 5px; background: #38bdf8; margin-top: 48px; }
+
+      /* bullets */
+      .rows { margin-top: 56px; display: flex; flex-direction: column; gap: 18px; }
+      .row { display: flex; align-items: center; gap: 32px; height: 92px; padding: 0 36px; border-radius: 20px;
+             background: #111a2e; border: 2px solid #1e293b; }
+      .row .num { flex: none; width: 56px; height: 56px; border-radius: 28px; background: #1e293b; color: #94a3b8;
+                  display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; }
+      .row .txt { font-size: 40px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.1; }
+      .row.on { border-color: #38bdf8; }
+      .row.on .num { background: #38bdf8; color: #0b1020; }
+
+      /* image (placeholder panel until real images exist) */
+      .panel { margin-top: 56px; width: 1600px; height: 440px; border-radius: 28px; overflow: hidden; position: relative;
+               background: linear-gradient(135deg, #0f2a44 0%, #111a2e 55%, #1e1b3a 100%); border: 2px solid #1e293b; }
+      .panel .orb { position: absolute; border-radius: 50%; }
+      .panel .cap-in { position: absolute; left: 64px; bottom: 56px; right: 64px; font-size: 56px; font-weight: 700;
+                       letter-spacing: -0.02em; line-height: 1.1; }
+
+      /* chart */
+      .chart { margin-top: 56px; width: 1600px; height: 470px; position: relative; }
+      .bar-row { display: flex; align-items: center; height: 64px; margin-bottom: 20px; }
+      .bar-label { width: 300px; font-size: 32px; color: #cbd5e1; text-align: right; padding-right: 28px; }
+      .bar-track { flex: 1; height: 52px; position: relative; }
+      .bar { height: 52px; border-radius: 10px; background: #38bdf8; }
+      .bar-val { position: absolute; top: 6px; font-size: 32px; font-weight: 700; color: #f4f4f5; white-space: nowrap; }
+      .unit { font-size: 26px; color: #94a3b8; margin-top: 8px; }
+      .legend { display: flex; flex-direction: column; gap: 20px; position: absolute; left: 560px; top: 60px; }
+      .legend .item { display: flex; align-items: center; gap: 20px; font-size: 34px; color: #e2e8f0; }
+      .legend .sw { width: 28px; height: 28px; border-radius: 6px; }
+
+      /* quote */
+      .quote { position: absolute; left: 160px; right: 220px; top: 220px; padding-left: 56px; border-left: 10px solid #38bdf8; }
+      .quote .q { font-size: 64px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
+      .quote .who { margin-top: 40px; font-size: 34px; color: #94a3b8; }
+
+      .captions { position: absolute; left: 0; top: 880px; width: 1920px; height: 200px; }
+      .cap { position: absolute; left: 220px; right: 220px; top: 50%; transform: translateY(-50%);
+             text-align: center; font-size: 38px; line-height: 1.35; color: #e2e8f0; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__DURATION__" data-width="1920" data-height="1080">
+      <audio id="vo" src="vo.wav" data-start="0" data-duration="__DURATION__" data-track-index="9"></audio>
+      <div id="content" class="clip" data-start="0" data-duration="__DURATION__" data-track-index="0">
+        <div class="stage" id="stage"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="__DURATION__" data-track-index="1" data-layout-allow-overlap>
+        <div class="captions" id="caps"></div>
+      </div>
+    </div>
+    <script>
+      const SCENE = __SCENE_JSON__;
+      const VC = SCENE.visual_content || {};
+      const stage = document.getElementById("stage");
+      const el = (tag, cls, text) => {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text !== undefined && text !== null) e.textContent = text;
+        return e;
+      };
+      // Seconds into the scene when narration sentence i starts (clamped to the last sentence).
+      const lineAt = (i) => SCENE.lines.length ? SCENE.lines[Math.min(i, SCENE.lines.length - 1)].start : 0.5;
+      // Spread n reveals across the narration: reveal k starts with the sentence at the same relative position.
+      const revealAt = (k, n) => lineAt(Math.floor((k * SCENE.lines.length) / Math.max(n, 1)));
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Captions: each sentence on at its start, off 0.3s after its end (or when the next starts).
+      const caps = document.getElementById("caps");
+      SCENE.lines.forEach((l, i) => {
+        const p = el("p", "cap", l.text);
+        caps.appendChild(p);
+        const next = SCENE.lines[i + 1];
+        tl.set(p, { opacity: 1 }, l.start);
+        tl.set(p, { opacity: 0 }, next ? Math.min(l.end + 0.3, next.start) : Math.min(l.end + 0.3, SCENE.duration - 0.05));
+      });
+
+      // Source line (top right of the content zone).
+      if (SCENE.source_line) {
+        const s = el("div", "source", SCENE.source_line);
+        stage.appendChild(s);
+        tl.fromTo(s, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+      }
+
+      // ---- visual type ----
+      __TYPE_SCRIPT__
+      // ---------------------
+
+      // Exit: fade the content zone out at the end of the scene.
+      tl.to("#stage", { opacity: 0, duration: 0.4 }, Math.max(SCENE.duration - 0.4, 0));
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

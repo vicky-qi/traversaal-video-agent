@@ -1,0 +1,107 @@
+{
+  "topic": "Template test",
+  "total_words": 0,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "What a battery costs",
+      "narration": "Battery prices have fallen fast. This chart is a template test with placeholder numbers.",
+      "duration_sec": 30,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "bar",
+        "chart_title": "Pack price per kilowatt-hour",
+        "labels": [
+          "2015",
+          "2020",
+          "2025"
+        ],
+        "values": [
+          380,
+          160,
+          108
+        ],
+        "unit": "US dollars per kWh",
+        "source_note": "Template test, placeholder data"
+      },
+      "sources": []
+    },
+    {
+      "id": 2,
+      "title": "Prices over time",
+      "narration": "Here the same idea is drawn as a line. The numbers are placeholders for testing only.",
+      "duration_sec": 30,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "line",
+        "chart_title": "Price trend",
+        "labels": [
+          "2015",
+          "2018",
+          "2021",
+          "2025"
+        ],
+        "values": [
+          380,
+          210,
+          140,
+          108
+        ],
+        "unit": "US dollars per kWh",
+        "source_note": "Template test, placeholder data"
+      },
+      "sources": []
+    },
+    {
+      "id": 3,
+      "title": "Battery types",
+      "narration": "A pie chart shows parts of a whole. These shares are placeholders.",
+      "duration_sec": 30,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "pie",
+        "chart_title": "Share by chemistry",
+        "labels": [
+          "LFP",
+          "NMC",
+          "Other"
+        ],
+        "values": [
+          55,
+          40,
+          5
+        ],
+        "unit": "percent",
+        "source_note": "Template test, placeholder data"
+      },
+      "sources": []
+    },
+    {
+      "id": 4,
+      "title": "In their words",
+      "narration": "A quote scene shows one exact sentence from a source. This one is a placeholder.",
+      "duration_sec": 30,
+      "visual_type": "quote",
+      "visual_content": {
+        "quote_text": "Exact quote as it appears in the source, copied word for word.",
+        "attribution": "Name, Title, Organization (2025)"
+      },
+      "sources": [
+        "https://www.iea.org/reports/example"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "From cells to a pack",
+      "narration": "An image scene will show a picture. For now it draws a placeholder panel with the caption.",
+      "duration_sec": 30,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Cutaway of an electric car showing the flat battery pack under the floor",
+        "caption": "Cells, then modules, then one pack",
+        "image_path": null
+      },
+      "sources": []
+    }
+  ]
+}

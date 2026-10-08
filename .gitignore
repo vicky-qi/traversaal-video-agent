@@ -10,3 +10,6 @@ runs/**/scenes/
 # Tools
 node_modules/
 .DS_Store
+
+# Render build folders (one HyperFrames project and MP4 per scene)
+runs/**/build/

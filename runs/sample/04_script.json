@@ -1,0 +1,37 @@
+{
+  "topic": "How Electric Car Batteries Work",
+  "total_words": 174,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "What's really powering an electric car?",
+      "narration": "You plug in an electric car at night, and by morning the screen shows a full battery. But what actually happened inside the car while it sat there? The answer lives in the battery, and it is simpler than it sounds. Once you understand one small idea, you can make sense of almost everything people argue about: how far the car goes, how fast it charges, how long it lasts, and what it costs.",
+      "duration_sec": 30,
+      "visual_type": "title",
+      "visual_content": {
+        "headline": "What's really powering an electric car?",
+        "subheadline": "One idea explains range, charging, lifespan and price"
+      },
+      "sources": []
+    },
+    {
+      "id": 2,
+      "title": "Inside a single cell",
+      "narration": "Start with a single cell, the basic building block. Most electric cars use lithium-ion cells, and each one has the same few parts. On one side is the anode, usually made of graphite. On the other side is the cathode, a metal oxide that holds lithium. Between them sits a liquid called the electrolyte, which lets lithium move through it. And a thin plastic sheet, the separator, keeps the two sides from touching, because if they touched, the cell would short circuit. That is the whole recipe: two sides, a path between them, and a wall that keeps them apart.",
+      "duration_sec": 40,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "Inside a single cell",
+        "bullets": [
+          "Anode: usually graphite",
+          "Cathode: a metal oxide holding lithium",
+          "Electrolyte: the path between them",
+          "Separator: the wall in the middle"
+        ]
+      },
+      "sources": [
+        "https://example.com/placeholder-source"
+      ]
+    }
+  ]
+}
