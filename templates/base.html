@@ -47,8 +47,9 @@
 
       /* chart */
       .chart { margin-top: 56px; width: 1600px; height: 470px; position: relative; }
-      .bar-row { display: flex; align-items: center; height: 64px; margin-bottom: 20px; }
-      .bar-label { width: 300px; font-size: 32px; color: #cbd5e1; text-align: right; padding-right: 28px; }
+      /* Rows grow with their label, so long labels wrap instead of overlapping the next row. */
+      .bar-row { display: flex; align-items: center; min-height: 64px; margin-bottom: 18px; }
+      .bar-label { flex: none; width: 300px; font-size: 30px; line-height: 1.2; color: #cbd5e1; text-align: right; padding-right: 28px; }
       .bar-track { flex: 1; height: 52px; position: relative; }
       .bar { height: 52px; border-radius: 10px; background: #38bdf8; }
       .bar-val { position: absolute; top: 6px; font-size: 32px; font-weight: 700; color: #f4f4f5; white-space: nowrap; }

@@ -73,9 +73,15 @@
     tl.fromTo(marks, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.05 }, t0 + 0.3);
   } else {
     const max = Math.max(...values, 1);
+    // Label column sized to the longest label (about 15px per character at 30px), between 200 and 600px;
+    // longer labels wrap onto extra lines and their row grows.
+    const longest = Math.max(...labels.map((l) => String(l).length), 1);
+    const labelWidth = Math.min(600, Math.max(200, longest * 15 + 28));
     const bars = labels.map((l, i) => {
       const row = el("div", "bar-row");
       const lab = el("div", "bar-label", l);
+      lab.style.width = labelWidth + "px";
+      if (longest > 30) lab.style.fontSize = "26px";
       const track = el("div", "bar-track");
       const pct = (values[i] / max) * 82;
       const bar = el("div", "bar");

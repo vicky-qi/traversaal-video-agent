@@ -4,6 +4,7 @@ One row per test run, newest first. This log becomes the Nov 15 progress report.
 
 | Date | Who | Prompt # | Stage that failed or looked weakest | What we changed |
 |---|---|---|---|---|
+| Oct 7 | Vicky (full run) | 1 | **First full run, end to end:** 7 min 47 s video, 12 scenes, about 65 min active. Research 69 facts in 14 min (parallel; old method unfinished at 33 min); fact-check kept 61 of 69; final-script check failed twice (6, then 1 scene) and passed in round 3; render failed once on long chart labels | Research and fact-check now run one agent per question in parallel; bar-chart labels wrap instead of overlapping |
 | Oct 7 | Vicky (Maggie's part) | Julia's 2-scene example | Scene builder: first test needed 3 workarounds (audio names, ffprobe path, Glob). After the fixes it ran with no hints: 2 of 2 scenes, status complete | Fixed audio naming, ffprobe through render/env.sh, removed Glob, integer ids, chart fields; added a tools check and an unreadable-audio rule |
 | Oct 7 | Vicky (Cynthia's part) | Template test (5 scenes) | Render: bar chart moved labels with `left` and the line chart's top label overflowed; `hyperframes check` caught both | Charts now animate with transforms; line chart has more headroom. All 5 types pass |
 | Oct 7 | Vicky (Cynthia's part) | Julia's 2-scene example | Voiceover → scene builder → render worked end to end: 65.7 s video, voice within 6% of target, render about 45 s | First working MP4 on main |

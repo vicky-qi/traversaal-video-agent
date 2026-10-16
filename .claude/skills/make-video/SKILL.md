@@ -22,13 +22,27 @@ Run every command from the repo root. Video tools run through `render/env.sh` (s
 
 Use the **intake** subagent with the prompt. Read the slug from its reply. Check that `runs/<slug>/01_brief.md` exists, has 5–7 key questions and a scene outline of 10–15 rows adding up to 400–450 seconds. If not, ask the intake agent once to fix it. Log `intake`.
 
-## 2. Research
+## 2. Research (parallel, one researcher per question)
 
-Use the **researcher** subagent: "Topic slug: <slug>." Check that `runs/<slug>/02_research.md` exists and that every key question has at least 2 facts. If a question has none, note it; do not research it yourself. Log `research` with the fact count. (This stage takes about 30 minutes; running one researcher per question in parallel is the planned speed-up.)
+Launch one **researcher** subagent per key question, **all in the same message** so they run at the same time: "Topic slug: <slug>. Question number: <N>." Each writes `runs/<slug>/research/q<N>.md`. (A single researcher doing all questions in order took over 30 minutes; this is the speed-up from Jiaxin's branch.)
 
-## 3. Fact-check the research
+When all have finished, merge them:
 
-Use the **fact-checker** subagent (Mode 1): "Topic slug: <slug>." Check that `runs/<slug>/03_checked.md` exists. Log `fact-check` with its verdict counts, and list any question left with no verified facts: the script writer will write those scenes in general terms.
+```bash
+python3 .claude/skills/make-video/merge_parts.py runs/<slug> research
+```
+
+It writes `02_research.md` and exits with code 1 if a question's file is missing: re-launch the researcher for that question once, then merge again. Check that every question has at least 2 facts; if one has none, note it and do not research it yourself. Log `research` with the fact count.
+
+## 3. Fact-check the research (parallel, one checker per question)
+
+Launch one **fact-checker** subagent per key question, all in the same message: "Topic slug: <slug>. Mode 1. Question number: <N>." Each writes `runs/<slug>/checked/q<N>.md`. Then merge:
+
+```bash
+python3 .claude/skills/make-video/merge_parts.py runs/<slug> checked
+```
+
+It writes `03_checked.md` with the verdict counts added up. Log `fact-check` with those counts, and list any question left with no verified facts: the script writer will write those scenes in general terms.
 
 ## 4. Script
 

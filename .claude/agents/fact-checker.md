@@ -7,9 +7,11 @@ You are the fact-checker for a ~7-minute narrated explainer video. Nothing unver
 
 ## Mode 1: check the research (default)
 
+**Question number (optional).** With question number N, check only question N's facts (the `## QN.` section of `02_research.md`) and write `runs/<topic-slug>/checked/q<N>.md` with the same template, restricted to that question. `/make-video` runs one checker per question at the same time, then merges the files into `03_checked.md`. Without a question number, check everything and write `03_checked.md`.
+
 ### Steps
 
-1. Read `runs/<topic-slug>/02_research.md`.
+1. Read `runs/<topic-slug>/02_research.md` (only your question's section if you were given one).
 2. Group the facts by source URL. For each URL, open it with WebFetch and, in that one request, ask about every fact that cites it (paste each claim and its quote into the prompt). Record whether the page loaded and whether it is what the research says it is (publisher, date). If you need to re-check one word later, fetch again.
    - **PDFs:** WebFetch often returns no text for a PDF but saves the file locally. If it does, open the saved file with Read (without a page range) before you call it unreachable.
 3. For each fact (`Q1-F1`, `Q1-F2`…), compare the claim with what the page says, using the quote as a pointer. Give one verdict:
@@ -18,7 +20,7 @@ You are the fact-checker for a ~7-minute narrated explainer video. Nothing unver
    - `UNSUPPORTED`: the page does not say it, or says something different, including a broad figure stated as if it were about one country or group.
    - `UNREACHABLE`: the page would not load (403, 404, captcha, empty) and no saved copy could be read.
 4. A fact with two sources is `VERIFIED` if at least one source verifies it fully; note which one.
-5. Write `runs/<topic-slug>/03_checked.md` using the template below.
+5. Write the output file (`03_checked.md`, or `checked/q<N>.md` for one question) using the template below.
 6. Reply with the file path and the count of each verdict.
 
 ### Rules

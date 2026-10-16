@@ -1,0 +1,258 @@
+{
+  "topic": "How Electric Car Batteries Work",
+  "total_words": 1046,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "What's really inside an electric car?",
+      "narration": "You plug in an electric car and watch the range number on the dashboard climb, mile by mile. It looks effortless. But inside the battery, something is physically moving the whole time. What is it, and where does it go? Understand that one simple idea, and the big questions about electric cars start to make sense: how far they go, how fast they charge, how long they last, and what they cost.",
+      "duration_sec": 30,
+      "visual_type": "title",
+      "visual_content": {
+        "headline": "What's really inside an electric car?",
+        "subheadline": "One small idea explains range, charging, lifespan and price",
+        "background_description": "An electric car plugged into a charger at dusk, its dashboard range number glowing"
+      },
+      "sources": []
+    },
+    {
+      "id": 2,
+      "title": "A fuel tank vs. a battery",
+      "narration": "Think about filling up a gas car. You pour fuel into the tank, the engine burns it, and once it is burned, it is gone. A battery works another way. Nothing is poured in, and nothing is burned. Instead, tiny charged bits of lithium shuttle from one side of the battery to the other, and back again. The two sides are not broken down; they just take turns holding the lithium. That idea runs from one small cell all the way up to the whole pack.",
+      "duration_sec": 35,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Split screen: a fuel nozzle filling a gas car's tank on the left, an electric car plugged into a charger on the right",
+        "caption": "Fuel gets burned. Lithium just moves back and forth.",
+        "image_path": null
+      },
+      "sources": [
+        "https://kva.se/en/news/nobelpriset-i-kemi-2019-2"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Inside a single cell",
+      "narration": "A single cell has five main parts. The negative side, the anode, is usually graphite, a form of carbon. The positive side, the cathode, is a coating of tiny lithium metal oxide particles. Each side sits on a thin metal foil that carries current: copper on the negative side, aluminum on the positive. Between them, a liquid or gel called the electrolyte lets lithium ions, charged bits of lithium, travel across. And in the middle, a thin, porous sheet called the separator stops the two sides touching and short-circuiting, while letting the tiny ions slip through.",
+      "duration_sec": 40,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "Five parts of one cell",
+        "bullets": [
+          "Anode: graphite, the negative side",
+          "Cathode: lithium metal oxide, the positive side",
+          "Current collectors: copper and aluminum foils",
+          "Electrolyte: liquid or gel that carries ions",
+          "Separator: porous wall that prevents short circuits"
+        ]
+      },
+      "sources": [
+        "https://www.ionworks.com/blog/batteries-101-how-do-batteries-work",
+        "https://batteryuniversity.com/article/bu-204-how-do-lithium-batteries-work",
+        "https://www.cei.washington.edu/research/energy-storage/lithium-ion-battery/"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "What happens when you charge and when you drive",
+      "narration": "When you plug in, the charger applies an electrical push. It drives lithium ions, charged bits of lithium, out of the positive side and into the graphite, where they slip between its thin layers like cards into a deck. Now the cell is charged, like water pumped up into a hilltop tank. When you drive, the water flows back down. The ions drift back to the positive side, while electrons take an outside route through the car's circuits, powering the car. Nothing is broken down, so this can repeat over and over.",
+      "duration_sec": 40,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Simple diagram of a battery cell: lithium ions moving between graphite layers and the positive side, electrons looping through an outside wire",
+        "caption": "Plug in: ions move in. Drive: they flow back.",
+        "image_path": null
+      },
+      "sources": [
+        "https://www.ionworks.com/blog/batteries-101-how-do-batteries-work",
+        "https://batteryuniversity.com/article/bu-204-how-do-lithium-batteries-work",
+        "https://kva.se/en/news/nobelpriset-i-kemi-2019-2"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Not every battery uses the same recipe",
+      "narration": "Not every car battery uses the same recipe. The big choice is the positive side. One family is nickel-based, mixing nickel, manganese and cobalt. Another uses lithium iron phosphate. Nickel-based cells store more energy for their weight. Iron phosphate is cheaper: in 2025 its packs averaged about 81 dollars per kilowatt-hour across all uses, against about 128 for nickel-based packs. In lab tests, iron phosphate cells also tend to reach runaway overheating later, and less violently. That year, iron phosphate made up more than half of electric vehicle batteries worldwide, though outside China almost 80 percent were nickel-based.",
+      "duration_sec": 40,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "bar",
+        "chart_title": "Average battery pack price, 2025, all uses",
+        "labels": [
+          "Lithium iron phosphate (LFP)",
+          "Nickel manganese cobalt (NMC)"
+        ],
+        "values": [
+          81,
+          128
+        ],
+        "unit": "US dollars per kWh",
+        "source_note": "BloombergNEF, December 2025; includes stationary storage"
+      },
+      "sources": [
+        "https://www.ionworks.com/blog/batteries-101-how-do-batteries-work",
+        "https://www.iea.org/reports/global-ev-outlook-2026/electric-vehicle-batteries",
+        "https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/",
+        "https://powerup-technology.com/nmc-vs-lfp-safety-and-performance-in-operation/"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "From one cell to a whole pack",
+      "narration": "A single cell supplies only about 3.6 volts. That can run a phone, but a car needs hundreds of volts. So cells are wired together. Linked side by side, they add capacity, meaning how much charge they hold. Linked end to end, they add up their voltage. Take the 2022 Chevrolet Bolt. Its 288 cells are joined three at a time, side by side, into 96 groups. Those groups are chained end to end across 10 modules, giving the pack about 350 volts.",
+      "duration_sec": 35,
+      "visual_type": "image",
+      "visual_content": {
+        "image_description": "Exploded diagram of an electric car battery: small cells grouped together, groups lined up in modules, modules forming a flat pack under the floor",
+        "caption": "288 cells, 96 groups, about 350 volts",
+        "image_path": null
+      },
+      "sources": [
+        "https://batteryuniversity.com/article/bu-204-how-do-lithium-batteries-work",
+        "https://batteryuniversity.com/article/bu-302-series-and-parallel-battery-configurations",
+        "https://gm-techlink.com/?p=15088"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "The battery's built-in manager",
+      "narration": "A pack's cells need a supervisor: the battery management system. It constantly measures voltage, current and temperature to estimate how full the battery is and how healthy. No two cells are identical, so their charge drifts apart, and the weakest cell limits how much of the pack you can use. The manager balances them. If limits are crossed, it can cut power, and in a fault it disconnects the battery. It also runs heating and cooling, because heat wears cells out faster and cold saps their power.",
+      "duration_sec": 35,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "What the battery manager does",
+        "bullets": [
+          "Tracks voltage, current and temperature",
+          "Estimates charge level and battery health",
+          "Balances cells as they drift apart",
+          "Cuts power or disconnects on a fault",
+          "Runs heating and cooling"
+        ]
+      },
+      "sources": [
+        "https://docs.ionworks.com/guide/batteries-101/battery-management-systems",
+        "https://batteryuniversity.com/article/bu-302-series-and-parallel-battery-configurations",
+        "https://batteryuniversity.com/article/bu-908-battery-management-system-bms",
+        "https://www.osti.gov/biblio/1064502"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "What sets range and charging speed",
+      "narration": "Driving range starts with pack size, measured in kilowatt-hours of stored energy. The long-range Tesla Model Y, America's best-selling electric car in 2025, holds about 81 kilowatt-hours. Chevrolet's electric Equinox holds 85, and the long-range Hyundai Ioniq 5 holds 84. Each is officially rated at over 300 miles in its longest-range version. Refill speed depends on the power the car and the charger can handle. At best, on a powerful fast charger, the Ioniq 5 goes from 10 to 80 percent in about 20 minutes. And a cold battery delivers less power and energy.",
+      "duration_sec": 40,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "bar",
+        "chart_title": "EPA-rated range, longest-range versions, 2026 models",
+        "labels": [
+          "Tesla Model Y Long Range RWD",
+          "Chevrolet Equinox EV FWD",
+          "Hyundai Ioniq 5 RWD"
+        ],
+        "values": [
+          357,
+          319,
+          318
+        ],
+        "unit": "miles",
+        "source_note": "US EPA via fueleconomy.gov, 2026 models"
+      },
+      "sources": [
+        "https://electrek.co/2026/01/13/top-10-best-selling-evs-us-2025/",
+        "https://www.fueleconomy.gov/feg/PowerSearch.do?action=noform&path=1&year1=2026&year2=2026&make=Tesla&baseModel=Model%20Y&srchtyp=ymm",
+        "https://www.kbb.com/tesla/model-y/2026/",
+        "https://www.fueleconomy.gov/feg/PowerSearch.do?action=noform&path=1&year1=2026&year2=2026&make=Chevrolet&srchtyp=ymm&pageno=1&rowLimit=50",
+        "https://www.kbb.com/chevrolet/equinox-ev/2026/",
+        "https://www.fueleconomy.gov/feg/Find.do?action=sbs&id=49960",
+        "https://www.kbb.com/hyundai/ioniq-5/2026/",
+        "https://www.osti.gov/biblio/1064502"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "How batteries age",
+      "narration": "A battery loses capacity slowly: a bit faster in the first year or two, then gently for many years. Heat speeds up wear, and so does sitting nearly full or empty most of the time. In Geotab's fleet data, frequent high-power fast charging wore batteries up to twice as fast as in cars that rarely fast-charge. Used electric vehicles in the United Kingdom aged four to five years kept a median 93.5 percent of their original capacity. Volkswagen there and Hyundai in Europe cover 8 years or 160,000 kilometers, should capacity fall below 70 percent.",
+      "duration_sec": 40,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "What wears a battery faster",
+        "bullets": [
+          "Heat",
+          "Long stretches near full or near empty",
+          "Frequent high-power fast charging: up to twice the wear"
+        ]
+      },
+      "sources": [
+        "https://www.geotab.com/blog/ev-battery-health/",
+        "https://www.recurrentauto.com/research/how-long-do-ev-batteries-last",
+        "https://evfleetworld.co.uk/average-used-ev-battery-health-stands-at-95-15-real-world-data-shows/",
+        "https://www.volkswagen.co.uk/en/owners-and-services/my-car/warranties.html",
+        "https://www.hyundai.com/eu/en/driving-hyundai/owning-a-hyundai/warranty.html"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "What a battery costs, then and now",
+      "narration": "The battery is the main reason an electric car costs more to build than a comparable gas car. But its price has fallen fast. In 2015, industry surveys put plug-in hybrid packs at about 400 to 480 dollars for each kilowatt-hour of storage. In 2025, packs for fully electric cars came in at about 99 dollars. In a recent model by America's Department of Energy, a compact electric car's battery costs the carmaker about 9,200 dollars, on a car that would sell for about 33,700 dollars.",
+      "duration_sec": 40,
+      "visual_type": "chart",
+      "visual_content": {
+        "chart_type": "bar",
+        "chart_title": "Battery pack price per kWh, 2015 vs. 2025",
+        "labels": [
+          "2015, plug-in hybrid (BloombergNEF)",
+          "2015, plug-in hybrid (Total Battery Consulting)",
+          "2025, battery-electric car (BloombergNEF)"
+        ],
+        "values": [
+          399,
+          477,
+          99
+        ],
+        "unit": "US dollars per kWh",
+        "source_note": "US DOE fact sheet, 2017; BloombergNEF, 2025"
+      },
+      "sources": [
+        "https://www.energy.gov/sites/prod/files/2017/06/f34/67089_EERE_LIB_cost_vs_price_metrics_r9_0.pdf",
+        "https://about.bnef.com/insights/clean-energy/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour",
+        "https://www.energy.gov/sites/default/files/2025-01/2025.01.13_DOE_Incremental_Cost_Report_for_publication.pdf"
+      ]
+    },
+    {
+      "id": 11,
+      "title": "What comes next",
+      "narration": "Several new battery types are on the way. Solid-state batteries swap the liquid inside the cell for a solid, and Toyota aims to launch its first car with one by 2028. Sodium-ion batteries use sodium instead of lithium, and CATL says large-scale production is due by the fourth quarter of 2026. And BYD claims its second-generation Blade battery charges from 10 to 70 percent in five minutes on its own ultra-fast chargers. For now, these are targets and claims, not everyday reality.",
+      "duration_sec": 35,
+      "visual_type": "bullets",
+      "visual_content": {
+        "heading": "Announced next-generation batteries",
+        "bullets": [
+          "Solid-state: Toyota targets its first car by 2028",
+          "Sodium-ion: CATL large-scale production due by late 2026",
+          "Faster charging: BYD claims 10 to 70 percent in 5 minutes"
+        ]
+      },
+      "sources": [
+        "https://www.ess-news.com/?p=6877",
+        "https://www.iea.org/reports/global-ev-outlook-2026/electric-vehicle-batteries",
+        "https://cnevpost.com/2025/04/21/catl-sodium-ion-12c-shenxing-freevoy-dual-power-batteries/",
+        "https://carnewschina.com/2026/04/22/catl-to-mass-produce-sodium-ion-batteries-in-2026-targeting-600-km-range-in-the-future/",
+        "https://www.evinfrastructurenews.com/ev-networks/byd-begins-europe-expansion-of-its-1-500kw-flash-chargers-as-it-hits-10-000-stations-in-china",
+        "https://carnewschina.com/2026/03/08/byds-flash-offensive-5-minute-blade-charging-cracks-nios-swap-legacy/"
+      ]
+    },
+    {
+      "id": 12,
+      "title": "The one thing to remember",
+      "narration": "Here is the one thing to remember. An electric car battery is many small cells, each moving lithium from one side to the other and back, wired together and managed as one pack. Everything else follows. How many cells, and which recipe, set the range. How fast lithium can safely move sets the charging speed. How gently the cells are treated sets the lifespan. And the cost of each kilowatt-hour sets much of the price.",
+      "duration_sec": 30,
+      "visual_type": "title",
+      "visual_content": {
+        "headline": "Small cells, one pack, one idea",
+        "subheadline": "Range, charging, lifespan and price all start in the cell"
+      },
+      "sources": []
+    }
+  ]
+}
