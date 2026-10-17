@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traversaal Video Agent</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230284c7'/%3E%3Cpath d='M12 9v14l11-7z' fill='white'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --text: #111827; --muted: #5b6474; --line: #e3e6eb;
+    --accent: #0284c7; --accent-ink: #ffffff; --accent-soft: #e0f2fe;
+    --ok: #15803d; --bad: #b91c1c; --bad-soft: #fef2f2; --run: #0284c7;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0f16; --card: #121821; --text: #e8ebf0; --muted: #98a2b3; --line: #232c39;
+      --accent: #38bdf8; --accent-ink: #04121c; --accent-soft: #0c2a3b;
+      --ok: #4ade80; --bad: #f87171; --bad-soft: #2a1213; --run: #38bdf8;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+         max-width: 980px; margin: 0 auto; padding: 20px 16px 8px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.01em; }
+  .mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); color: var(--accent-ink);
+          display: grid; place-items: center; font-size: 13px; }
+  .meta { color: var(--muted); font-size: 13px; text-align: right; }
+  main { max-width: 980px; margin: 0 auto; padding: 8px 16px 48px; display: grid; gap: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  h1 { font-size: 28px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px; }
+  h2 { font-size: 20px; letter-spacing: -0.01em; margin: 0; }
+  .lede { color: var(--muted); margin: 0 0 20px; max-width: 680px; }
+  label { display: block; font-weight: 600; margin-bottom: 8px; }
+  textarea, input { width: 100%; font: inherit; color: var(--text); background: var(--bg);
+                    border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  textarea { resize: vertical; min-height: 56px; }
+  textarea:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
+  .chip { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px;
+          padding: 5px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+  .chip:hover { color: var(--text); border-color: var(--accent); }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .row input { flex: 1 1 180px; width: auto; }
+  button.primary { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px;
+                   padding: 12px 20px; font: inherit; font-weight: 650; cursor: pointer; }
+  button.primary:disabled { opacity: .6; cursor: default; }
+  button.ghost, a.ghost { background: transparent; color: var(--text); border: 1px solid var(--line);
+                          border-radius: 10px; padding: 8px 14px; font: inherit; font-size: 14px;
+                          cursor: pointer; text-decoration: none; display: inline-block; }
+  button.ghost:hover, a.ghost:hover { border-color: var(--accent); }
+  .msg { min-height: 1.5em; margin: 12px 0 0; color: var(--muted); font-size: 14px; }
+  .msg.bad { color: var(--bad); }
+  .job-head { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--run); }
+  .eyebrow.done { color: var(--ok); } .eyebrow.failed, .eyebrow.cancelled, .eyebrow.interrupted { color: var(--bad); }
+  .sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  video { width: 100%; border-radius: 10px; background: #000; margin-top: 20px; aspect-ratio: 16 / 9; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .error { background: var(--bad-soft); color: var(--bad); border-radius: 10px; padding: 12px 14px; margin-top: 16px;
+           white-space: pre-wrap; font-size: 14px; }
+  .stages { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 2px; }
+  .stage { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; padding: 8px 0;
+           border-top: 1px solid var(--line); }
+  .stage:first-child { border-top: 0; }
+  .icon { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid;
+          place-items: center; font-size: 12px; font-weight: 800; margin-top: 1px; }
+  .stage.done .icon { border-color: var(--ok); color: var(--ok); }
+  .stage.failed .icon, .stage.cancelled .icon { border-color: var(--bad); color: var(--bad); }
+  .stage.running .icon { border-color: var(--run); border-top-color: transparent; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .stage.running .icon { animation: none; border-top-color: var(--run); } }
+  .stage .name { font-weight: 600; }
+  .stage.pending .name { color: var(--muted); font-weight: 500; }
+  .stage .note { color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+  .stage .time { color: var(--muted); font-size: 13px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  details { margin-top: 16px; }
+  summary { cursor: pointer; font-weight: 600; font-size: 14px; color: var(--muted); }
+  .feed { margin-top: 8px; max-height: 260px; overflow: auto; background: var(--bg); border-radius: 10px;
+          padding: 10px 12px; font: 12.5px/1.6 var(--mono); color: var(--muted); }
+  .feed div { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .feed b { color: var(--text); font-weight: 600; }
+  .files { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .history { list-style: none; margin: 12px 0 0; padding: 0; }
+  .history li { border-top: 1px solid var(--line); }
+  .history button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; padding: 12px 4px;
+                    display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+  .history button:hover .p, .history button:focus-visible .p { color: var(--accent); }
+  .history .p { font-weight: 600; overflow-wrap: anywhere; }
+  .history .s { color: var(--muted); font-size: 13px; text-align: right; white-space: nowrap; }
+  .empty { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+  .notice { background: var(--accent-soft); border-radius: 10px; padding: 12px 14px; font-size: 14px; margin-bottom: 16px; }
+  @media (max-width: 560px) {
+    .card { padding: 18px; } h1 { font-size: 23px; }
+    .meta { display: none; }
+    .stage { grid-template-columns: 26px 1fr; } .stage .time { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true">▶</span>Traversaal Video Agent</div>
+  <div class="meta" id="meta"></div>
+</header>
+<main>
+  <section class="card">
+    <div class="notice" id="notice" hidden></div>
+    <h1>Turn one question into a 7-minute explainer video</h1>
+    <p class="lede">The agent researches the topic on the web, checks every fact against its source, writes and
+      narrates a script, and renders a finished MP4. A video takes about an hour; you can close this page while it works.</p>
+    <form id="new">
+      <label for="prompt">What should the video explain?</label>
+      <textarea id="prompt" rows="2" maxlength="300" placeholder="How do electric vehicle batteries work?" required></textarea>
+      <div class="chips" id="examples"></div>
+      <div class="row">
+        <input id="code" type="password" placeholder="Access code" autocomplete="current-password" hidden>
+        <button class="primary" id="go" type="submit">Make the video</button>
+      </div>
+      <p class="msg" id="msg" role="status"></p>
+    </form>
+  </section>
+
+  <section class="card" id="job" hidden>
+    <div class="job-head">
+      <div>
+        <div class="eyebrow" id="j-status"></div>
+        <h2 id="j-title"></h2>
+        <div class="sub" id="j-sub"></div>
+      </div>
+      <button class="ghost" id="j-cancel" type="button" hidden>Stop</button>
+    </div>
+    <div id="j-video"></div>
+    <div class="error" id="j-error" hidden></div>
+    <ol class="stages" id="j-stages"></ol>
+    <details id="j-details" open><summary>Live activity</summary><div class="feed" id="j-feed"></div></details>
+    <div class="files" id="j-files"></div>
+  </section>
+
+  <section class="card">
+    <h2>Videos</h2>
+    <ul class="history" id="history"></ul>
+    <p class="empty" id="history-empty" hidden>No videos yet.</p>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const FILE_NAMES = { "report.md": "Report", "01_brief.md": "Brief", "02_research.md": "Research",
+  "03_checked.md": "Checked facts", "04_script.json": "Script", "05_script_check.md": "Script check",
+  "run_log.md": "Run log" };
+const STATUS = { queued: "Waiting", running: "Working", done: "Ready", failed: "Stopped with a problem",
+  cancelled: "Stopped", interrupted: "Interrupted" };
+let config = { stages: [] }, selected = null, timer = null;
+
+function store(key, value) {
+  try { if (value === undefined) return localStorage.getItem(key); localStorage.setItem(key, value); } catch (e) { return null; }
+}
+let code = store("tva-code") || "";
+
+function h(tag, attrs = {}, ...children) {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") el.className = v; else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (v !== null && v !== undefined && v !== false) el.setAttribute(k, v);
+  }
+  for (const c of children.flat()) if (c !== null && c !== undefined) el.append(c);
+  return el;
+}
+const fmt = (s) => s >= 60 ? `${Math.floor(s / 60)} min ${Math.round(s % 60)} s` : `${Math.round(s)} s`;
+const fileUrl = (job, name, dl) => `/api/videos/${job.id}/files/${name}?` +
+  new URLSearchParams({ ...(code ? { code } : {}), ...(dl ? { download: 1 } : {}) });
+
+async function api(path, opts = {}) {
+  const res = await fetch(path, { ...opts, headers: { "Content-Type": "application/json",
+    ...(code ? { "X-Access-Code": code } : {}), ...(opts.headers || {}) } });
+  const body = await res.json().catch(() => ({}));
+  if (res.status === 401) { $("code").hidden = false; throw new Error("Enter the access code first."); }
+  if (!res.ok) throw new Error(body.detail || `Request failed (${res.status})`);
+  return body;
+}
+
+function say(text, bad) { $("msg").textContent = text; $("msg").className = "msg" + (bad ? " bad" : ""); }
+
+async function init() {
+  config = await (await fetch("/api/config")).json();
+  $("meta").textContent = `Model: ${config.model}` + (config.max_cost_usd ? ` · limit $${config.max_cost_usd} per video` : "");
+  if (config.access_code_required) { $("code").hidden = false; $("code").value = code; }
+  if (!config.api_key_set) {
+    $("notice").hidden = false;
+    $("notice").textContent = "This server has no ANTHROPIC_API_KEY yet, so it can show past videos but cannot make new ones.";
+  }
+  for (const p of config.examples) {
+    $("examples").append(h("button", { class: "chip", type: "button", onclick: () => { $("prompt").value = p; $("prompt").focus(); } }, p));
+  }
+  const fromHash = new URLSearchParams(location.hash.slice(1)).get("video");
+  await loadHistory();
+  if (fromHash) select(fromHash);
+  setInterval(loadHistory, 15000);
+}
+
+$("new").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!$("code").hidden) { code = $("code").value.trim(); store("tva-code", code); }
+  $("go").disabled = true; say("Starting…");
+  try {
+    const job = await api("/api/videos", { method: "POST", body: JSON.stringify({ prompt: $("prompt").value }) });
+    say("Started. Progress is shown below; you can close this page and come back.");
+    $("prompt").value = "";
+    await loadHistory(); select(job.id);
+  } catch (err) { say(err.message, true); }
+  $("go").disabled = false;
+});
+
+$("j-cancel").addEventListener("click", async () => {
+  if (!selected || !confirm("Stop making this video? The work so far is kept, but it cannot be resumed here.")) return;
+  try { show(await api(`/api/videos/${selected}/cancel`, { method: "POST" })); poll(); } catch (err) { say(err.message, true); }
+});
+
+async function loadHistory() {
+  let list = [];
+  try { list = await api("/api/videos"); } catch (err) { if (!$("code").hidden) say(err.message, true); return; }
+  $("history").replaceChildren(...list.map((j) => h("li", {}, h("button", { type: "button", onclick: () => select(j.id) },
+    h("span", { class: "p" }, j.prompt),
+    h("span", { class: "s" }, `${STATUS[j.status] || j.status} · ${j.created.replace("T", " ").slice(0, 16)}`)))));
+  $("history-empty").hidden = list.length > 0;
+}
+
+function select(id) {
+  selected = id; history.replaceState(null, "", `#video=${id}`);
+  $("j-video").replaceChildren(); $("job").hidden = false; poll();
+  $("job").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function poll() {
+  clearTimeout(timer);
+  if (!selected) return;
+  try {
+    const job = await api(`/api/videos/${selected}`);
+    show(job);
+    if (job.status === "queued" || job.status === "running") timer = setTimeout(poll, 3000);
+    else loadHistory();
+  } catch (err) { say(err.message, true); }
+}
+
+function show(job) {
+  const running = config.stages.find((s) => job.stages[s.key]?.status === "running");
+  const status = $("j-status");
+  status.className = "eyebrow " + job.status;
+  status.textContent = job.status === "queued" ? `Waiting · number ${job.queue_position} in line`
+    : job.status === "running" ? `Working · ${running ? running.name : "starting"}` : STATUS[job.status] || job.status;
+  $("j-title").textContent = job.prompt;
+  const spent = Object.values(job.stages).reduce((a, s) => a + (s.seconds || 0), 0);
+  $("j-sub").textContent = [`Requested ${job.created.replace("T", " ").slice(0, 16)}`,
+    spent ? (job.status === "running" ? `${fmt(spent)} so far` : `took ${fmt(spent)}`) : null, job.cost_usd ? `API cost $${job.cost_usd.toFixed(2)}` : null].filter(Boolean).join(" · ");
+  $("j-cancel").hidden = !(job.status === "queued" || job.status === "running");
+
+  if (job.files.includes("final.mp4") && !$("j-video").childElementCount) {
+    const secs = job.summary.video_seconds;
+    $("j-video").append(h("video", { controls: true, preload: "metadata", src: fileUrl(job, "final.mp4") }),
+      h("div", { class: "actions" },
+        h("a", { class: "ghost", href: fileUrl(job, "final.mp4", true) }, "Download MP4"),
+        h("a", { class: "ghost", href: fileUrl(job, "report.md"), target: "_blank", rel: "noopener" }, "Report"),
+        secs ? h("span", { class: "sub" }, `${fmt(secs)} long`) : null));
+  }
+  $("j-error").hidden = !job.error; $("j-error").textContent = job.error || "";
+
+  $("j-stages").replaceChildren(...config.stages.map((s) => {
+    const st = job.stages[s.key] || { status: "pending" };
+    const mark = { done: "✓", failed: "✕", cancelled: "–" }[st.status] || "";
+    const time = st.status === "running" ? "working…" : st.seconds ? fmt(st.seconds) : "";
+    return h("li", { class: `stage ${st.status}` }, h("span", { class: "icon", "aria-hidden": "true" }, mark),
+      h("div", {}, h("div", { class: "name" }, s.name), st.note ? h("div", { class: "note" }, st.note) : null),
+      h("span", { class: "time" }, time));
+  }));
+
+  const feed = $("j-feed"), atBottom = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 40;
+  feed.replaceChildren(...(job.events || []).slice(-150).map((e) => {
+    const [who, ...rest] = e.text.split(": ");
+    return h("div", {}, `${e.t}  `, rest.length ? h("b", {}, who + ": ") : null, rest.length ? rest.join(": ") : e.text);
+  }));
+  if (atBottom) feed.scrollTop = feed.scrollHeight;
+
+  $("j-files").replaceChildren(...job.files.filter((f) => FILE_NAMES[f] && f !== "report.md").map((f) =>
+    h("a", { class: "ghost", href: fileUrl(job, f), target: "_blank", rel: "noopener" }, FILE_NAMES[f])));
+}
+
+init().catch((err) => say(err.message, true));
+</script>
+</body>
+</html>

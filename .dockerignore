@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+**/__pycache__
+node_modules
+runs/**/audio
+runs/**/scenes
+runs/**/build
+runs/**/*.mp4
+runs/**/*.mov
+runs/**/status.json

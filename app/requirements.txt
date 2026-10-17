@@ -1,0 +1,4 @@
+# The app's Python packages, installed into the `video` conda env (see app/README.md).
+claude-agent-sdk==0.2.168
+fastapi==0.143.3
+uvicorn==0.54.0

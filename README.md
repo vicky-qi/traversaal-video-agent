@@ -6,6 +6,8 @@ One prompt in, a narrated explainer video of about 7 minutes out, built with Cla
 
 > I am <your name>. Read CLAUDE.md and the files in .claude/agents/. In 5 short bullets, tell me what this project builds, how the stages hand off to each other, and what my part is.
 
+**Use it without Claude Code:** `app/` packages the same pipeline as a web app that anyone can open in a browser, paid with an Anthropic API key instead of a Claude subscription. See `app/README.md`.
+
 - How the pipeline works and who owns what: `CLAUDE.md`
 - Scene format shared by the script, voiceover and render stages: `docs/scene-format.md`
 - Test prompts and test log: `tests/`
