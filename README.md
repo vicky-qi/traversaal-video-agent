@@ -1,6 +1,8 @@
 # Traversaal Video Agent
 
-One prompt in, a narrated explainer video of about 7 minutes out, built with Claude Code skills and subagents. UCLA Anderson MSBA capstone for Traversaal.ai.
+One prompt in, a fact-checked, narrated cinematic explainer of about 7 minutes (or a 2-minute demo) out, built with Claude Code skills and subagents and rendered with HyperFrames. UCLA Anderson MSBA capstone for Traversaal.ai.
+
+**Just want to make a video?** Run `./setup.sh` once, then `./start.sh`, and use the web page that opens (Traversaal Video Studio). Step-by-step instructions: [INSTRUCTOR.md](INSTRUCTOR.md).
 
 **New to the project?** Open this folder in the Code tab of the Claude desktop app and ask:
 

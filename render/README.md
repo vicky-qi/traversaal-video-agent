@@ -16,9 +16,9 @@ conda env create -f environment.yml
 
 This creates a conda environment called `video` with Node 22+, FFmpeg and Python. Every command below runs inside it through `render/env.sh`, which works even when conda is not activated (for example in the Claude desktop app). The first voiceover downloads the voice model (about 27 MB); the first render downloads HyperFrames' browser and fonts.
 
-## The three steps
+## Film mode (cinematic definition, Oct 16)
 
-Replace `<slug>` with the run folder name, for example `how-ev-batteries-work`.
+Replace `<slug>` with the run folder name. The `/make-video` workflow runs these in order.
 
 **1. Voiceover** (needs `runs/<slug>/04_script.json`):
 
@@ -26,29 +26,39 @@ Replace `<slug>` with the run folder name, for example `how-ev-batteries-work`.
 render/env.sh python render/voiceover.py runs/<slug>
 ```
 
-Writes `runs/<slug>/audio/scene_01.wav`, `scene_02.wav`… and `audio/timing.json` (when each sentence starts and ends). Each sentence is voiced separately, so captions match the voice exactly; unchanged sentences are reused on the next run. Options: `--voice af_heart` (default), `--speed 0.85` (default). It prints each scene's real length and exits with code 2 if the total is more than 15% away from the script's target, which means the script writer should trim or extend.
+Writes `audio/scene_NN.wav`, `audio/timing.json` (when each sentence starts and ends) and `audio/subtitles.srt`. Each sentence is voiced separately, so subtitles and shots match the voice exactly; unchanged sentences are reused on the next run. Options: `--voice af_heart` (default), `--speed 0.85` (default). Exit code 2 means the total is more than 15% away from the script's target.
 
-**2. Scene files**: run the `scene-builder` agent (Maggie's) on the same slug. It measures each audio file and writes `runs/<slug>/scenes/scene_NN.json` and `scenes/index.json`. Its `ffprobe` command must run through the wrapper: `render/env.sh ffprobe ...`.
+**2. Storyboard** (the `storyboard` agent) writes `05_storyboard.json`; check it with `python3 .claude/skills/make-video/check_storyboard.py runs/<slug>`.
 
-**3. Render**:
+**3. Scenes** (one `scene-builder` agent per scene) write `scenes/scene_NN/scene.html`. Check one scene without rendering:
+
+```bash
+render/env.sh python render/render.py runs/<slug> --scene 3 --check-only
+```
+
+**4. Render and sound**:
 
 ```bash
 render/env.sh python render/render.py runs/<slug>
 ```
 
-For each scene it fills `templates/base.html` with `templates/<visual_type>.js` and the scene's content, runs `hyperframes check`, renders the scene, then joins all scenes into **`runs/<slug>/final.mp4`** (1920×1080, H.264 + AAC).
+For each scene it places the scene's fragment into `templates/film/shell.html` with the storyboard's shot timing and palette, runs `hyperframes check`, renders it, joins all scenes, then `render/sound.py` adds a synthesised music bed (the storyboard's `music.mood`, lowered under the voice) and the shots' sound effects. Output: **`runs/<slug>/final.mp4`** (1920×1080, H.264 + AAC).
 
-- `--scene 3`: re-render only scene 3 (after a fix), then join again.
+- `--scene 3`: re-render only scene 3, then join and mix again if every scene is rendered.
 - `--draft`: faster, lower-quality render for previews.
-- It stops if `scenes/index.json` is not `complete`, or if `hyperframes check` finds an error, and prints which scene and why.
+- It stops at the first scene that fails `hyperframes check` and prints why.
+
+## Slide mode (first definition)
+
+Runs made before Oct 16 have no `05_storyboard.json`; `render.py` renders them the old way, from `scenes/index.json` and the slide templates in `templates/`.
 
 ## Where things go
 
 | Path | What | In GitHub? |
 |---|---|---|
 | `runs/<slug>/audio/` | Voiceover files and `timing.json` | No (`.gitignore`) |
-| `runs/<slug>/scenes/` | Scene files from the scene builder | No (rebuilt from the script and audio) |
-| `runs/<slug>/build/` | One HyperFrames project and MP4 per scene | No |
+| `runs/<slug>/scenes/` | Scene fragments from the scene builders (the film's source) | Yes |
+| `runs/<slug>/build/` | One HyperFrames project and MP4 per scene, plus the sound files | No |
 | `runs/<slug>/final.mp4` | The finished video | No: share it through the team Google Drive |
 
 ## Examples

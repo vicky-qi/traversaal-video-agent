@@ -1,0 +1,33 @@
+{
+  "id": 1,
+  "title": "What a battery costs",
+  "narration": "Battery prices have fallen fast. This chart is a template test with placeholder numbers.",
+  "sources": [],
+  "visual_type": "chart",
+  "visual_content": {
+    "chart_type": "bar",
+    "chart_title": "Pack price per kilowatt-hour",
+    "labels": [
+      "2015",
+      "2020",
+      "2025"
+    ],
+    "values": [
+      380,
+      160,
+      108
+    ],
+    "unit": "US dollars per kWh",
+    "source_note": "Template test, placeholder data"
+  },
+  "order": 1,
+  "audio_file": "runs/template-test/audio/scene_01.wav",
+  "script_duration_sec": 30,
+  "final_duration_sec": 7.039,
+  "layout": {
+    "template": "chart",
+    "style_file": null
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

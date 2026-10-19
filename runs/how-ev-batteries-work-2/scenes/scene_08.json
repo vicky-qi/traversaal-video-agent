@@ -1,0 +1,42 @@
+{
+  "id": 8,
+  "order": 8,
+  "title": "What sets range and charging speed",
+  "narration": "Driving range starts with pack size, measured in kilowatt-hours of stored energy. The long-range Tesla Model Y, America's best-selling electric car in 2025, holds about 81 kilowatt-hours. Chevrolet's electric Equinox holds 85, and the long-range Hyundai Ioniq 5 holds 84. Each is officially rated at over 300 miles in its longest-range version. Refill speed depends on the power the car and the charger can handle. At best, on a powerful fast charger, the Ioniq 5 goes from 10 to 80 percent in about 20 minutes. And a cold battery delivers less power and energy.",
+  "sources": [
+    "https://electrek.co/2026/01/13/top-10-best-selling-evs-us-2025/",
+    "https://www.fueleconomy.gov/feg/PowerSearch.do?action=noform&path=1&year1=2026&year2=2026&make=Tesla&baseModel=Model%20Y&srchtyp=ymm",
+    "https://www.kbb.com/tesla/model-y/2026/",
+    "https://www.fueleconomy.gov/feg/PowerSearch.do?action=noform&path=1&year1=2026&year2=2026&make=Chevrolet&srchtyp=ymm&pageno=1&rowLimit=50",
+    "https://www.kbb.com/chevrolet/equinox-ev/2026/",
+    "https://www.fueleconomy.gov/feg/Find.do?action=sbs&id=49960",
+    "https://www.kbb.com/hyundai/ioniq-5/2026/",
+    "https://www.osti.gov/biblio/1064502"
+  ],
+  "visual_type": "chart",
+  "visual_content": {
+    "chart_type": "bar",
+    "chart_title": "EPA-rated range, longest-range versions, 2026 models",
+    "labels": [
+      "Tesla Model Y Long Range RWD",
+      "Chevrolet Equinox EV FWD",
+      "Hyundai Ioniq 5 RWD"
+    ],
+    "values": [
+      357,
+      319,
+      318
+    ],
+    "unit": "miles",
+    "source_note": "US EPA via fueleconomy.gov, 2026 models"
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_08.wav",
+  "script_duration_sec": 40,
+  "final_duration_sec": 46.09,
+  "layout": {
+    "template": "chart",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

@@ -1,16 +1,19 @@
-"""Render stage: turn the scene files into runs/<slug>/final.mp4.
+"""Render stage: turn a run into runs/<slug>/final.mp4.
 
 Usage (from the repo root):
-    render/env.sh python render/render.py runs/<slug> [--scene 3] [--draft] [--no-check]
+    render/env.sh python render/render.py runs/<slug> [--scene 3] [--draft] [--no-check] [--check-only]
 
-Reads runs/<slug>/scenes/index.json and scene_NN.json (written by the scene-builder agent),
-plus runs/<slug>/audio/timing.json (written by render/voiceover.py). For each scene it fills
-templates/base.html with templates/<visual_type>.js, runs `hyperframes check`, renders the
-scene to MP4, then joins all scenes into final.mp4.
+Film mode (cinematic definition, used when runs/<slug>/05_storyboard.json exists):
+  For each scene it puts the scene builder's runs/<slug>/scenes/scene_NN/scene.html into
+  templates/film/shell.html with the storyboard's shot timing, runs `hyperframes check`, renders
+  it, joins all scenes, then mixes in a music bed and sound effects (render/sound.py).
+Slide mode (the first definition, kept so earlier runs still render):
+  Reads scenes/index.json and scene_NN.json and fills templates/base.html + <visual_type>.js.
 
-  --scene N    re-render only scene N, then join again
-  --draft      faster, lower-quality render for previews
-  --no-check   skip `hyperframes check` (not recommended)
+  --scene N     build/check/render only scene N, then join again if every scene is rendered
+  --check-only  build and check only (with --scene: one scene); no rendering. Scene builders use this.
+  --draft       faster, lower-quality render for previews
+  --no-check    skip `hyperframes check` (not recommended)
 """
 import argparse
 import json
@@ -100,52 +103,115 @@ def check(out_dir, name):
     return True
 
 
+def film_shots(board_scene, t):
+    """Absolute start/end (seconds within the scene) of every storyboard shot."""
+    lines, dur = t["lines"], t["duration"]
+    shots = board_scene["shots"]
+    starts = [0.0 if k == 0 else lines[sh["sentence"]]["start"] + float(sh.get("offset") or 0)
+              for k, sh in enumerate(shots)]
+    ends = starts[1:] + [dur]
+    return [{"n": sh["n"], "start": round(a, 3), "end": round(b, 3), "camera": sh.get("camera", "static"),
+             "text": sh.get("text"), "data": sh.get("data"), "sound": sh.get("sound", "none")}
+            for sh, a, b in zip(shots, starts, ends)]
+
+
+def build_film_scene(run, board, board_scene, t, topic, out_dir):
+    name = f"scene_{int(board_scene['id']):02d}"
+    fragment = run / "scenes" / name / "scene.html"
+    if not fragment.exists():
+        sys.exit(f"{name}: missing {fragment.relative_to(REPO)}; run the scene builder for scene {board_scene['id']}")
+    data = {
+        "topic": topic, "scene_id": board_scene["id"], "duration": t["duration"],
+        "transition_in": board_scene.get("transition_in", "cut"),
+        "palette": (board.get("art_direction") or {}).get("palette") or [],
+        "lines": t["lines"], "shots": film_shots(board_scene, t),
+    }
+    html = (TEMPLATES / "film" / "shell.html").read_text()
+    html = html.replace("__DURATION__", f"{t['duration']:.3f}")
+    html = html.replace("__SCENE_JSON__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
+    html = html.replace("__SCENE_FRAGMENT__", fragment.read_text())
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "index.html").write_text(html)
+    shutil.copy(TEMPLATES / "hyperframes.json", out_dir / "hyperframes.json")
+    shutil.copy(run / "audio" / f"{name}.wav", out_dir / "vo.wav")
+    return t["duration"]
+
+
+def join(clips, run):
+    concat = run / "build" / "concat.txt"
+    concat.write_text("".join(f"file '{c.name}'\n" for c in clips))
+    out = run / "build" / "joined.mp4"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
+                    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
+                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("run_dir")
     ap.add_argument("--scene", type=int)
     ap.add_argument("--draft", action="store_true")
     ap.add_argument("--no-check", action="store_true")
+    ap.add_argument("--check-only", action="store_true")
     args = ap.parse_args()
 
     run = Path(args.run_dir).resolve()
-    index = json.loads((run / "scenes" / "index.json").read_text())
-    if index.get("status") != "complete":
-        sys.exit(f"scenes/index.json status is '{index.get('status')}', not 'complete'. Problems: {index.get('problems')}")
     timing = json.loads((run / "audio" / "timing.json").read_text())["scenes"]
     topic = json.loads((run / "04_script.json").read_text()).get("topic", "")
     build = run / "build"
+    film = (run / "05_storyboard.json").exists()
+    quality = "draft" if args.draft else "standard"
 
-    clips = []
-    for entry in index["scenes"]:
-        scene_file = REPO / entry["scene_file"]
-        if not scene_file.exists():
-            scene_file = run / "scenes" / Path(entry["scene_file"]).name
-        scene = json.loads(scene_file.read_text())
-        name = Path(scene["audio_file"]).stem            # scene_01
-        order = int(scene.get("order", re.sub(r"\D", "", name) or 0))
-        out_dir = build / name
+    jobs = []  # (order, name, builder)
+    if film:
+        board = json.loads((run / "05_storyboard.json").read_text())
+        for bs in board["scenes"]:
+            name = f"scene_{int(bs['id']):02d}"
+            jobs.append((int(bs["id"]), name, lambda bs=bs, name=name: build_film_scene(run, board, bs, timing[name], topic, build / name)))
+    else:
+        index = json.loads((run / "scenes" / "index.json").read_text())
+        if index.get("status") != "complete":
+            sys.exit(f"scenes/index.json status is '{index.get('status')}', not 'complete'. Problems: {index.get('problems')}")
+        for entry in index["scenes"]:
+            scene_file = REPO / entry["scene_file"]
+            if not scene_file.exists():
+                scene_file = run / "scenes" / Path(entry["scene_file"]).name
+            scene = json.loads(scene_file.read_text())
+            name = Path(scene["audio_file"]).stem
+            order = int(scene.get("order", re.sub(r"\D", "", name) or 0))
+            jobs.append((order, name, lambda scene=scene, name=name: build_scene(run, scene, timing[name], topic, build / name)))
+
+    clips, failed = [], []
+    for order, name, builder in jobs:
         clip = build / f"{name}.mp4"
         clips.append(clip)
         if args.scene and order != args.scene:
             continue
-        dur = build_scene(run, scene, timing[name], topic, out_dir)
-        print(f"{name} ({scene['visual_type']}, {dur:.1f}s)")
-        if not args.no_check and not check(out_dir, name):
-            sys.exit(f"Fix the template or the scene content for {name}, then run again with --scene {order}.")
-        quality = "draft" if args.draft else "standard"
-        subprocess.run(HF + ["render", str(out_dir), "-o", str(clip), "--quality", quality, "--quiet"], check=True)
+        dur = builder()
+        print(f"{name} ({'film' if film else 'slides'}, {dur:.1f}s)")
+        if not args.no_check and not check(build / name, name):
+            failed.append(order)
+            if not args.check_only:
+                sys.exit(f"Fix scene {order} (see the errors above), then run again with --scene {order}.")
+            continue
+        if args.check_only:
+            continue
+        subprocess.run(HF + ["render", str(build / name), "-o", str(clip), "--quality", quality, "--quiet"], check=True)
         print(f"  rendered {clip.name}: {duration(clip):.2f}s")
 
+    if args.check_only:
+        sys.exit(f"check failed for scenes {failed}" if failed else 0)
     missing = [c.name for c in clips if not c.exists()]
     if missing:
-        sys.exit(f"Missing rendered scenes: {missing}. Render them first.")
-    concat = build / "concat.txt"
-    concat.write_text("".join(f"file '{c.name}'\n" for c in clips))
+        sys.exit(f"Not joined yet; still to render: {missing}")
+    joined = join(clips, run)
     final = run / "final.mp4"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(final)], check=True)
+    if film:
+        from sound import mix
+        mix(run, joined, final, board, timing)
+    else:
+        shutil.copy(joined, final)
     print(f"final.mp4: {duration(final):.1f}s, {len(clips)} scenes -> {final.relative_to(REPO)}")
 
 

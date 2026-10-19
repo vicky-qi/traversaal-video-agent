@@ -1,0 +1,556 @@
+<!--
+  Scene 1 "Inside a single cell" (pilot-cinematic), 8 shots, every picture built in code (SVG + GSAP).
+  One held world (#w1) carries shots 1-3 and 5-8: a single glowing cell that opens as a cutaway and is
+  built up part by part. Its camera (#w1cam) is moved with explicit, continuous tweens so the held world
+  never jumps between shots. Shot 4 (#s4) is a separate close-up inside the violet coating.
+    1 push_in   one dim cell floats in the dark, lights up from within, the camera closes in
+    2 push_in   the casing slides apart; graphite sheets slide in on the left        (label: Anode: usually graphite)
+    3 pan_left  violet particles pop in row by row on the right, a gap stays open    (label: Cathode: tiny particles)
+    4 orbit     close-up: round violet grains with amber lithium dots that glint
+    5 pull_out  back to the cutaway; copper foil, then silver foil slide in, shimmer to their tabs
+    6 parallax  blue electrolyte rises and soaks both sides; lithium ions (+) drift across the gap
+    7 static    the porous separator sheet drops into the gap; the sides never touch
+    8 pull_out  close on the holes as ions slip through, pull back, five parts brighten in turn (5 labels)
+-->
+<style>
+  #w1 { opacity: 1; }
+  .w1sky { position: absolute; inset: 0;
+    background: radial-gradient(1250px 760px at 50% 44%, #16295a 0%, #0e1a3d 42%, #0b1020 78%); }
+  .w1tint { position: absolute; inset: 0;
+    background: radial-gradient(900px 620px at 84% 76%, rgba(167, 139, 250, 0.11), rgba(167, 139, 250, 0) 70%),
+                radial-gradient(820px 560px at 12% 18%, rgba(56, 189, 248, 0.09), rgba(56, 189, 248, 0) 70%); }
+  .w1beam { position: absolute; inset: 0;
+    background: linear-gradient(112deg, rgba(125, 211, 252, 0) 26%, rgba(125, 211, 252, 0.055) 39%, rgba(125, 211, 252, 0) 53%); }
+  .vig { position: absolute; inset: 0;
+    background: radial-gradient(1450px 920px at 50% 46%, rgba(5, 8, 18, 0) 56%, rgba(5, 8, 18, 0.58) 100%); }
+  .scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 300px;
+    background: linear-gradient(180deg, rgba(5, 8, 18, 0) 0%, rgba(5, 8, 18, 0.5) 100%); }
+  .hud { position: absolute; left: 0; top: 0; }
+  .s4bg { position: absolute; inset: 0;
+    background: radial-gradient(1300px 860px at 50% 45%, #2a1f5e 0%, #171039 50%, #0b1020 88%); }
+  .s4key { position: absolute; inset: 0;
+    background: radial-gradient(900px 620px at 28% 22%, rgba(221, 214, 254, 0.12), rgba(221, 214, 254, 0) 70%); }
+</style>
+
+<!-- Shots 1-3 and 5-8: one cell, opened and built up part by part -->
+<div class="shot" id="w1">
+  <div class="w1sky"></div>
+  <div class="w1tint"></div>
+  <div class="w1beam"></div>
+  <div class="cam" id="w1cam">
+    <svg id="w1svg" width="1920" height="1080" viewBox="0 0 1920 1080" overflow="visible">
+      <defs>
+        <radialGradient id="gInterior" cx="50%" cy="46%" r="68%">
+          <stop offset="0" stop-color="#15274d" /><stop offset="0.62" stop-color="#0d1731" /><stop offset="1" stop-color="#080e21" />
+        </radialGradient>
+        <radialGradient id="gInnerGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#38bdf8" stop-opacity="0.5" /><stop offset="1" stop-color="#38bdf8" stop-opacity="0" />
+        </radialGradient>
+        <radialGradient id="gFaceGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0.55" /><stop offset="0.55" stop-color="#38bdf8" stop-opacity="0.22" />
+          <stop offset="1" stop-color="#38bdf8" stop-opacity="0" />
+        </radialGradient>
+        <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#26385a" /><stop offset="1" stop-color="#131d35" />
+        </linearGradient>
+        <linearGradient id="gFaceTop" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1a2846" /><stop offset="1" stop-color="#111a31" />
+        </linearGradient>
+        <linearGradient id="gFaceBot" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#111a31" /><stop offset="1" stop-color="#0c1428" />
+        </linearGradient>
+        <linearGradient id="gSheen" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#e0f2fe" stop-opacity="0" /><stop offset="0.5" stop-color="#e0f2fe" stop-opacity="0.16" />
+          <stop offset="1" stop-color="#e0f2fe" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="gSheet" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5b6b82" /><stop offset="0.35" stop-color="#3a4a61" /><stop offset="1" stop-color="#1f2a3d" />
+        </linearGradient>
+        <radialGradient id="gPart" cx="38%" cy="32%" r="72%">
+          <stop offset="0" stop-color="#ede9fe" /><stop offset="0.22" stop-color="#c4b5fd" /><stop offset="0.6" stop-color="#a78bfa" />
+          <stop offset="0.88" stop-color="#6f52d8" /><stop offset="1" stop-color="#47368f" />
+        </radialGradient>
+        <linearGradient id="gCu" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#7c2d12" /><stop offset="0.5" stop-color="#d97706" /><stop offset="1" stop-color="#92400e" />
+        </linearGradient>
+        <linearGradient id="gCuTab" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#d97706" /><stop offset="1" stop-color="#92400e" />
+        </linearGradient>
+        <linearGradient id="gAl" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#94a3b8" /><stop offset="0.5" stop-color="#f1f5f9" /><stop offset="1" stop-color="#a3b1c4" />
+        </linearGradient>
+        <linearGradient id="gAlTab" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f1f5f9" /><stop offset="1" stop-color="#94a3b8" />
+        </linearGradient>
+        <linearGradient id="gShimmer" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#7dd3fc" stop-opacity="0" /><stop offset="0.5" stop-color="#e0f2fe" stop-opacity="0.95" />
+          <stop offset="1" stop-color="#7dd3fc" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="gLiquid" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#38bdf8" stop-opacity="0.42" /><stop offset="0.5" stop-color="#38bdf8" stop-opacity="0.26" />
+          <stop offset="1" stop-color="#0ea5e9" stop-opacity="0.36" />
+        </linearGradient>
+        <linearGradient id="gSep" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#b8c4d4" /><stop offset="0.5" stop-color="#f8fafc" /><stop offset="1" stop-color="#c3cedc" />
+        </linearGradient>
+        <radialGradient id="gIon" cx="40%" cy="36%" r="64%">
+          <stop offset="0" stop-color="#fff7d6" /><stop offset="0.45" stop-color="#fbbf24" /><stop offset="1" stop-color="#e48a06" />
+        </radialGradient>
+        <clipPath id="cpOuter"><rect x="300" y="220" width="1320" height="600" rx="60" /></clipPath>
+        <clipPath id="cpLiquid"><rect x="314" y="234" width="1292" height="572" rx="44" /></clipPath>
+        <clipPath id="cpInterior"><rect x="326" y="246" width="1268" height="548" rx="36" /></clipPath>
+        <clipPath id="cpFoil"><rect x="290" y="100" width="1340" height="694" /></clipPath>
+        <clipPath id="cpCu"><rect x="336" y="190" width="20" height="598" /><rect x="328" y="150" width="56" height="48" rx="7" /></clipPath>
+        <clipPath id="cpAl"><rect x="1564" y="190" width="20" height="598" /><rect x="1536" y="150" width="56" height="48" rx="7" /></clipPath>
+        <mask id="mSep" maskUnits="userSpaceOnUse" x="930" y="236" width="60" height="568">
+          <rect x="930" y="236" width="60" height="568" fill="#fff" />
+          <g id="sepHoles"></g>
+        </mask>
+        <filter id="fBlur26" filterUnits="userSpaceOnUse" x="150" y="80" width="1620" height="880"><feGaussianBlur stdDeviation="26" /></filter>
+        <filter id="fBlur8" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="8" /></filter>
+        <filter id="fBlur4" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4" /></filter>
+        <filter id="fBlurNear" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="3.5" /></filter>
+        <filter id="fLit" filterUnits="userSpaceOnUse" x="200" y="80" width="1520" height="820" color-interpolation-filters="sRGB">
+          <feColorMatrix type="matrix" values="1.4 0 0 0 0.10  0 1.4 0 0 0.13  0 0 1.4 0 0.17  0 0 0 1 0" result="b" />
+          <feGaussianBlur in="b" stdDeviation="9" result="g" />
+          <feMerge><feMergeNode in="g" /><feMergeNode in="g" /><feMergeNode in="b" /></feMerge>
+        </filter>
+      </defs>
+
+      <!-- far dust motes -->
+      <g id="motesFar" data-depth="0.25"><g id="mfA"></g><g id="mfB"></g></g>
+
+      <g id="rig">
+        <!-- the cell's back: halo, dark interior, inner light -->
+        <g id="cellBack" data-depth="0.8">
+          <rect id="halo" x="300" y="220" width="1320" height="600" rx="60" fill="none" stroke="#38bdf8" stroke-width="30" filter="url(#fBlur26)" opacity="0" />
+          <rect x="326" y="246" width="1268" height="548" rx="36" fill="url(#gInterior)" />
+          <ellipse id="innerGlow" cx="960" cy="520" rx="640" ry="300" fill="url(#gInnerGlow)" opacity="0" />
+          <rect id="cathGlow" x="1016" y="262" width="560" height="512" rx="40" fill="#a78bfa" filter="url(#fBlur26)" opacity="0" />
+        </g>
+
+        <!-- electrolyte, behind the electrodes -->
+        <g id="liqBack" data-depth="0.7"><g clip-path="url(#cpLiquid)"><g id="liqRiseA">
+          <rect x="300" y="234" width="1320" height="600" fill="url(#gLiquid)" />
+          <rect x="300" y="234" width="1320" height="14" fill="#7dd3fc" opacity="0.3" />
+          <rect id="liqLit" x="300" y="234" width="1320" height="600" fill="#7dd3fc" opacity="0" />
+        </g></g></g>
+
+        <!-- electrodes and current collectors -->
+        <g id="elec" data-depth="0.85">
+          <g clip-path="url(#cpFoil)"><g id="cuFoil">
+            <rect x="336" y="190" width="20" height="598" rx="3" fill="url(#gCu)" />
+            <rect x="328" y="150" width="56" height="48" rx="7" fill="url(#gCuTab)" stroke="#fbbf24" stroke-opacity="0.45" stroke-width="2" />
+            <g clip-path="url(#cpCu)"><rect id="cuShim" x="320" y="800" width="80" height="130" fill="url(#gShimmer)" /></g>
+          </g></g>
+          <g clip-path="url(#cpFoil)"><g id="alFoil">
+            <rect x="1564" y="190" width="20" height="598" rx="3" fill="url(#gAl)" />
+            <rect x="1536" y="150" width="56" height="48" rx="7" fill="url(#gAlTab)" stroke="#ffffff" stroke-opacity="0.5" stroke-width="2" />
+            <g clip-path="url(#cpAl)"><rect id="alShim" x="1530" y="800" width="80" height="130" fill="url(#gShimmer)" /></g>
+          </g></g>
+          <g clip-path="url(#cpInterior)"><g id="sheets"></g></g>
+          <g id="parts"></g>
+          <use id="litSheets" href="#sheets" filter="url(#fLit)" opacity="0" />
+          <use id="litParts" href="#parts" filter="url(#fLit)" opacity="0" />
+          <use id="litCu" href="#cuFoil" filter="url(#fLit)" opacity="0" />
+          <use id="litAl" href="#alFoil" filter="url(#fLit)" opacity="0" />
+        </g>
+
+        <!-- lithium ions, behind the separator so they show through its holes -->
+        <g id="ionsL" data-depth="1.05"></g>
+
+        <!-- the separator -->
+        <g id="sepL" data-depth="0.85" opacity="0"><g id="sepDrop">
+          <rect id="sepGlow" x="930" y="246" width="60" height="548" rx="10" fill="#e2e8f0" filter="url(#fBlur8)" opacity="0" />
+          <g id="sepBody" mask="url(#mSep)">
+            <rect x="943" y="250" width="34" height="540" rx="4" fill="url(#gSep)" opacity="0.93" />
+          </g>
+          <g id="sepRims"></g>
+          <use id="litSep" href="#sepBody" filter="url(#fLit)" opacity="0" />
+        </g></g>
+
+        <!-- electrolyte, in front: soft tint, surface and light ripples -->
+        <g id="liqFront" data-depth="0.7"><g clip-path="url(#cpLiquid)"><g id="liqRiseB">
+          <rect x="300" y="234" width="1320" height="600" fill="#38bdf8" opacity="0.09" />
+          <g id="caustics"></g>
+          <g id="wave">
+            <path id="wavePath" fill="none" stroke="#7dd3fc" stroke-width="10" opacity="0.35" filter="url(#fBlur4)" />
+            <path id="wavePath2" fill="none" stroke="#e0f2fe" stroke-width="3" opacity="0.9" />
+          </g>
+        </g></g></g>
+
+        <!-- the casing: wall in section, closed face panels, outline -->
+        <g id="casing" data-depth="0.8">
+          <path id="wallRing" fill="url(#gWall)" fill-rule="evenodd" />
+          <rect x="326" y="246" width="1268" height="548" rx="36" fill="none" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="2" />
+          <g clip-path="url(#cpOuter)">
+            <g id="panTop">
+              <rect x="300" y="220" width="1320" height="300" fill="url(#gFaceTop)" />
+              <rect x="300" y="514" width="1320" height="6" fill="#0a1124" opacity="0.8" />
+            </g>
+            <g id="panBot">
+              <rect x="300" y="520" width="1320" height="300" fill="url(#gFaceBot)" />
+              <rect x="300" y="520" width="1320" height="3" fill="#24365a" opacity="0.7" />
+            </g>
+            <ellipse id="faceGlow" cx="960" cy="520" rx="660" ry="300" fill="url(#gFaceGlow)" opacity="0" />
+            <rect id="seamGlow" x="300" y="508" width="1320" height="24" fill="#38bdf8" filter="url(#fBlur8)" opacity="0" />
+            <rect id="seam" x="320" y="518.5" width="1280" height="3" fill="#e0f2fe" opacity="0" />
+            <polygon id="sheen" points="120,220 330,220 210,820 0,820" fill="url(#gSheen)" />
+          </g>
+          <rect id="outDim" x="300" y="220" width="1320" height="600" rx="60" fill="none" stroke="#475569" stroke-width="4" />
+          <g id="outLit" opacity="0">
+            <rect x="300" y="220" width="1320" height="600" rx="60" fill="none" stroke="#38bdf8" stroke-width="5" />
+            <path d="M380 222.5 H1540" stroke="#e0f2fe" stroke-width="2.5" stroke-linecap="round" opacity="0.7" />
+          </g>
+        </g>
+      </g>
+
+      <!-- near dust motes, soft and out of focus -->
+      <g id="motesNear" data-depth="1.6" filter="url(#fBlurNear)"></g>
+    </svg>
+  </div>
+  <!-- shot 8 leaders and bracket (fixed to the final framing) -->
+  <svg class="hud" id="hud8" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <g id="ldAn" opacity="0"></g><g id="ldCa" opacity="0"></g><g id="ldCc" opacity="0"></g>
+    <g id="ldEl" opacity="0"></g><g id="ldSe" opacity="0"></g>
+  </svg>
+  <div class="vig"></div>
+  <div class="scrim"></div>
+</div>
+
+<!-- Shot 4: close-up inside the violet coating -->
+<div class="shot" id="s4">
+  <div class="s4bg"></div>
+  <div class="cam">
+    <svg width="1920" height="1080" viewBox="0 0 1920 1080" overflow="visible">
+      <defs>
+        <radialGradient id="g4P" cx="38%" cy="32%" r="74%">
+          <stop offset="0" stop-color="#f1edff" /><stop offset="0.2" stop-color="#c9bbfd" /><stop offset="0.56" stop-color="#a78bfa" />
+          <stop offset="0.86" stop-color="#6b4fd2" /><stop offset="1" stop-color="#3b2b84" />
+        </radialGradient>
+        <radialGradient id="g4B" cx="40%" cy="35%" r="70%">
+          <stop offset="0" stop-color="#7a66c4" /><stop offset="0.6" stop-color="#43357f" /><stop offset="1" stop-color="#231a4b" />
+        </radialGradient>
+        <radialGradient id="gLi" cx="40%" cy="36%" r="64%">
+          <stop offset="0" stop-color="#fff6cf" /><stop offset="0.5" stop-color="#fbbf24" /><stop offset="1" stop-color="#d97706" />
+        </radialGradient>
+        <filter id="f4Back" filterUnits="userSpaceOnUse" x="-500" y="-500" width="2920" height="2080"><feGaussianBlur stdDeviation="6" /></filter>
+        <filter id="f4Halo" filterUnits="userSpaceOnUse" x="-500" y="-500" width="2920" height="2080"><feGaussianBlur stdDeviation="7" /></filter>
+        <filter id="f4Front" filterUnits="userSpaceOnUse" x="-900" y="-700" width="3720" height="2480"><feGaussianBlur stdDeviation="22" /></filter>
+      </defs>
+      <g id="c4back" data-depth="0.3" filter="url(#f4Back)" opacity="0.85"></g>
+      <g id="c4mid" data-depth="0.7">
+        <g id="c4parts"></g>
+        <g id="c4halo" filter="url(#f4Halo)"></g>
+        <g id="c4spark"></g>
+      </g>
+      <g id="c4front" data-depth="1.4" filter="url(#f4Front)" opacity="0.6"></g>
+    </svg>
+  </div>
+  <div class="s4key"></div>
+  <div class="vig"></div>
+  <div class="scrim"></div>
+</div>
+
+<script>
+  {
+    const NS = "http://www.w3.org/2000/svg";
+    const byId = (id) => document.getElementById(id);
+    const make = (tag, attrs, parent) => {
+      const e = document.createElementNS(NS, tag);
+      Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+      if (parent) parent.appendChild(e);
+      return e;
+    };
+    // Seeded PRNG (mulberry32): the same layout on every render.
+    let seed = 1016;
+    const rnd = () => {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+    // fromTo with explicit endpoints that does not apply its from-values before it starts.
+    const ft = (el, from, to, pos) => tl.fromTo(el, from, Object.assign({ immediateRender: false }, to), pos);
+    const reps = (start, period) => Math.max(0, Math.floor((SCENE.duration - start) / period) - 1);
+    const END = SCENE.duration;
+    const [t1, t2, t3, t4, t5, t6, t7, t8] = [1, 2, 3, 4, 5, 6, 7, 8].map(shotStart);
+
+    // ---------- build the world ----------
+    const rr = (x, y, w, h, r) =>
+      `M${x + r},${y} H${x + w - r} A${r},${r} 0 0 1 ${x + w},${y + r} V${y + h - r} A${r},${r} 0 0 1 ${x + w - r},${y + h} ` +
+      `H${x + r} A${r},${r} 0 0 1 ${x},${y + h - r} V${y + r} A${r},${r} 0 0 1 ${x + r},${y} Z`;
+    byId("wallRing").setAttribute("d", rr(300, 220, 1320, 600, 60) + " " + rr(326, 246, 1268, 548, 36));
+
+    // Dust motes: far ones in two drifting groups, near ones soft and few.
+    const mfA = byId("mfA"), mfB = byId("mfB"), twinkle = [];
+    for (let i = 0; i < 130; i++) {
+      const m = make("circle", { cx: (-260 + rnd() * 2440).toFixed(1), cy: (-200 + rnd() * 1480).toFixed(1),
+        r: (0.7 + rnd() * 1.7).toFixed(2), fill: rnd() < 0.35 ? "#7dd3fc" : "#e2e8f0",
+        opacity: (0.12 + rnd() * 0.4).toFixed(2) }, i % 2 ? mfA : mfB);
+      if (i % 11 === 0) twinkle.push(m);
+    }
+    const motesNear = byId("motesNear"), nearMotes = [];
+    for (let i = 0; i < 12; i++) {
+      const edge = i % 2 ? rnd() * 520 : 1400 + rnd() * 520;
+      nearMotes.push(make("circle", { cx: (i % 3 === 0 ? 300 + rnd() * 1320 : edge).toFixed(1), cy: (-60 + rnd() * 1000).toFixed(1),
+        r: (3 + rnd() * 5).toFixed(1), fill: "#bae6fd", opacity: (0.16 + rnd() * 0.22).toFixed(2) }, motesNear));
+    }
+
+    // Graphite: 13 thin dark-slate sheets, stacked.
+    const sheetsG = byId("sheets"), sheets = [], sheetHi = [];
+    for (let k = 0; k < 13; k++) {
+      const y = 262 + k * 40, g = make("g", {}, sheetsG);
+      make("rect", { x: 356, y, width: 544, height: 24, rx: 5, fill: "url(#gSheet)" }, g);
+      make("rect", { x: 362, y: y + 9, width: 532, height: 1.2, fill: "#0f172a", opacity: 0.5 }, g);
+      make("rect", { x: 362, y: y + 16, width: 532, height: 1.2, fill: "#0f172a", opacity: 0.4 }, g);
+      sheetHi.push(make("rect", { x: 362, y: y + 2, width: 532, height: 2.6, rx: 1.3, fill: "#a5b4c8", opacity: 0.5 }, g));
+      sheets.push(g);
+    }
+
+    // Cathode: ~230 small round violet particles, hex-packed, row by row.
+    const partsG = byId("parts"), parts = [], partDelay = [];
+    for (let r = 0; r < 16; r++) {
+      const cy = 279 + r * 31, off = r % 2 ? 18 : 0;
+      for (let c = 0; ; c++) {
+        const cx = 1041 + off + c * 36;
+        if (cx > 1545) break;
+        parts.push(make("circle", { cx: (cx + (rnd() - 0.5) * 1.6).toFixed(1), cy: (cy + (rnd() - 0.5) * 1.6).toFixed(1),
+          r: (14.9 + rnd() * 1.5).toFixed(2), fill: "url(#gPart)" }, partsG));
+        partDelay.push(r * 0.165 + c * 0.012);
+      }
+    }
+
+    // Separator holes (cut out of the sheet by the mask) and their rims.
+    const holesG = byId("sepHoles"), rimsG = byId("sepRims"), HOLE = (k) => 266 + k * 28;
+    for (let k = 0; k < 19; k++) {
+      make("circle", { cx: 960, cy: HOLE(k), r: 9, fill: "#000" }, holesG);
+      make("circle", { cx: 960, cy: HOLE(k), r: 9, fill: "none", stroke: "#94a3b8", "stroke-width": 1.6, opacity: 0.9 }, rimsG);
+    }
+
+    // Electrolyte surface wave and soft light ripples.
+    let wd = "M140 234";
+    for (let x = 140; x < 1800; x += 40) wd += ` Q${x + 20} ${x % 80 === 60 ? 228 : 240} ${x + 40} 234`;
+    byId("wavePath").setAttribute("d", wd);
+    byId("wavePath2").setAttribute("d", wd);
+    const caustics = [];
+    for (let i = 0; i < 6; i++) {
+      caustics.push(make("ellipse", { cx: 420 + i * 210 + rnd() * 60, cy: 300 + rnd() * 420, rx: 160 + rnd() * 120, ry: 26 + rnd() * 20,
+        fill: "#bae6fd", opacity: 0.11, filter: "url(#fBlur8)" }, byId("caustics")));
+    }
+
+    // Lithium ions: glowing amber dots with a small plus mark, at the separator hole heights.
+    const XL = 906, XR = 1014;
+    const ionDefs = [
+      { k: 2, side: 0, cross: [30.1, 32.85, 36.4, 38.7] },
+      { k: 5, side: 1, cross: [30.5, 33.0, 37.0, t8 + 0.02] },
+      { k: 8, side: 0, cross: [31.0, 36.6, t8 + 0.55] },
+      { k: 11, side: 1, cross: [30.3, 37.6, t8 + 0.28] },
+      { k: 14, side: 1, cross: [31.4, 37.3, t8 + 0.8] },
+      { k: 17, side: 1, cross: [30.8, 33.05, 38.2] },
+    ];
+    const ionsL = byId("ionsL"), ions = [];
+    ionDefs.forEach((d, i) => {
+      const g = make("g", {}, ionsL), inner = make("g", {}, g);
+      const halo = make("circle", { cx: 0, cy: 0, r: 15, fill: "#f59e0b", opacity: 0.5, filter: "url(#fBlur4)" }, inner);
+      make("circle", { cx: 0, cy: 0, r: 6.6, fill: "url(#gIon)" }, inner);
+      make("path", { d: "M-3.3 0 H3.3 M0 -3.3 V3.3", stroke: "#7c2d12", "stroke-width": 1.7, "stroke-linecap": "round" }, inner);
+      gsap.set(g, { x: d.side ? XR : XL, y: HOLE(d.k) });
+      gsap.set(inner, { scale: 0.2, opacity: 0, transformOrigin: "50% 50%" });
+      ions.push({ g, inner, halo, d, i });
+    });
+
+    // ---------- initial states (applied once, before any seek) ----------
+    gsap.set("#w1cam", { scale: 1, x: 0, y: 0 });
+    // SVG pivots are set once, on an untransformed element, so GSAP never shifts them to compensate later.
+    gsap.set(["#rig", "#halo", "#faceGlow"], { svgOrigin: "960 520" });
+    gsap.set(["#motesFar", "#motesNear", "#c4back", "#c4mid"], { svgOrigin: "960 540" });
+    gsap.set("#rig", { scale: 0.42, y: 40 });
+    gsap.set(["#liqRiseA", "#liqRiseB"], { y: 600 });
+    gsap.set("#sepDrop", { y: -900 });
+
+    // ---------- the world's camera: one continuous path through the held shots ----------
+    const cam = "#w1cam";
+    const C = (scale, x, y) => ({ scale, x, y });   // every camera tween sets all three, so any seek order lands the same
+    ft(cam, C(1, 0, 0), { ...C(1.03, 0, 0), duration: t2, ease: "sine.inOut" }, 0);                                 // 1 push_in
+    ft(cam, C(1.03, 0, 0), { ...C(1.11, 70, 0), duration: t3 - t2, ease: "sine.inOut" }, t2);                       // 2 push_in
+    ft(cam, C(1.11, 70, 0), { ...C(1.13, -170, 0), duration: t4 - t3 + 0.35, ease: "sine.inOut" }, t3);             // 3 pan_left
+    ft(cam, C(2.0, -664, 52), { ...C(1, 0, 0), duration: 3.06, ease: "power2.inOut" }, t5 - 0.175);                 // 5 pull_out
+    ft(cam, C(1, 0, 0), { ...C(0.975, 0, 0), duration: t6 - (t5 + 2.885), ease: "sine.inOut" }, t5 + 2.885);
+    ft(cam, C(0.975, 0, 0), { ...C(0.995, 0, 0), duration: t7 - t6, ease: "sine.inOut" }, t6);                      // 6 parallax
+    ft(cam, C(0.995, 0, 0), { ...C(1.012, 0, 0), duration: t8 - t7, ease: "sine.inOut" }, t7);                      // 7 static
+    ft(cam, C(2.6, 0, 52), { ...C(2.45, 0, 49), duration: 0.85, ease: "sine.out" }, t8);                            // 8 close on the holes
+    ft(cam, C(2.45, 0, 49), { ...C(0.86, 0, -23), duration: 1.05, ease: "power3.inOut" }, t8 + 0.85);               //   pull_out to the whole cell
+
+    // Ambient life for the whole scene: motes drift and twinkle, the halo breathes.
+    tl.fromTo("#mfA", { x: 0, y: 0 }, { x: 120, y: -55, duration: END, ease: "none" }, 0);
+    tl.fromTo("#mfB", { x: 0, y: 0 }, { x: -90, y: -75, duration: END, ease: "none" }, 0);
+    nearMotes.forEach((m, i) => {
+      tl.fromTo(m, { x: 0, y: 0 }, { x: (i % 2 ? 1 : -1) * (70 + rnd() * 90), y: -(30 + rnd() * 70), duration: END, ease: "none" }, 0);
+    });
+    twinkle.forEach((m, i) => {
+      const dur = 1.3 + (i % 3) * 0.4;
+      tl.fromTo(m, { opacity: 0.1 }, { opacity: 0.75, duration: dur, yoyo: true, repeat: reps(i * 0.37, dur), ease: "sine.inOut" }, i * 0.37);
+    });
+    ft("#motesFar", { scale: 1 }, { scale: 1.12, duration: t3, ease: "power1.inOut" }, 0);
+    ft("#motesNear", { scale: 1 }, { scale: 1.45, duration: t3, ease: "power1.inOut" }, 0);
+
+    // ---------- Shot 1: one dim cell in the dark lights up from within; the camera closes in ----------
+    ft("#rig", { scale: 0.42, y: 40 }, { scale: 1, y: 0, duration: t2, ease: "power1.inOut" }, 0);
+    ft("#halo", { opacity: 0, scale: 0.97 }, { opacity: 0.85, scale: 1, duration: 2.6, ease: "sine.inOut" }, 0.3);
+    ft("#halo", { opacity: 0.85 }, { opacity: 0.55, duration: 2.6, yoyo: true, repeat: reps(3.2, 2.6), ease: "sine.inOut" }, 3.2);
+    ft("#outDim", { opacity: 1 }, { opacity: 0, duration: 2.0, ease: "sine.inOut" }, 0.6);
+    ft("#outLit", { opacity: 0 }, { opacity: 1, duration: 2.0, ease: "sine.inOut" }, 0.6);
+    ft("#faceGlow", { opacity: 0, scale: 0.6 }, { opacity: 0.85, scale: 1, duration: 2.5, ease: "sine.inOut" }, 0.5);
+    ft("#sheen", { x: 0 }, { x: 1750, duration: 1.8, ease: "power1.inOut" }, 1.1);
+    ft(["#seam", "#seamGlow"], { opacity: 0 }, { opacity: 0.9, duration: 0.8, ease: "power2.in" }, t2 - 0.9);
+
+    // ---------- Shot 2: the casing slides apart; graphite sheets slide in on the left ----------
+    const open = t2 + 0.15;
+    ft("#panTop", { y: 0 }, { y: -320, duration: 1.1, ease: "power3.inOut" }, open);
+    ft("#panBot", { y: 0 }, { y: 320, duration: 1.1, ease: "power3.inOut" }, open);
+    ft(["#seam", "#seamGlow"], { opacity: 0.9 }, { opacity: 0, duration: 0.45 }, open + 0.1);
+    ft("#faceGlow", { opacity: 0.85 }, { opacity: 0, duration: 0.6 }, open + 0.1);
+    ft("#innerGlow", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.out" }, open + 0.1);
+    ft("#innerGlow", { opacity: 1 }, { opacity: 0.4, duration: 1.6, ease: "sine.inOut" }, open + 0.65);
+    sheets.forEach((s, k) => {
+      const at = t2 + 1.05 + (12 - k) * 0.17;   // bottom sheet first: the stack builds upward
+      tl.fromTo(s, { x: -580 }, { x: 0, duration: 0.6, ease: "power3.out" }, at);
+      ft(sheetHi[k], { opacity: 1 }, { opacity: 0.5, duration: 0.8, ease: "sine.out" }, at + 0.45);
+    });
+    const frameX = (x, s, tx) => 960 + (x - 960) * s + tx;
+    const centred = (el, cx) => { el.style.left = Math.round(cx - el.offsetWidth / 2) + "px"; return el; };
+    centred(label(S(2).text, 0, 70, t2 + 1.35, shotEnd(2)), frameX(628, 1.11, 70));
+
+    // ---------- Shot 3: the view drifts right; violet particles pop in row by row ----------
+    tl.fromTo(parts, { scale: 0, opacity: 0, transformOrigin: "50% 50%" },
+      { scale: 1, opacity: 1, duration: 0.42, ease: "back.out(2.2)", stagger: (i) => partDelay[i] }, t3 + 0.35);
+    ft("#cathGlow", { opacity: 0 }, { opacity: 0.45, duration: 3.0, ease: "sine.inOut" }, t3 + 0.6);
+    centred(label(S(3).text, 0, 70, t3 + 1.0, shotEnd(3)), frameX(1292, 1.13, -170));
+
+    // ---------- Shot 4: close-up of the coating, round grains with lithium dots, the camera circles ----------
+    {
+      const back = byId("c4back"), partsG4 = byId("c4parts"), haloG = byId("c4halo"), sparkG = byId("c4spark"), front = byId("c4front");
+      for (let r = 0; r < 9; r++) for (let c = 0; c < 13; c++) {
+        make("circle", { cx: (-220 + c * 196 + (r % 2 ? 98 : 0) + (rnd() - 0.5) * 30).toFixed(1),
+          cy: (-160 + r * 170 + (rnd() - 0.5) * 30).toFixed(1), r: (70 + rnd() * 18).toFixed(1), fill: "url(#g4B)" }, back);
+      }
+      const dotGroups = [], haloGroups = [], dotDelay = [], sparkSpots = [];
+      const R0 = 142, dx = 298, dy = 258;
+      for (let r = 0; r < 6; r++) for (let c = 0; c < 9; c++) {
+        const cx = -180 + c * dx + (r % 2 ? dx / 2 : 0) + (rnd() - 0.5) * 24;
+        const cy = -110 + r * dy + (rnd() - 0.5) * 24;
+        const R = R0 * (0.9 + rnd() * 0.14);
+        make("circle", { cx: cx.toFixed(1), cy: cy.toFixed(1), r: R.toFixed(1), fill: "url(#g4P)" }, partsG4);
+        make("circle", { cx: cx.toFixed(1), cy: cy.toFixed(1), r: (R - 2).toFixed(1), fill: "none", stroke: "#ddd6fe", "stroke-opacity": 0.3, "stroke-width": 2.5 }, partsG4);
+        const dg = make("g", { opacity: 0.18 }, partsG4), hg = make("g", { opacity: 0 }, haloG);
+        const a0 = rnd() * Math.PI, pts = [[0, 0]];
+        for (let k = 0; k < 6; k++) pts.push([0.4 * R * Math.cos(a0 + (k * Math.PI) / 3), 0.4 * R * Math.sin(a0 + (k * Math.PI) / 3)]);
+        for (let k = 0; k < 6; k++) pts.push([0.72 * R * Math.cos(a0 + Math.PI / 6 + (k * Math.PI) / 3), 0.72 * R * Math.sin(a0 + Math.PI / 6 + (k * Math.PI) / 3)]);
+        const dr = R * 0.06;
+        pts.forEach(([px, py]) => {
+          const x = cx + px + (rnd() - 0.5) * 6, y = cy + py + (rnd() - 0.5) * 6;
+          make("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: (dr * (0.85 + rnd() * 0.3)).toFixed(2), fill: "url(#gLi)" }, dg);
+          make("circle", { cx: x.toFixed(1), cy: y.toFixed(1), r: (dr * 2.7).toFixed(1), fill: "#f59e0b", opacity: 0.55 }, hg);
+          if (x > 160 && x < 1760 && y > 120 && y < 860 && rnd() < 0.05) sparkSpots.push([x, y]);
+        });
+        dotGroups.push(dg); haloGroups.push(hg);
+        dotDelay.push(Math.hypot(cx - 960, cy - 470) / 1100);
+      }
+      for (let i = 0; i < 3; i++) {
+        make("circle", { cx: [140, 1820, 1480][i], cy: [150, 300, -40][i], r: [250, 220, 200][i], fill: "url(#g4P)" }, front);
+      }
+      shot(4, "#s4");
+      const lit = t4 + 0.6;   // the lithium shows as the narration names the materials
+      tl.fromTo(dotGroups, { opacity: 0.18 }, { opacity: 1, duration: 0.8, ease: "sine.out", stagger: (i) => dotDelay[i] }, lit);
+      tl.fromTo(haloGroups, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "sine.out", stagger: (i) => dotDelay[i] }, lit);
+      ft(haloG, { opacity: 1 }, { opacity: 0.55, duration: 0.9, yoyo: true, repeat: 3, ease: "sine.inOut" }, lit + 1.4);
+      sparkSpots.slice(0, 16).forEach(([x, y], i) => {
+        const w = make("g", { transform: `translate(${x.toFixed(1)} ${y.toFixed(1)})` }, sparkG);
+        const p = make("path", { d: "M0,-15 C1.6,-3.2 3.2,-1.6 15,0 C3.2,1.6 1.6,3.2 0,15 C-1.6,3.2 -3.2,1.6 -15,0 C-3.2,-1.6 -1.6,-3.2 0,-15 Z",
+          fill: "#fff7d6", opacity: 0.95 }, w);
+        tl.fromTo(p, { scale: 0, rotate: 0, transformOrigin: "50% 50%" },
+          { scale: 1, rotate: 45, duration: 0.38, yoyo: true, repeat: 1, ease: "sine.inOut" }, t4 + 1.5 + (i % 8) * 0.42 + (i >> 3) * 0.2);
+      });
+      // Orbit: the shell turns the camera; the layers counter-move so the cluster seems to turn in depth.
+      tl.fromTo(back, { x: 70, rotate: 0 }, { x: -70, rotate: -3, duration: shotLen(4) + 0.35, ease: "sine.inOut" }, t4 - 0.175);
+      tl.fromTo("#c4mid", { x: 30, rotate: -2.5 }, { x: -30, rotate: 2.5, duration: shotLen(4) + 0.35, ease: "sine.inOut" }, t4 - 0.175);
+      tl.fromTo(front, { x: -240, y: 40 }, { x: 280, y: -30, duration: shotLen(4) + 0.35, ease: "sine.inOut" }, t4 - 0.175);
+    }
+
+    // ---------- Shot 5: pull back out; the two metal foils slide in and shimmer up to their tabs ----------
+    const cuIn = t5 + 3.4, alIn = t5 + 5.35;   // land on "copper" and on "aluminum"
+    tl.fromTo("#cuFoil", { y: 660 }, { y: 0, duration: 0.95, ease: "power3.out" }, cuIn);
+    tl.fromTo("#alFoil", { y: 660 }, { y: 0, duration: 0.95, ease: "power3.out" }, alIn);
+    const shim = t5 + 6.55;
+    ft(["#cuShim", "#alShim"], { y: 0 }, { y: -800, duration: 0.95, ease: "sine.inOut" }, shim);
+    ft(["#cuShim", "#alShim"], { y: 0 }, { y: -800, duration: 0.95, ease: "sine.inOut" }, shim + 1.05);
+
+    // ---------- Shot 6: the electrolyte rises and soaks both sides; ions drift across the gap ----------
+    tl.fromTo(["#liqRiseA", "#liqRiseB"], { y: 600 }, { y: 0, duration: 2.6, ease: "power1.inOut" }, t6 + 0.2);
+    tl.fromTo("#wave", { x: 0 }, { x: -240, duration: 3.0, ease: "none" }, t6);
+    caustics.forEach((c, i) => {
+      tl.fromTo(c, { x: 0 }, { x: (i % 2 ? 1 : -1) * 90, duration: END - t6, ease: "sine.inOut" }, t6);
+    });
+    // Parallax: liquid, electrodes, ions, casing and motes slide at different speeds.
+    const layers = [["#motesFar", 0.25], ["#cellBack", 0.8], ["#liqBack", 0.7], ["#elec", 0.85], ["#ionsL", 1.05],
+                    ["#sepL", 0.85], ["#liqFront", 0.7], ["#casing", 0.8], ["#motesNear", 1.6]];
+    layers.forEach(([sel, d]) => {
+      ft(sel, { x: 0 }, { x: -60 * d, duration: shotLen(6), ease: "sine.inOut" }, t6);
+      tl.set(sel, { x: 0 }, t8);   // re-centred under the cut to shot 8
+    });
+    ions.forEach(({ g, inner, halo, d, i }) => {
+      const appear = t6 + 3.8 + i * 0.12;
+      ft(inner, { scale: 0.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(2)" }, appear);
+      ft(halo, { opacity: 0.5 }, { opacity: 0.85, duration: 0.9, yoyo: true, repeat: reps(appear + 0.6, 0.9), ease: "sine.inOut" }, appear + 0.6);
+      let side = d.side;
+      d.cross.forEach((at) => {
+        const dur = at >= t8 ? 1.0 : 1.8;
+        ft(g, { x: side ? XR : XL }, { x: side ? XL : XR, duration: dur, ease: "sine.inOut" }, at);
+        side = 1 - side;
+      });
+    });
+
+    // ---------- Shot 7: the porous separator drops into the gap; the sides never touch ----------
+    const drop = t7 + 1.3;
+    ft("#sepL", { opacity: 0 }, { opacity: 1, duration: 0.25 }, drop);
+    ft("#sepDrop", { y: -900 }, { y: 0, duration: 1.15, ease: "power2.out" }, drop);
+    ft("#sepGlow", { opacity: 0 }, { opacity: 0.75, duration: 0.5, ease: "sine.out" }, drop + 0.9);
+    ft("#sepGlow", { opacity: 0.75 }, { opacity: 0.3, duration: 1.2, ease: "sine.inOut" }, drop + 1.4);
+    ft("#sepGlow", { opacity: 0.3 }, { opacity: 0.65, duration: 0.55, yoyo: true, repeat: 1, ease: "sine.inOut" }, drop + 2.7);
+
+    // ---------- Shot 8: ions slip through the holes; pull back; five parts brighten in turn ----------
+    const b0 = t8 + 1.92, bd = 0.35;
+    const pulse = (sel, at, peak = 1, rest = 0.32) => {
+      ft(sel, { opacity: 0 }, { opacity: peak, duration: 0.16, ease: "power2.out" }, at);
+      ft(sel, { opacity: peak }, { opacity: rest, duration: 0.75, ease: "sine.inOut" }, at + 0.16);
+    };
+    const hud = (g, d, dots) => {
+      make("path", { d, fill: "none", stroke: "#7dd3fc", "stroke-width": 2.2, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0.85 }, g);
+      dots.forEach(([x, y]) => make("circle", { cx: x, cy: y, r: 5, fill: "#e0f2fe" }, g));
+    };
+    const reveal8 = (sel, at) => ft(sel, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "sine.out" }, at);
+    // Final framing (scale 0.86, y -23): X = 960 + (x - 960) * 0.86, Y = 517 + (y - 540) * 0.86.
+    const MID = (y) => Math.round(y - 73 / 2);
+    // 1 anode (left)
+    pulse("#litSheets", b0);
+    const lAn = label("Anode", 0, MID(426), b0); lAn.style.left = Math.round(368 - lAn.offsetWidth) + "px";
+    hud(byId("ldAn"), "M374 426 H490", [[496, 426]]); reveal8("#ldAn", b0);
+    // 2 cathode (right)
+    pulse("#litParts", b0 + bd, 0.9);
+    label("Cathode", 1552, MID(426), b0 + bd);
+    hud(byId("ldCa"), "M1434 426 H1546", [[1428, 426]]); reveal8("#ldCa", b0 + bd);
+    // 3 current collectors: both foils at the same instant, one bracket to both tabs
+    pulse(["#litCu", "#litAl"], b0 + 2 * bd);
+    centred(label("Current collectors", 0, 64, b0 + 2 * bd), 960);
+    hud(byId("ldCc"), "M441 176 V150 H1479 V176 M960 150 V141", []); reveal8("#ldCc", b0 + 2 * bd);
+    // 4 electrolyte: the liquid in every gap
+    pulse("#liqLit", b0 + 3 * bd, 0.42, 0.12);
+    centred(label("Electrolyte", 0, 794, b0 + 3 * bd), 600);
+    hud(byId("ldEl"), "M600 788 V734", [[600, 728]]); reveal8("#ldEl", b0 + 3 * bd);
+    // 5 separator
+    pulse("#litSep", b0 + 4 * bd, 1, 0.45);
+    centred(label("Separator", 0, 794, b0 + 4 * bd), 960);
+    hud(byId("ldSe"), "M960 788 V720", [[960, 714]]); reveal8("#ldSe", b0 + 4 * bd);
+  }
+</script>

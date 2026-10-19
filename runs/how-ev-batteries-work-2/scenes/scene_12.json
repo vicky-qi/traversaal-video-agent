@@ -1,0 +1,28 @@
+{
+  "id": 12,
+  "order": 12,
+  "title": "The one thing to remember",
+  "narration": "Here is the one thing to remember. An electric car battery is many small cells, each moving lithium from one side to the other and back, wired together and managed as one pack. Everything else follows. Range starts with how much energy the pack stores. Charging speed depends on the power the car and charger can handle. How gently the cells are treated affects how fast they wear. And the battery is the main extra cost compared with a similar gas car.",
+  "sources": [
+    "https://kva.se/en/news/nobelpriset-i-kemi-2019-2",
+    "https://batteryuniversity.com/article/bu-302-series-and-parallel-battery-configurations",
+    "https://docs.ionworks.com/guide/batteries-101/battery-management-systems",
+    "https://www.kbb.com/hyundai/ioniq-5/2026/",
+    "https://www.geotab.com/blog/ev-battery-health/",
+    "https://www.energy.gov/sites/default/files/2025-01/2025.01.13_DOE_Incremental_Cost_Report_for_publication.pdf"
+  ],
+  "visual_type": "title",
+  "visual_content": {
+    "headline": "Small cells, one pack, one idea",
+    "subheadline": "Range, charging, lifespan and price all start in the cell"
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_12.wav",
+  "script_duration_sec": 30,
+  "final_duration_sec": 31.88,
+  "layout": {
+    "template": "title",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

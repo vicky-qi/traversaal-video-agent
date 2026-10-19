@@ -1,5 +1,7 @@
 # Scene templates
 
+**Films (cinematic definition, Oct 16) use `templates/film/`**: the scene shell, the helpers and a reference scene; see `templates/film/README.md`. The files below are the first definition's slide layouts, kept so runs made before Oct 16 still render.
+
 Owner: Jiaxin (with Cynthia). They follow `docs/visual-style.md`, which is based on Jiaxin's style guide.
 
 - `base.html`: the shared scene page: canvas, styles, captions, source line, timing and the scene's exit. `render/render.py` fills its three tokens (`__DURATION__`, `__SCENE_JSON__`, `__TYPE_SCRIPT__`).

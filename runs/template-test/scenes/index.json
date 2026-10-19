@@ -1,0 +1,49 @@
+{
+  "topic_slug": "template-test",
+  "status": "complete",
+  "scene_count": 5,
+  "total_duration_sec": 32.06,
+  "scenes": [
+    {
+      "id": 1,
+      "scene_file": "runs/template-test/scenes/scene_01.json",
+      "audio_file": "runs/template-test/audio/scene_01.wav",
+      "final_duration_sec": 7.039,
+      "visual_type": "chart",
+      "asset_status": "ready"
+    },
+    {
+      "id": 2,
+      "scene_file": "runs/template-test/scenes/scene_02.json",
+      "audio_file": "runs/template-test/audio/scene_02.wav",
+      "final_duration_sec": 6.847,
+      "visual_type": "chart",
+      "asset_status": "ready"
+    },
+    {
+      "id": 3,
+      "scene_file": "runs/template-test/scenes/scene_03.json",
+      "audio_file": "runs/template-test/audio/scene_03.wav",
+      "final_duration_sec": 5.353,
+      "visual_type": "chart",
+      "asset_status": "ready"
+    },
+    {
+      "id": 4,
+      "scene_file": "runs/template-test/scenes/scene_04.json",
+      "audio_file": "runs/template-test/audio/scene_04.wav",
+      "final_duration_sec": 6.249,
+      "visual_type": "quote",
+      "asset_status": "ready"
+    },
+    {
+      "id": 5,
+      "scene_file": "runs/template-test/scenes/scene_05.json",
+      "audio_file": "runs/template-test/audio/scene_05.wav",
+      "final_duration_sec": 6.569,
+      "visual_type": "image",
+      "asset_status": "ready"
+    }
+  ],
+  "problems": []
+}

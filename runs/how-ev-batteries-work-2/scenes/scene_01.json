@@ -1,0 +1,24 @@
+{
+  "id": 1,
+  "order": 1,
+  "title": "What's really inside an electric car?",
+  "narration": "You plug in an electric car and watch the range number on the dashboard climb, mile by mile. It looks effortless. But inside the battery, something is physically moving the whole time. What is it, and where does it go? Understand that one simple idea, and the big questions about electric cars start to make sense: how far they go, how fast they charge, how long they last, and what they cost.",
+  "sources": [
+    "https://www.ionworks.com/blog/batteries-101-how-do-batteries-work"
+  ],
+  "visual_type": "title",
+  "visual_content": {
+    "headline": "What's really inside an electric car?",
+    "subheadline": "One small idea explains range, charging, lifespan and price",
+    "background_description": "An electric car plugged into a charger at dusk, its dashboard range number glowing"
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_01.wav",
+  "script_duration_sec": 30,
+  "final_duration_sec": 27.86,
+  "layout": {
+    "template": "title",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "placeholder",
+  "review_flags": []
+}

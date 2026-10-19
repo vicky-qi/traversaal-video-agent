@@ -90,6 +90,18 @@ def main():
         print(f"{name}: {d:.1f}s (target {scene.get('duration_sec')}s), {len(lines)} sentences")
 
     (audio_dir / "timing.json").write_text(json.dumps(timing, indent=2) + "\n")
+    # Subtitle file for the whole film (scenes back to back), for players and uploads.
+    def ts(x):
+        h, rem = divmod(x, 3600); m, sec = divmod(rem, 60)
+        return f"{int(h):02d}:{int(m):02d}:{int(sec):02d},{int(round((sec % 1) * 1000)) % 1000:03d}"
+    srt, k, offset = [], 1, 0.0
+    for name in sorted(timing["scenes"]):
+        sc = timing["scenes"][name]
+        for line in sc["lines"]:
+            srt.append(f"{k}\n{ts(offset + line['start'])} --> {ts(offset + line['end'])}\n{line['text']}\n")
+            k += 1
+        offset += sc["duration"]
+    (audio_dir / "subtitles.srt").write_text("\n".join(srt))
     total = sum(s["duration"] for s in timing["scenes"].values())
     off = (total - target_total) / target_total if target_total else 0
     print(f"total: {total:.1f}s vs script target {target_total:.0f}s ({off:+.0%})")

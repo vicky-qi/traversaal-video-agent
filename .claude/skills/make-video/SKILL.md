@@ -1,10 +1,12 @@
 ---
 name: make-video
-description: Turn a one-line prompt into a narrated, fact-checked ~7-minute explainer MP4 by running the intake, researcher, fact-checker, scriptwriter and scene-builder subagents in order, then the voiceover and render scripts. Use when the user asks to make a video from a prompt, or runs /make-video.
-argument-hint: '"<prompt>"'
+description: Turn a one-line prompt into a narrated, fact-checked ~7-minute cinematic explainer MP4 (a short documentary-style film, not slides) by running the intake, researcher, fact-checker, scriptwriter, storyboard and scene-builder subagents in order, then the voiceover, render and sound scripts. Use when the user asks to make a video from a prompt, or runs /make-video.
+argument-hint: '"<prompt>" [--minutes 7] [--slug name]'
 ---
 
-# make-video: prompt → narrated MP4
+# make-video: prompt → cinematic explainer MP4
+
+The film follows `Video Definition v2: Cinematic Explainer` (Oct 16): one question followed to its answer, told through moving full-frame pictures, camera work, music and sound, with every fact verified.
 
 Owner: Julia. Adapted from the orchestrator on Jiaxin's pipeline branch to the file names on main (`CLAUDE.md`, `docs/scene-format.md`).
 
@@ -15,6 +17,9 @@ Run every command from the repo root. Video tools run through `render/env.sh` (s
 ## 0. Start
 
 1. The prompt is the text after `/make-video`. If there is none, ask for it and stop.
+   - `--minutes N` (default 7): the film's target length. Pass it to the intake agent ("Target length: N minutes") and to every `check_script.py` call (`--minutes N`). A 2-minute film is the quick demo the web app offers.
+   - `--slug name`: the web app creates `runs/<name>/` with a `request.json` before starting you; pass the slug to the intake agent so every file lands in that folder.
+   - When run from the web app (headless, `claude -p`), never stop to ask the user anything: make the sensible choice, note it in `run_log.md`, and go on.
 2. Check the video tools once: `render/env.sh ffmpeg -version`. If it fails, stop and point the user to the setup in `render/README.md`.
 3. Note the start time (`date "+%Y-%m-%d %H:%M:%S"`). After each stage, append one line to `runs/<slug>/run_log.md`: `| <stage> | <start> | <end> | ok/failed | <short note> |` (create the file with a header row after the intake stage, once the slug is known).
 
@@ -49,7 +54,7 @@ It writes `03_checked.md` with the verdict counts added up. Log `fact-check` wit
 Use the **scriptwriter** subagent: "Topic slug: <slug>." Then run:
 
 ```bash
-python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json
+python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json --minutes <N>
 ```
 
 If it prints any `FAIL` line, send those lines back for a revision (see **Revisions** below), at most 2 times. Log `script`.
@@ -68,39 +73,50 @@ render/env.sh python render/voiceover.py runs/<slug>
 
 Log `length-fit` with the measured total.
 
-## 6. Fact-check the final script (at most 2 rounds)
+## 6. Storyboard
 
-This runs after the length fit so it checks the final wording. Jiaxin's test found the script writer stretching facts that were correct in the research.
+Use the **storyboard** subagent: "Topic slug: <slug>." It reads the brief's story spine and art direction, the script and `audio/timing.json`, and writes `runs/<slug>/05_storyboard.json`. Then run:
 
-1. Use a **fresh fact-checker** subagent in Mode 2: "Topic slug: <slug>. Check the script (Mode 2)." It writes `runs/<slug>/05_script_check.md`.
-2. `PASS`: go to step 7.
-3. `FAIL`: send the scriptwriter a revision with the failing sentences and reasons, run `check_script.py`, then go back to 1.
-4. After 2 rounds, if sentences still fail, send a revision telling the scriptwriter to **delete** every failing sentence. Unverified claims never reach the final video.
-5. If the wording changed, run `voiceover.py` again (a length warning here is logged, not looped on).
+```bash
+python3 .claude/skills/make-video/check_storyboard.py runs/<slug>
+```
 
-Log `script-check`.
+If it prints any `FAIL`, send the failures back to the storyboard agent (at most 2 times). Log `storyboard` with the numbers line (shots, per minute, camera movement, on-screen text).
 
-## 7. Scene files
+## 7. Final fact-check of script and storyboard (at most 2 rounds)
 
-Use the **scene-builder** subagent: "Topic slug: <slug>." Check that `runs/<slug>/scenes/index.json` has `"status": "complete"`. If it is incomplete, read its `problems`: missing or ambiguous audio means rerun `voiceover.py`; incomplete `visual_content` means a script revision. Log `scenes`, including any `review_flags`.
+This runs after the length fit and the storyboard, so it checks the final words and pictures. Jiaxin's test and the Oct 7 full run both found the script stretching facts that were correct in the research.
 
-## 8. Render
+1. Use a **fresh fact-checker** subagent in Mode 2: "Topic slug: <slug>. Final check (Mode 2): script and storyboard." It writes `runs/<slug>/06_final_check.md`.
+2. `PASS`: go to step 8.
+3. `FAIL` on narration: send the scriptwriter a revision (see **Revisions**), run `check_script.py` and `voiceover.py` again (only changed sentences are re-voiced), then ask the storyboard agent to update the shots of the changed scenes, and go back to 1. In round 2, ask the fact-checker to re-check only the changed scenes.
+4. `FAIL` on a shot: send the storyboard agent the failing shots and reasons, run `check_storyboard.py`, then go back to 1.
+5. After 2 rounds, tell the scriptwriter to **delete** every sentence that still fails, and the storyboard agent to remove every shot that still fails. Unverified claims never reach the final film.
+
+Log `final-check`.
+
+## 8. Scene building (parallel, one builder per scene)
+
+Launch one **scene-builder** subagent per scene, **all in the same message**: "Topic slug: <slug>. Scene id: <N>." Each writes `runs/<slug>/scenes/scene_NN/scene.html` and checks it with `render.py --check-only`. When all have finished, check that every scene has a `scene.html`; re-launch a builder once for any scene that is missing or whose check failed. Log `scenes`.
+
+## 9. Render and sound
 
 ```bash
 render/env.sh python render/render.py runs/<slug>
 ```
 
-It checks each scene with `hyperframes check`, renders it and joins everything into `runs/<slug>/final.mp4`. If a scene fails its check, the error names the scene: if the cause is content (text too long), send a script revision for that scene, rerun steps 5–7 as needed, then `render.py runs/<slug> --scene <N>`; if it is a template problem, stop and report it. Log `render` with the final length.
+It checks and renders each scene, joins them, then mixes a music bed (the storyboard's `music.mood`) and the shots' sound effects under the voice (`render/sound.py`), writing `runs/<slug>/final.mp4`. If a scene fails its check, send the error to a scene builder for that scene ("Fix this check failure: …"), then run `render.py runs/<slug> --scene <N>`. One repair attempt per scene; if it still fails, log `render failed` and report it. Log `render` with the final length.
 
-## 9. Report
+## 10. Report
 
 Add one row to `tests/log.md`, then tell the user briefly:
 
 - the video path and its length vs the 7-minute target
-- the fact-check results (verified, rejected, script-check rounds, sentences deleted)
+- the film's numbers from `check_storyboard.py` (shots per minute, camera movement, on-screen text)
+- the fact-check results (verified, rejected, final-check rounds, sentences or shots removed)
 - the assumptions the intake agent made (from `01_brief.md`), since the user never confirmed them
 - time per stage (from `run_log.md`) and the total
-- anything that failed or needs a human look (`review_flags`, thin scenes)
+- anything that failed or needs a human look
 
 ## Revisions
 

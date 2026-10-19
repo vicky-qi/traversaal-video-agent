@@ -1,0 +1,32 @@
+{
+  "id": 11,
+  "order": 11,
+  "title": "What comes next",
+  "narration": "Several new battery types are on the way. Toyota aims to launch its first car with an all-solid-state battery by 2028, and BYD plans to sell its first from 2027. Sodium-ion batteries use sodium instead of lithium, and CATL says large-scale production is due by the fourth quarter of 2026. And BYD claims its second-generation Blade battery charges from 10 to 70 percent in five minutes on its own ultra-fast chargers. For now, these are targets and claims, not everyday reality.",
+  "sources": [
+    "https://www.ess-news.com/?p=6877",
+    "https://www.iea.org/reports/global-ev-outlook-2026/electric-vehicle-batteries",
+    "https://cnevpost.com/2025/04/21/catl-sodium-ion-12c-shenxing-freevoy-dual-power-batteries/",
+    "https://carnewschina.com/2026/04/22/catl-to-mass-produce-sodium-ion-batteries-in-2026-targeting-600-km-range-in-the-future/",
+    "https://www.evinfrastructurenews.com/ev-networks/byd-begins-europe-expansion-of-its-1-500kw-flash-chargers-as-it-hits-10-000-stations-in-china",
+    "https://carnewschina.com/2026/03/08/byds-flash-offensive-5-minute-blade-charging-cracks-nios-swap-legacy/"
+  ],
+  "visual_type": "bullets",
+  "visual_content": {
+    "heading": "Announced next-generation batteries",
+    "bullets": [
+      "Solid-state: Toyota targets its first car by 2028",
+      "Sodium-ion: CATL large-scale production due by late 2026",
+      "Faster charging: BYD claims 10–70% in 5 minutes on its 1,500-kW chargers"
+    ]
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_11.wav",
+  "script_duration_sec": 35,
+  "final_duration_sec": 40.19,
+  "layout": {
+    "template": "bullets",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

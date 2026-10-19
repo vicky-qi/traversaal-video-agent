@@ -5,7 +5,6 @@
 runs/**/*.mp4
 runs/**/*.mov
 runs/**/audio/
-runs/**/scenes/
 
 # Tools
 node_modules/

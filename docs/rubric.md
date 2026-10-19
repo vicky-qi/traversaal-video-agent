@@ -2,7 +2,7 @@
 
 Owner: Jiaxin. Used to score every test video (key result: average 4 out of 5 or higher). At least two people score each video independently, then compare; if two scores differ by more than 1 point, discuss and agree.
 
-Score each criterion from 1 to 5. Each level has one sentence describing what it looks like, so two people scoring the same video give similar scores.
+Score each of the six criteria from 1 to 5. Each level has one sentence describing what it looks like, so two people scoring the same video give similar scores.
 
 ## Criteria
 
@@ -56,21 +56,33 @@ Score each criterion from 1 to 5. Each level has one sentence describing what it
 | 2 | One fact is wrong, or several are unsourced or overstated. |
 | 1 | Several facts are wrong, or sources are invented. |
 
+### 6. Cinematic quality: does it feel like a film, not a narrated slide deck?
+
+Added Oct 16 with the cinematic definition (Video Definition v2).
+
+| Score | What it looks like |
+|---|---|
+| 5 | Feels like a short documentary: full-frame pictures, constant purposeful motion, music and sound, and the story carried mostly by images. |
+| 4 | Clearly a film; a few shots are static or rely on text. |
+| 3 | Mixed: some animated shots, but long stretches of static pictures or text. |
+| 2 | Mostly cards or text with occasional motion. |
+| 1 | A narrated slide deck. |
+
 Accuracy is checked against `03_checked.md` and, for any doubt, the source page itself. A score of 2 or lower on accuracy means the video fails, whatever its other scores.
 
 ## Scoring sheet
 
-One row per scorer per prompt (prompts from `tests/prompts.md`). Average = mean of the five scores.
+One row per scorer per prompt (prompts from `tests/prompts.md`). Average = mean of the six scores.
 
-| Date | Prompt # | Scorer | Clarity | Visual | Narration | Coherence | Accuracy | Average | Length (min:s) | Notes |
-|---|---|---|---|---|---|---|---|---|---|---|
-| | 1 | | | | | | | | | |
-| | 2 | | | | | | | | | |
-| | 3 | | | | | | | | | |
-| | 4 | | | | | | | | | |
-| | 5 | | | | | | | | | |
-| | 6 | | | | | | | | | |
-| | 7 | | | | | | | | | |
-| | 8 | | | | | | | | | |
-| | 9 | | | | | | | | | |
-| | 10 | | | | | | | | | |
+| Date | Prompt # | Scorer | Clarity | Visual | Narration | Coherence | Accuracy | Cinematic | Average | Length (min:s) | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| | 1 | | | | | | | | | | |
+| | 2 | | | | | | | | | | |
+| | 3 | | | | | | | | | | |
+| | 4 | | | | | | | | | | |
+| | 5 | | | | | | | | | | |
+| | 6 | | | | | | | | | | |
+| | 7 | | | | | | | | | | |
+| | 8 | | | | | | | | | | |
+| | 9 | | | | | | | | | | |
+| | 10 | | | | | | | | | | |

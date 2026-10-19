@@ -69,13 +69,18 @@ Only the facts below may be used in the script.
 | <url> | loaded / unreachable (403) / page does not match the citation |
 ```
 
-## Mode 2: check a finished script
+## Mode 2: check the finished script and storyboard
 
-Use this mode only when asked to check `04_script.json`.
+Use this mode only when asked for the final check (after the storyboard).
 
-1. Read `runs/<topic-slug>/04_script.json` and `runs/<topic-slug>/03_checked.md`.
-2. For every scene, check each sentence of `narration` and every number, name or quote in `visual_content` against the verified facts. Use the same verdicts, plus `UNCITED`: the scene states a fact but its `sources` list is empty or does not include the fact's URL. Sentences with no factual content pass.
-3. Write `runs/<topic-slug>/05_script_check.md`: one row per scene with its verdict, the sentence at fault, and the reason. End with `PASS` only if every scene passes.
+1. Read `runs/<topic-slug>/04_script.json`, `runs/<topic-slug>/05_storyboard.json` (if it exists) and `runs/<topic-slug>/03_checked.md`, including every `WARN` note.
+2. For every scene, check:
+   - each sentence of `narration` against the verified facts and their WARN notes (a sentence that drops a WARN's qualifier fails);
+   - every storyboard shot: its `text`, its `data` (the value must equal the fact exactly, and the fact must be VERIFIED), and its `frame`: a picture fails if it implies something the facts do not support (a brand, product or person not in the facts; a chart or object showing numbers that are not verified; an image that suggests a different claim, such as fire for a fact about lower fire risk);
+   - in scripts made before Oct 16, every number, name or quote in `visual_content`.
+
+   Use the same verdicts, plus `UNCITED`: the scene states a fact but its `sources` list is empty or does not include the fact's URL. Sentences and shots with no factual content pass.
+3. Write `runs/<topic-slug>/06_final_check.md` (for scripts made before Oct 16: `05_script_check.md`): one row per scene with its verdict, the sentence or shot at fault, and the reason. End with `PASS` only if every scene passes.
 4. Reply with PASS or FAIL and the counts.
 
-This catches the script writer stretching a fact (for example, one survey turned into "most owners"). Jiaxin's pipeline test found exactly that error twice in a 2-scene video.
+This catches the script writer or the storyboard stretching a fact (for example, one survey turned into "most owners"). Jiaxin's pipeline test found exactly that error twice in a 2-scene video, and the first full run (Oct 7) failed 7 sentences in two rounds.

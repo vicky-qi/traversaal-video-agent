@@ -1,0 +1,245 @@
+{
+  "topic": "How Electric Car Batteries Work",
+  "art_direction": {
+    "style": "flat vector illustration with soft gradients and glow, like an animated science documentary",
+    "palette": [
+      "#0b1020",
+      "#38bdf8",
+      "#f59e0b",
+      "#e2e8f0",
+      "#a78bfa"
+    ],
+    "mood": "curious and calm, with a sense of discovery",
+    "hero_visual": "one glowing battery cell, opened as a cutaway, that the film keeps returning to"
+  },
+  "music": {
+    "mood": "curious"
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "transition_in": "fade",
+      "shots": [
+        {
+          "n": 1,
+          "sentence": 0,
+          "offset": 0,
+          "frame": "Dark navy field (#0b1020) with a soft radial glow. A single rounded-rectangle battery cell floats alone in the centre of the dark, small and dim at first, just a slate outline. It lights up from within with a sky-blue (#38bdf8) glow that slowly swells while faint dust-like motes drift past it; the camera pushes in toward it until it fills most of the frame. Only this one cell is ever on screen: no other cells, no pack.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "rise",
+          "facts": []
+        },
+        {
+          "n": 2,
+          "sentence": 1,
+          "offset": 0,
+          "frame": "The glowing cell's casing slides apart, top half up and bottom half down, opening it as a wide cutaway (the hero visual): a dark interior inside a sky-blue glowing rounded outline. On the left half, thin dark-slate graphite sheets slide in from the left one by one and stack horizontally, like a neat stack of thin layers. The right half stays empty for now.",
+          "camera": "push_in",
+          "text": "Anode: usually graphite",
+          "data": null,
+          "sound": "whoosh",
+          "facts": [
+            "Q1-F1",
+            "Q1-F2"
+          ]
+        },
+        {
+          "n": 3,
+          "sentence": 2,
+          "offset": 0,
+          "frame": "Same cutaway; the view drifts toward the right half, where hundreds of small round violet (#a78bfa) particles pop into place, row by row, building a thick coating opposite the graphite stack. A narrow empty gap stays open down the middle between the two sides.",
+          "camera": "pan_left",
+          "text": "Cathode: tiny particles",
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F2"
+          ]
+        },
+        {
+          "n": 4,
+          "sentence": 2,
+          "offset": 4.5,
+          "frame": "Close-up inside the violet coating: a cluster of round particles fills the frame, packed side by side as round grains (not stacked sheets). Tiny amber (#f59e0b) dots of lithium sit nested inside each particle and glint softly as the camera slowly circles the cluster.",
+          "camera": "orbit",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F2",
+            "Q1-F8"
+          ]
+        },
+        {
+          "n": 5,
+          "sentence": 3,
+          "offset": 0,
+          "frame": "The camera pulls back out to the full cutaway. A thin copper-coloured foil (a dark shade of the amber) slides in along the far left edge, under the graphite stack, then a thin pale silver foil (#e2e8f0) slides in along the far right edge, under the violet coating. Each foil ends in a small tab poking out of the top of the cell; a faint sky-blue shimmer runs along both foils up to their tabs.",
+          "camera": "pull_out",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F3"
+          ]
+        },
+        {
+          "n": 6,
+          "sentence": 4,
+          "offset": 0,
+          "frame": "Translucent sky-blue liquid rises from the bottom of the cutaway, filling the spaces between the graphite sheets, around the violet particles and the gap in the middle, until both sides are soaked. A few amber lithium ions, each a small glowing dot with a tiny plus mark drawn on it, drift slowly across the liquid in the middle gap and back. Liquid, ions and electrode layers sit on separate depth layers that slide at different speeds.",
+          "camera": "parallax",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F4"
+          ]
+        },
+        {
+          "n": 7,
+          "sentence": 5,
+          "offset": 0,
+          "frame": "A thin pale sheet (#e2e8f0) dotted with tiny round holes drops from above the cell and slides down into the narrow middle gap, between the graphite side and the violet side. The two sides sit close on either side of it but never touch; the cell stays calm and evenly glowing, no sparks.",
+          "camera": "static",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F5"
+          ]
+        },
+        {
+          "n": 8,
+          "sentence": 5,
+          "offset": 5.8,
+          "frame": "Close on the sheet's holes: amber lithium ions slip through the tiny holes one by one, while the much bigger violet particles and graphite sheets stay on their own sides. The camera pulls back to the whole cutaway cell, centred as a glowing sky-blue rounded rectangle: copper foil, graphite stack, separator sheet, violet coating and silver foil side by side in the translucent blue liquid. Then exactly five parts brighten in turn, one beat each: the graphite stack (anode); the violet coating (cathode); the copper foil and the silver foil together, lighting at the same instant as ONE part (current collectors); the blue liquid filling every gap (electrolyte); and the separator sheet. Five small pill labels sit beside the five parts, with one shared label joined by a thin bracket to both foils.",
+          "camera": "pull_out",
+          "text": "Anode, cathode, current collectors, electrolyte, separator",
+          "data": null,
+          "sound": "chime",
+          "facts": [
+            "Q1-F1",
+            "Q1-F5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "transition_in": "match_cut",
+      "shots": [
+        {
+          "n": 1,
+          "sentence": 0,
+          "offset": 0,
+          "frame": "Opens close on a glowing sky-blue rounded rectangle at the same size and position as the cell that ended the last scene: it is the lit panel of a plain charging post. The camera pulls back to a quiet night street (navy sky, a few soft stars, dark road): a simple, generic car silhouette with no badges or model details parked beside the post, a cable running from the post into the car's side. A bright sky-blue pulse travels down the cable into the car.",
+          "camera": "pull_out",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": [
+            "Q1-F7"
+          ]
+        },
+        {
+          "n": 2,
+          "sentence": 1,
+          "offset": 0,
+          "frame": "Inside the cutaway cell (the hero visual), same layout as before. A plain charger lead, drawn as two thin lines, comes down from the top of the frame to the two foil tabs. A soft pale-white (#e2e8f0) glow runs along the whole lead and holds there, steady and even, as a halo on the tabs: the charger's push, drawn as a glow, not as moving dots. Amber lithium ions pop out of the violet particles on the right and stream left through the blue liquid, slip through the separator's holes and head for the graphite sheets; the view drifts toward the graphite side on the left with them.",
+          "camera": "pan_right",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F7",
+            "Q1-F5"
+          ]
+        },
+        {
+          "n": 3,
+          "sentence": 1,
+          "offset": 6.5,
+          "frame": "Close-up on the graphite stack: thin slate sheets lie stacked like a deck of cards seen side-on. Amber ions arrive and slide in flat between the sheets, each gap parting slightly as an ion slips in, like a card pushed into a deck, until every gap is lined with a glowing amber row.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "chime",
+          "facts": [
+            "Q1-F8"
+          ]
+        },
+        {
+          "n": 4,
+          "sentence": 2,
+          "offset": 0,
+          "frame": "A flat vector hillside at night in the same palette: a navy-to-violet hill, a small pump at its foot beside a low pool of sky-blue water, and on the hilltop a rounded tank shaped like the cell, its rim glowing sky blue. The pump pushes water up a pipe along the slope into the tank, and the tank's water level rises until it is full.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F7"
+          ]
+        },
+        {
+          "n": 5,
+          "sentence": 3,
+          "offset": 0,
+          "frame": "Same hillside: a valve at the base of the full tank swings open and the water rushes back down the pipe, turning a small waterwheel at the foot of the hill as the tank's level drops. Stars, hill and pipe sit on separate depth layers that slide at different speeds.",
+          "camera": "parallax",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": [
+            "Q1-F6"
+          ]
+        },
+        {
+          "n": 6,
+          "sentence": 4,
+          "offset": 0,
+          "frame": "Back inside the cutaway cell. Amber ions slide out from between the graphite sheets and drift right through the blue liquid and the separator's holes, settling back into the violet particles; the view drifts toward the violet side on the right with them.",
+          "camera": "pan_left",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F6",
+            "Q1-F5"
+          ]
+        },
+        {
+          "n": 7,
+          "sentence": 4,
+          "offset": 3.0,
+          "frame": "The camera pulls back from the cell to show a simple outside circuit: one glowing circuit line runs from the copper-side tab at top left, up to a small plain lamp (a round flat-vector bulb) at the top of the frame, and back down into the silver-side tab at top right. Small sky-blue electron dots race around the line in that direction, out of the copper tab, through the lamp and into the silver tab, while the amber ions keep drifting right inside the cell; as the dots pass through it, the lamp's bulb fills with a soft warm glow. Nothing else is in the circuit: no car, no wheels.",
+          "camera": "pull_out",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F6"
+          ]
+        },
+        {
+          "n": 8,
+          "sentence": 5,
+          "offset": 0,
+          "frame": "The whole cutaway cell (the hero visual), centred and glowing, with the short two-line charger lead at its top touching both foil tabs. Amber ions sweep left into the graphite, then right back into the violet particles, then left again, several times in a smooth rhythm. On each leftward sweep the charger lead fills with its soft pale-white (#e2e8f0) glow, steady along its length, and it fades as the ions sweep back right. The sheets, particles and separator stay whole and unchanged throughout and the cell's sky-blue outline glow stays steady. The slow orbit ends favouring the violet particle side, which brightens slightly as the last ions settle there.",
+          "camera": "orbit",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": [
+            "Q1-F8",
+            "Q1-F6",
+            "Q1-F7"
+          ]
+        }
+      ]
+    }
+  ]
+}

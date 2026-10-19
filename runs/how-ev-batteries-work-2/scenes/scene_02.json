@@ -1,0 +1,24 @@
+{
+  "id": 2,
+  "order": 2,
+  "title": "A fuel tank vs. a battery",
+  "narration": "Think about filling up a gas car. You pour fuel into the tank, the engine burns it, and once it is burned, it is gone. A battery works another way. Nothing is poured in, and nothing is burned. Instead, tiny charged bits of lithium shuttle from one side of the battery to the other, and back again. The two sides are not broken down; they just take turns holding the lithium. That idea runs from one small cell all the way up to the whole pack.",
+  "sources": [
+    "https://kva.se/en/news/nobelpriset-i-kemi-2019-2"
+  ],
+  "visual_type": "image",
+  "visual_content": {
+    "image_description": "Split screen: a fuel nozzle filling a gas car's tank on the left, an electric car plugged into a charger on the right",
+    "caption": "Fuel gets burned. Lithium just moves back and forth.",
+    "image_path": null
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_02.wav",
+  "script_duration_sec": 35,
+  "final_duration_sec": 30.43,
+  "layout": {
+    "template": "image",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "placeholder",
+  "review_flags": []
+}

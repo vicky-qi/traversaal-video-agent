@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traversaal Video Studio</title>
+<style>
+  :root {
+    --bg: #0b1020; --panel: #111a2e; --panel2: #16213a; --line: #24324f; --fg: #e8edf5; --muted: #93a1b8;
+    --accent: #38bdf8; --accent2: #f59e0b; --good: #34d399; --bad: #f87171;
+    --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font); }
+  header { display: flex; align-items: center; gap: 14px; padding: 18px 28px; border-bottom: 1px solid var(--line); }
+  header .logo { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), #6366f1); }
+  header h1 { font-size: 18px; margin: 0; letter-spacing: -0.01em; }
+  header .sub { color: var(--muted); font-size: 13px; }
+  header .spacer { flex: 1; }
+  .layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  .card h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 12px; font-weight: 600; }
+  .col { display: grid; gap: 18px; align-content: start; min-width: 0; }
+  textarea { width: 100%; min-height: 96px; resize: vertical; background: var(--bg); color: var(--fg); border: 1px solid var(--line);
+             border-radius: 10px; padding: 12px; font: inherit; }
+  textarea:focus, button:focus-visible, .run:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .lengths { display: flex; gap: 8px; margin: 12px 0; }
+  .lengths label { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 10px; cursor: pointer; }
+  .lengths input { margin-right: 6px; }
+  .lengths small { display: block; color: var(--muted); }
+  .lengths label:has(input:checked) { border-color: var(--accent); background: rgba(56, 189, 248, 0.08); }
+  button { background: var(--accent); color: #04121f; border: 0; border-radius: 10px; padding: 11px 18px; font: 600 15px var(--font); cursor: pointer; }
+  button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .msg { margin-top: 10px; font-size: 13px; color: var(--bad); min-height: 1em; }
+  .examples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .examples button { background: var(--panel2); color: var(--muted); font-weight: 500; font-size: 12px; padding: 6px 10px; border: 1px solid var(--line); }
+  .runs { display: grid; gap: 8px; max-height: 420px; overflow: auto; }
+  .run { text-align: left; background: var(--panel2); color: var(--fg); border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; font: inherit; cursor: pointer; }
+  .run.sel { border-color: var(--accent); }
+  .run .t { font-weight: 600; font-size: 14px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .run .m { color: var(--muted); font-size: 12px; }
+  .chip { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 999px; margin-right: 6px; }
+  .chip.running { background: rgba(56, 189, 248, 0.15); color: var(--accent); }
+  .chip.done { background: rgba(52, 211, 153, 0.15); color: var(--good); }
+  .chip.failed, .chip.cancelled { background: rgba(248, 113, 113, 0.15); color: var(--bad); }
+  .chip.earlier { background: var(--panel); color: var(--muted); }
+  .checks { display: grid; gap: 8px; font-size: 13px; }
+  .checks .row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
+  .checks .ok { color: var(--good); } .checks .no { color: var(--bad); }
+  .checks .fix { color: var(--muted); grid-column: 2; }
+  .detail h2.title { font-size: 22px; text-transform: none; letter-spacing: -0.01em; color: var(--fg); margin: 0 0 4px; }
+  .detail .meta { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .stepper { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; margin-bottom: 18px; }
+  @media (max-width: 1100px) { .stepper { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .step { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-width: 0; }
+  .step .n { font-size: 12px; color: var(--muted); }
+  .step .l { font-weight: 600; font-size: 13px; }
+  .step .d { font-size: 12px; color: var(--muted); min-height: 1.4em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .step.done { border-color: rgba(52, 211, 153, 0.5); }
+  .step.done .n { color: var(--good); }
+  .step.now { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .step.now .n { color: var(--accent); }
+  .step a { color: var(--accent); font-size: 12px; }
+  video { width: 100%; border-radius: 12px; background: #000; display: block; }
+  .actions { display: flex; gap: 10px; margin: 14px 0; flex-wrap: wrap; }
+  .actions a { color: var(--accent); }
+  .feed { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; max-height: 300px; overflow: auto; font-size: 13px; display: grid; gap: 6px; }
+  .feed .tool { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .doc { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; max-height: 520px; overflow: auto; white-space: pre-wrap; font: 13px/1.55 var(--mono); }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" aria-hidden="true"></div>
+  <div><h1>Traversaal Video Studio</h1><div class="sub">One prompt in, a fact-checked cinematic explainer out</div></div>
+  <div class="spacer"></div>
+  <button class="secondary" id="refreshCheck" type="button">Re-run setup check</button>
+</header>
+
+<div class="layout">
+  <div class="col">
+    <section class="card">
+      <h2>New video</h2>
+      <label for="prompt" class="sub">What should the video explain?</label>
+      <textarea id="prompt" placeholder="How do electric vehicle batteries work?"></textarea>
+      <div class="examples" id="examples"></div>
+      <div class="lengths" role="radiogroup" aria-label="Length">
+        <label><input type="radio" name="len" value="2" checked>2-minute demo<small>about 15-25 min to make</small></label>
+        <label><input type="radio" name="len" value="7">7-minute film<small>about 45-65 min to make</small></label>
+      </div>
+      <button id="go" type="button">Generate video</button>
+      <div class="msg" id="msg" role="status"></div>
+    </section>
+
+    <section class="card">
+      <h2>Setup check</h2>
+      <div class="checks" id="checks"><span class="sub">Checking...</span></div>
+    </section>
+
+    <section class="card">
+      <h2>Your videos</h2>
+      <div class="runs" id="runs"><span class="sub">No videos yet.</span></div>
+    </section>
+  </div>
+
+  <main class="card detail" id="detail">
+    <div class="empty">Start a new video, or pick one from Your videos.</div>
+  </main>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = (s) => s == null ? "" : (s >= 3600 ? Math.floor(s / 3600) + "h " : "") + Math.floor((s % 3600) / 60) + "m " + String(Math.round(s % 60)).padStart(2, "0") + "s";
+let selected = null, lastRuns = [], docOpen = null;
+
+const EXAMPLES = ["How do electric vehicle batteries work?", "Why are more companies adopting a four-day work week?",
+  "What caused the 2008 financial crisis?", "How does compound interest help you build wealth?"];
+$("#examples").innerHTML = EXAMPLES.map((e) => `<button type="button">${esc(e)}</button>`).join("");
+$("#examples").addEventListener("click", (e) => { if (e.target.tagName === "BUTTON") $("#prompt").value = e.target.textContent; });
+
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
+
+async function loadChecks() {
+  $("#checks").innerHTML = '<span class="sub">Checking...</span>';
+  try {
+    const d = await api("/api/doctor");
+    $("#checks").innerHTML = d.checks.map((c) => `<div class="row"><span class="${c.ok ? "ok" : "no"}">${c.ok ? "✓" : "✕"}</span>
+      <span><b>${esc(c.name)}</b> <span class="sub">${esc(c.detail)}</span></span>${c.fix ? `<span class="fix">${esc(c.fix)}</span>` : ""}</div>`).join("");
+    $("#go").disabled = !d.ok;
+  } catch (e) { $("#checks").textContent = "Setup check failed: " + e.message; }
+}
+$("#refreshCheck").onclick = loadChecks;
+
+$("#go").onclick = async () => {
+  const prompt = $("#prompt").value.trim();
+  const minutes = Number(document.querySelector('input[name="len"]:checked').value);
+  $("#msg").textContent = "";
+  $("#go").disabled = true;
+  try {
+    const { slug } = await api("/api/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt, minutes }) });
+    selected = slug; docOpen = null;
+    await refresh();
+  } catch (e) { $("#msg").textContent = e.message; }
+  $("#go").disabled = false;
+};
+
+function renderRuns(runs) {
+  if (!runs.length) { $("#runs").innerHTML = '<span class="sub">No videos yet.</span>'; return; }
+  $("#runs").innerHTML = runs.map((r) => {
+    const st = r.state === "earlier run" ? "earlier" : r.state;
+    const doneN = r.stages.filter((s) => s.done).length;
+    return `<button type="button" class="run ${r.slug === selected ? "sel" : ""}" data-slug="${esc(r.slug)}">
+      <span class="t">${esc(r.title)}</span>
+      <span class="m"><span class="chip ${st}">${esc(r.state)}</span>${doneN}/9 steps${r.minutes ? " · " + r.minutes + " min" : ""}</span></button>`;
+  }).join("");
+}
+$("#runs").addEventListener("click", (e) => {
+  const b = e.target.closest(".run");
+  if (b) { selected = b.dataset.slug; docOpen = null; refresh(); }
+});
+
+async function openDoc(slug, file) {
+  docOpen = file;
+  const r = await fetch(`/files/${slug}/${file}`);
+  const t = await r.text();
+  const box = $("#doc");
+  if (box) box.textContent = file.endsWith(".json") ? JSON.stringify(JSON.parse(t), null, 2) : t;
+}
+
+function renderDetail(d) {
+  const nowIdx = d.state === "running" ? d.stages.findIndex((s) => !s.done) : -1;
+  const steps = d.stages.map((s, i) => `<div class="step ${s.done ? "done" : ""} ${i === nowIdx ? "now" : ""}">
+      <div class="n">${s.done ? "✓ " + fmt(s.at_s) : i === nowIdx ? "working…" : "step " + (i + 1)}</div>
+      <div class="l">${esc(s.label)}</div><div class="d">${esc(s.detail || "")}</div>
+      ${s.file && s.file !== "final.mp4" ? `<a href="#" data-file="${esc(s.file)}">open</a>` : ""}</div>`).join("");
+  const res = d.result;
+  const status = d.state === "running" ? `Running for ${fmt(d.elapsed_s)}` :
+    d.state === "done" ? `Finished${res ? " in " + fmt(res.duration_s) : ""}` :
+    d.state === "failed" ? "Stopped before the video was finished" : esc(d.state);
+  const feed = (d.feed || []).slice().reverse().map((f) => `<div class="${f.kind}">${esc(f.text)}</div>`).join("") || '<span class="sub">No activity yet.</span>';
+  $("#detail").innerHTML = `
+    <h2 class="title">${esc(d.title)}</h2>
+    <div class="meta">${status}${d.minutes ? " · " + d.minutes + "-minute video" : ""} · folder <code>runs/${esc(d.slug)}</code></div>
+    <div class="stepper">${steps}</div>
+    ${d.video ? `<video controls preload="metadata" src="${d.video}"></video>
+      <div class="actions"><a href="${d.video}" download="${esc(d.slug)}.mp4">Download MP4</a>
+      ${d.stages[2].file ? `<a href="#" data-file="03_checked.md">Sources and checked facts</a>` : ""}
+      ${d.stages[6].file ? `<a href="#" data-file="06_final_check.md">Final fact-check</a>` : ""}</div>` : ""}
+    ${d.state === "running" ? `<div class="actions"><button class="secondary" id="cancel" type="button">Stop this run</button></div>` : ""}
+    ${res && !res.ok ? `<p class="msg">${esc(res.text.slice(0, 400))}</p>` : ""}
+    <h2>${docOpen ? esc(docOpen) : "Activity"}</h2>
+    ${docOpen ? `<div class="doc" id="doc">Loading…</div><div class="actions"><a href="#" id="closeDoc">Back to activity</a></div>` : `<div class="feed">${feed}</div>`}`;
+  $("#detail").querySelectorAll("a[data-file]").forEach((a) => a.onclick = (e) => { e.preventDefault(); openDoc(d.slug, a.dataset.file); refresh(); });
+  if (docOpen) openDoc(d.slug, docOpen);
+  const c = $("#closeDoc"); if (c) c.onclick = (e) => { e.preventDefault(); docOpen = null; refresh(); };
+  const x = $("#cancel"); if (x) x.onclick = async () => { await api(`/api/runs/${d.slug}/cancel`, { method: "POST" }); refresh(); };
+}
+
+let lastDetailKey = "";
+async function refresh() {
+  try {
+    lastRuns = await api("/api/runs");
+    renderRuns(lastRuns);
+    if (selected) {
+      const d = await api(`/api/runs/${selected}`);
+      // Re-render only when something changed, so a playing video is never reset.
+      const key = JSON.stringify([d.slug, d.state, d.stages, (d.feed || []).length, docOpen, d.video,
+                                  d.state === "running" ? Math.floor((d.elapsed_s || 0) / 15) : 0]);
+      if (key !== lastDetailKey) { lastDetailKey = key; renderDetail(d); }
+    }
+  } catch (e) { /* server restarting */ }
+}
+loadChecks();
+refresh();
+setInterval(() => { const running = lastRuns.some((r) => r.state === "running"); if (running || !selected) refresh(); }, 4000);
+</script>
+</body>
+</html>

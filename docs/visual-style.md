@@ -1,62 +1,58 @@
 # Visual style
 
-Owner: Jiaxin. Based on the style guide on Jiaxin's pipeline branch, adapted to the five `visual_type`s in `docs/scene-format.md`. The templates in `templates/` implement this file; change both together.
-
-Every scene shares one look so the joined video reads as one piece.
+Owner: Jiaxin. **Updated Oct 16 for the cinematic definition** (Video Definition v2): the film is told through moving, full-frame pictures, not cards of text. Each film's own look comes from the brief's **Art direction**; this file sets the rules every film follows. The shot library in `templates/film/` implements them. (The first definition's slide layouts are described in git history before Oct 16.)
 
 ## Canvas
 
-- 1920×1080, 30 fps, background `#0b1020`.
-- **Content zone:** the top 880px, padding `120px 160px 0`. Headings, rows, charts, quotes and panels go here.
-- **Caption band:** the bottom 200px. Only the sentence being spoken, centred, at most 1480px wide.
-- **Source line:** top right of the content zone, 24px, `#94a3b8`: `Source: iea.org` or, for charts, the chart's `source_note`.
-- `hyperframes check` must pass with 0 errors before a scene is rendered (`render/render.py` runs it).
+- 1920×1080, 30 fps. The picture fills the whole frame in every shot.
+- **Subtitles:** small (30px), centred near the bottom on a soft dark pill; the shell shows them automatically. Keep the bottom 170px free of important picture detail.
+- **Source credits:** small (22px), top right, only on shots that show a number (`credit(...)`). Every source also goes in the film's sources list.
+- `hyperframes check` must pass with 0 errors before a scene renders.
 
-## Type (Inter, loaded by HyperFrames)
+## Default art direction
 
-| Role | Size | Weight | Colour |
-|---|---|---|---|
-| Eyebrow (label above the headline) | 30px, uppercase, letter-spacing .14em | 600 | `#38bdf8` |
-| Headline | 108px (title), 84px (default), 72px (bullets), 64px (chart) | 700 | `#f4f4f5` |
-| Subheadline / body | 40px | 400 | `#cbd5e1` |
-| Bullet row text | 40px | 600 | `#f4f4f5` |
-| Quote | 64px | 600 | `#f4f4f5` |
-| Caption | 38px, line-height 1.35 | 400 | `#e2e8f0` |
-| Source line, units | 24–26px | 400 | `#94a3b8` |
+Used when the brief does not set one.
 
-## Colour
-
-- Accent `#38bdf8` for active items, eyebrows and the first data series. Second accent `#f59e0b` for a contrasting value.
-- Cards and rows: fill `#111a2e`, border `#1e293b` (inactive) and `#38bdf8` (active), radius 20–28px.
-- Extra chart colours, in order: `#a78bfa`, `#34d399`, `#f472b6`, `#94a3b8`.
-
-## Layout by visual type
-
-| `visual_type` | Layout |
+| | Default |
 |---|---|
-| `title` | Topic as eyebrow, large headline (2 lines max), subheadline, short accent bar. |
-| `bullets` | Scene title as eyebrow, heading, then 2–5 numbered rows. Rows start dim and light up one by one, spread across the narration. |
-| `image` | Scene title as eyebrow and a wide panel with the caption. Version 1 has no image source, so the panel is a soft gradient placeholder; `image_description` is kept for later and not shown. |
-| `chart` | Chart title as headline with the unit under it. `bar`: horizontal bars that grow in turn. `line`: a line that draws itself with value labels. `pie`: a donut with a legend. Values are shown exactly as given. |
-| `quote` | Large quote with a left accent bar; the attribution fades in after the first sentence. |
+| Style | Flat vector illustration with soft gradients and glow, like an animated science documentary |
+| Palette | Background `#0b1020`, accent `#38bdf8`, second accent `#f59e0b`, light `#e2e8f0` |
+| Type | Inter (loaded by HyperFrames). Labels 34px semibold; big numbers 200px extra-bold in the accent colour |
+| Mood | Curious and calm, building to a confident payoff; music mood `calm` |
 
-## On-screen text limits
+## Shots and camera
 
-These match `docs/scene-format.md`; the scene builder flags anything longer.
-
-| Field | Limit |
+| Rule | Target |
 |---|---|
-| `headline`, `heading` | 8 words |
-| `subheadline`, `caption`, each bullet | 12 words |
-| `chart_title` | 10 words |
-| `quote_text` | 30 words |
-| bullets per scene | 2–5 |
-| chart labels | 2–8 |
+| Shot length | 2.5–9 seconds, mostly 4–6; 4–8 shots per scene |
+| Camera | Movement in at least 70% of shots: `push_in`, `pull_out`, `pan_*`, `orbit`, `parallax`; `static` only for a beat of stillness |
+| Motion inside the frame | Something meaningful moves in every shot: objects acting out the narration, particles, light |
+| Timing | Actions start on the sentence that names them (`lineStart(i)`) |
+| Scene transitions | `fade` (first scene), `zoom_through` (into something), `wipe` (change of place or time), `match_cut` (shape carries over), `cut` |
+| Hero visual | Returns at least three times, including the last scene |
 
-## Motion
+## On-screen text
 
-- Entrances: fade with a 24–40px rise, 0.5–0.8s, `power3.out`; groups stagger by about 0.1s.
-- On-screen changes follow the voice: each reveal starts with a narration sentence.
-- Use transforms (`scale`, `x`, `y`, opacity) for motion, never `left`, `top` or `width`; HyperFrames' check rejects layout motion.
-- Each scene fades its content out over its last 0.4s. Scenes cut directly, with no transitions between them.
-- Captions switch on at each sentence's start and off 0.3s after its end, or when the next sentence starts.
+- At most 10 words at a time, in at most 30% of shots: labels, a short title card, or one number with its unit.
+- Numbers on screen are exact verified values (`data` in the storyboard), with a source credit.
+- Never repeat the narration on screen; the subtitles already carry it.
+
+| Element | Limit |
+|---|---|
+| Label or title card | 10 words |
+| Big number | the value plus its unit |
+| Source credit | publisher and year |
+
+## Pictures in version 1
+
+Built in code only: inline SVG, CSS shapes, gradients, particles and animated diagrams. No photographs, footage, logos, real people or specific products until Traversaal.ai confirms what images are allowed. Pictures must not imply anything the verified facts do not support.
+
+## Motion rules HyperFrames enforces
+
+- Animate transforms and opacity only (`x`, `y`, `scale`, `rotate`, `opacity`, SVG `attr`), never `left`, `top`, `width` or `height`.
+- Text stays inside the frame and does not overlap other text.
+- Deterministic animation only: no randomness or clocks.
+
+## Sound
+
+- Voice, plus a music bed under the whole film (synthesised by `render/sound.py` in the storyboard's `music.mood`, lowered automatically while the voice speaks), plus short effects (`whoosh`, `hit`, `rise`, `chime`) on the shots the storyboard marks.

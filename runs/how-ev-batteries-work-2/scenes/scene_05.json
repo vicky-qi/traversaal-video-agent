@@ -1,0 +1,36 @@
+{
+  "id": 5,
+  "order": 5,
+  "title": "Not every battery uses the same recipe",
+  "narration": "Not every car battery uses the same recipe. The big choice is the positive side. One family is nickel-based, mixing nickel, manganese and cobalt. Another uses lithium iron phosphate. Nickel-based cells store more energy for their weight. Iron phosphate is cheaper: in 2025 its packs averaged about 81 dollars per kilowatt-hour across all uses, against about 128 for nickel-based packs. In lab tests, iron phosphate cells also tend to reach runaway overheating later, and less violently. That year, iron phosphate made up more than half of electric vehicle batteries worldwide, though outside China almost 80 percent were nickel-based.",
+  "sources": [
+    "https://www.ionworks.com/blog/batteries-101-how-do-batteries-work",
+    "https://www.iea.org/reports/global-ev-outlook-2026/electric-vehicle-batteries",
+    "https://about.bnef.com/insights/clean-transport/lithium-ion-battery-pack-prices-fall-to-108-per-kilowatt-hour-despite-rising-metal-prices-bloombergnef/",
+    "https://powerup-technology.com/nmc-vs-lfp-safety-and-performance-in-operation/"
+  ],
+  "visual_type": "chart",
+  "visual_content": {
+    "chart_type": "bar",
+    "chart_title": "Average battery pack price, 2025, all uses",
+    "labels": [
+      "Lithium iron phosphate (LFP)",
+      "Nickel manganese cobalt (NMC)"
+    ],
+    "values": [
+      81,
+      128
+    ],
+    "unit": "US dollars per kWh",
+    "source_note": "BloombergNEF, December 2025; includes stationary storage"
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_05.wav",
+  "script_duration_sec": 40,
+  "final_duration_sec": 49.61,
+  "layout": {
+    "template": "chart",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

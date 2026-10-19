@@ -1,0 +1,31 @@
+{
+  "id": 9,
+  "order": 9,
+  "title": "How batteries age",
+  "narration": "A battery loses capacity slowly: a bit faster in the first year or two, then gently for many years. Heat speeds up wear, and so does sitting nearly full or empty most of the time. In Geotab's fleet data, frequent high-power fast charging wore batteries up to twice as fast as in cars that rarely fast-charge. Used electric vehicles in the United Kingdom aged four to five years kept a median 93.5 percent of their original capacity. Volkswagen there and Hyundai in Europe cover 8 years or 160,000 kilometers, should capacity fall below 70 percent.",
+  "sources": [
+    "https://www.geotab.com/blog/ev-battery-health/",
+    "https://www.recurrentauto.com/research/how-long-do-ev-batteries-last",
+    "https://evfleetworld.co.uk/average-used-ev-battery-health-stands-at-95-15-real-world-data-shows/",
+    "https://www.volkswagen.co.uk/en/owners-and-services/my-car/warranties.html",
+    "https://www.hyundai.com/eu/en/driving-hyundai/owning-a-hyundai/warranty.html"
+  ],
+  "visual_type": "bullets",
+  "visual_content": {
+    "heading": "What wears a battery faster",
+    "bullets": [
+      "Heat",
+      "Spending most of the time near full or near empty",
+      "Frequent high-power fast-charging: up to twice the wear of rarely fast-charged cars"
+    ]
+  },
+  "audio_file": "runs/how-ev-batteries-work-2/audio/scene_09.wav",
+  "script_duration_sec": 40,
+  "final_duration_sec": 43.33,
+  "layout": {
+    "template": "bullets",
+    "style_file": "docs/visual-style.md"
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

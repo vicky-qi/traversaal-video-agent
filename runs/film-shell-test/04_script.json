@@ -1,0 +1,18 @@
+{
+  "topic": "How Electric Car Batteries Work",
+  "total_words": 102,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Inside a single cell",
+      "act": 2,
+      "narration": "A single cell has five main parts. The negative side, the anode, is usually graphite, a form of carbon. The positive side, the cathode, is a coating of tiny particles, typically a lithium metal oxide or lithium iron phosphate. Each side sits on a thin metal foil that carries current: copper on the negative side, aluminum on the positive. Between them, a liquid or gel called the electrolyte lets lithium ions, charged bits of lithium, travel across. And in the middle, a thin, porous sheet called the separator stops the two sides touching and short-circuiting, while letting the tiny ions slip through.",
+      "duration_sec": 40,
+      "sources": [
+        "https://www.ionworks.com/blog/batteries-101-how-do-batteries-work",
+        "https://batteryuniversity.com/article/bu-204-how-do-lithium-batteries-work",
+        "https://www.cei.washington.edu/research/energy-storage/lithium-ion-battery/"
+      ]
+    }
+  ]
+}

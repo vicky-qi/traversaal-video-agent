@@ -28,4 +28,7 @@ fi
 
 export PATH="$PREFIX/bin:$PATH"
 export HYPERFRAMES_PYTHON="$PREFIX/bin/python"
+# No usage analytics from HyperFrames or its media-use scripts (they send anonymous telemetry by default).
+export HYPERFRAMES_NO_TELEMETRY=1
+export DO_NOT_TRACK=1
 exec "$@"

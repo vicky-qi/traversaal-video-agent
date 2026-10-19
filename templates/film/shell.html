@@ -1,0 +1,162 @@
+<!doctype html>
+<!--
+  Film scene shell (cinematic definition, Oct 16). render/render.py fills three placeholders
+  (written in capitals between double underscores below): DURATION, the scene length in seconds;
+  SCENE_JSON, { topic, scene_id, duration, transition_in, palette, lines[{text,start,end}],
+  shots[{n,start,end,camera,text,data,sound}] } with times in seconds within the scene; and
+  SCENE_FRAGMENT, the scene builder's runs/<slug>/scenes/scene_NN/scene.html.
+  The fragment draws the pictures and adds animations to `tl` with the helpers below.
+  See templates/film/README.md and templates/film/example-scene.html.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0b1020; }
+      #root { width: 100%; height: 100%; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #f4f4f5; }
+      #world { position: absolute; inset: 0; overflow: hidden; }
+      /* A shot fills the frame; `.cam` inside it is what the camera moves. */
+      .shot { position: absolute; inset: 0; opacity: 0; }
+      .cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+      /* Layers inside a shot stack in document order (positioned elements would otherwise cover plain SVG). */
+      .cam > * { position: absolute; left: 0; top: 0; }
+      .label { position: absolute; padding: 14px 26px; border-radius: 999px; background: rgba(11, 16, 32, 0.72);
+               border: 2px solid rgba(56, 189, 248, 0.7); font-size: 34px; font-weight: 600; color: #f4f4f5;
+               white-space: nowrap; opacity: 0; }
+      .big-number { position: absolute; font-size: 200px; font-weight: 800; letter-spacing: -0.04em; color: #38bdf8; opacity: 0; }
+      .big-unit { position: absolute; font-size: 40px; font-weight: 500; color: #cbd5e1; opacity: 0; }
+      .credit { position: absolute; right: 64px; top: 48px; font-size: 22px; color: rgba(203, 213, 225, 0.85); opacity: 0; }
+      #wipe { position: absolute; inset: 0; background: #0b1020; transform-origin: 100% 50%; pointer-events: none; }
+      .subs { position: absolute; left: 0; right: 0; bottom: 44px; height: 120px; }
+      .sub { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); max-width: 1400px; padding: 10px 22px;
+             border-radius: 10px; background: rgba(11, 16, 32, 0.6); text-align: center; font-size: 30px;
+             line-height: 1.35; color: #e2e8f0; opacity: 0; }
+    </style>
+    <script>
+      const SCENE = __SCENE_JSON__;
+      const P = SCENE.palette && SCENE.palette.length ? SCENE.palette : ["#0b1020", "#38bdf8", "#f59e0b", "#e2e8f0"];
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl; // registered here; the fragment and the closing script add to it
+
+      // ---- timing ----
+      const S = (n) => SCENE.shots[n - 1];
+      const shotStart = (n) => S(n).start;
+      const shotEnd = (n) => S(n).end;
+      const shotLen = (n) => S(n).end - S(n).start;
+      const lineStart = (i) => SCENE.lines[Math.min(i, SCENE.lines.length - 1)].start;
+      const $ = (sel) => (typeof sel === "string" ? document.querySelector(sel) : sel);
+
+      // ---- camera: moves an element over [start, start+dur] using transforms only ----
+      function camera(el, move, start, dur, strength = 1) {
+        el = $(el);
+        const k = strength, d = Math.max(dur, 0.1), e = "sine.inOut";
+        const moves = {
+          push_in: [{ scale: 1 }, { scale: 1 + 0.12 * k }],
+          pull_out: [{ scale: 1 + 0.12 * k }, { scale: 1 }],
+          pan_left: [{ x: 70 * k }, { x: -70 * k }],
+          pan_right: [{ x: -70 * k }, { x: 70 * k }],
+          pan_up: [{ y: 45 * k }, { y: -45 * k }],
+          pan_down: [{ y: -45 * k }, { y: 45 * k }],
+          orbit: [{ rotate: -2 * k, scale: 1.04 }, { rotate: 2 * k, scale: 1.08 }],
+          static: [{ scale: 1 }, { scale: 1.02 }],
+        };
+        if (move === "parallax") {
+          el.querySelectorAll("[data-depth]").forEach((layer) => {
+            const depth = parseFloat(layer.dataset.depth) || 0.5;
+            tl.fromTo(layer, { x: 60 * depth * k }, { x: -60 * depth * k, duration: d, ease: e }, start);
+          });
+          tl.fromTo(el, { scale: 1.02 }, { scale: 1.05, duration: d, ease: e }, start);
+          return;
+        }
+        const [from, to] = moves[move] || moves.static;
+        tl.fromTo(el, from, { ...to, duration: d, ease: e }, start);
+      }
+
+      // ---- shot: show element `el` during shot n, cross-fading in, with that shot's camera move on its .cam ----
+      function shot(n, el, opts = {}) {
+        el = $(el);
+        const a = shotStart(n), b = shotEnd(n), fade = opts.fade ?? 0.35;
+        if (n === 1) tl.set(el, { opacity: 1 }, 0);
+        else tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: fade, ease: "power1.out" }, a - fade / 2);
+        if (n < SCENE.shots.length && !opts.hold) tl.to(el, { opacity: 0, duration: fade, ease: "power1.in" }, b - fade / 2);
+        const cam = el.querySelector(".cam") || el;
+        camera(cam, opts.camera || S(n).camera, a, b - a + (n < SCENE.shots.length ? fade : 0), opts.strength ?? 1);
+      }
+
+      // ---- on-screen elements ----
+      function reveal(el, at, from = { opacity: 0, y: 24 }, dur = 0.7) {
+        tl.fromTo($(el), from, { opacity: 1, x: 0, y: 0, scale: 1, duration: dur, ease: "power3.out" }, at);
+      }
+      function hide(el, at, dur = 0.4) { tl.to($(el), { opacity: 0, duration: dur }, at); }
+      function label(text, x, y, at, until) {
+        const l = document.createElement("div");
+        l.className = "label"; l.textContent = text; l.style.left = x + "px"; l.style.top = y + "px";
+        document.getElementById("world").appendChild(l);
+        reveal(l, at, { opacity: 0, y: 16 }, 0.5);
+        if (until !== undefined) hide(l, until - 0.3);
+        return l;
+      }
+      function bigNumber(value, unit, x, y, at, until, decimals = 0) {
+        const num = document.createElement("div"), u = document.createElement("div");
+        num.className = "big-number"; u.className = "big-unit";
+        Object.assign(num.style, { left: x + "px", top: y + "px" });
+        Object.assign(u.style, { left: x + 8 + "px", top: y + 230 + "px" });
+        u.textContent = unit; num.textContent = (0).toFixed(decimals);
+        const w = document.getElementById("world"); w.append(num, u);
+        const c = { v: 0 };
+        tl.set(num, { opacity: 1 }, at);
+        tl.to(c, { v: value, duration: 1.2, ease: "power2.out",
+          onUpdate: () => { num.textContent = c.v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }); } }, at);
+        reveal(u, at + 0.4, { opacity: 0, y: 12 }, 0.5);
+        if (until !== undefined) { hide(num, until - 0.3); hide(u, until - 0.3); }
+        return num;
+      }
+      function credit(text, at, until) {
+        const c = document.createElement("div");
+        c.className = "credit"; c.textContent = text;
+        document.getElementById("world").appendChild(c);
+        tl.fromTo(c, { opacity: 0 }, { opacity: 1, duration: 0.5 }, at);
+        if (until !== undefined) hide(c, until - 0.3);
+        return c;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="__DURATION__" data-width="1920" data-height="1080">
+      <audio id="vo" src="vo.wav" data-start="0" data-duration="__DURATION__" data-track-index="9"></audio>
+      <div id="world" class="clip" data-start="0" data-duration="__DURATION__" data-track-index="0" data-layout-allow-overlap>
+__SCENE_FRAGMENT__
+      </div>
+      <div id="overlay" class="clip" data-start="0" data-duration="__DURATION__" data-track-index="1" data-layout-allow-overlap>
+        <div id="wipe"></div>
+        <div class="subs" id="subs"></div>
+      </div>
+    </div>
+    <script>
+      // Scene transition in.
+      const world = document.getElementById("world"), wipe = document.getElementById("wipe");
+      const tin = SCENE.transition_in;
+      if (tin === "wipe") tl.fromTo(wipe, { scaleX: 1 }, { scaleX: 0, duration: 0.8, ease: "power3.inOut" }, 0);
+      else tl.set(wipe, { opacity: 0 }, 0);
+      if (tin === "fade") tl.fromTo(world, { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0);
+      if (tin === "zoom_through") tl.fromTo(world, { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "power3.out" }, 0);
+
+      // Small subtitles: each sentence on at its start, off at its end (or when the next starts).
+      const subs = document.getElementById("subs");
+      SCENE.lines.forEach((l, i) => {
+        const p = document.createElement("p");
+        p.className = "sub"; p.textContent = l.text; subs.appendChild(p);
+        const next = SCENE.lines[i + 1];
+        tl.set(p, { opacity: 1 }, l.start);
+        tl.set(p, { opacity: 0 }, next ? Math.min(l.end + 0.25, next.start) : Math.min(l.end + 0.25, SCENE.duration - 0.05));
+      });
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

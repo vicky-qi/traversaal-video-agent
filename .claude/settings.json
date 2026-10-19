@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write(runs/**)",
+      "Edit(runs/**)",
+      "WebSearch",
+      "WebFetch",
+      "Agent",
+      "Skill",
+      "Bash(render/env.sh python render/voiceover.py *)",
+      "Bash(render/env.sh python render/render.py *)",
+      "Bash(render/env.sh python render/sound.py *)",
+      "Bash(render/env.sh ffprobe *)",
+      "Bash(render/env.sh ffmpeg *)",
+      "Bash(render/env.sh npx --yes hyperframes@0.8.140 check *)",
+      "Bash(python3 .claude/skills/make-video/check_script.py *)",
+      "Bash(python3 .claude/skills/make-video/check_storyboard.py *)",
+      "Bash(python3 .claude/skills/make-video/merge_parts.py *)",
+      "Bash(ls *)",
+      "Bash(mv runs/*)",
+      "Bash(cp runs/*)",
+      "Bash(mkdir -p runs/*)",
+      "Bash(date *)",
+      "Bash(diff runs/*)"
+    ]
+  }
+}

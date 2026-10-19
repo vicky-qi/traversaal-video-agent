@@ -1,0 +1,23 @@
+{
+  "id": 4,
+  "title": "In their words",
+  "narration": "A quote scene shows one exact sentence from a source. This one is a placeholder.",
+  "sources": [
+    "https://www.iea.org/reports/example"
+  ],
+  "visual_type": "quote",
+  "visual_content": {
+    "quote_text": "Exact quote as it appears in the source, copied word for word.",
+    "attribution": "Name, Title, Organization (2025)"
+  },
+  "order": 4,
+  "audio_file": "runs/template-test/audio/scene_04.wav",
+  "script_duration_sec": 30,
+  "final_duration_sec": 6.249,
+  "layout": {
+    "template": "quote",
+    "style_file": null
+  },
+  "asset_status": "ready",
+  "review_flags": []
+}

@@ -1,0 +1,25 @@
+{
+  "topic_slug": "sample",
+  "status": "complete",
+  "scene_count": 2,
+  "total_duration_sec": 65.6,
+  "scenes": [
+    {
+      "id": 1,
+      "scene_file": "runs/sample/scenes/scene_01.json",
+      "audio_file": "runs/sample/audio/scene_01.wav",
+      "final_duration_sec": 26.58,
+      "visual_type": "title",
+      "asset_status": "ready"
+    },
+    {
+      "id": 2,
+      "scene_file": "runs/sample/scenes/scene_02.json",
+      "audio_file": "runs/sample/audio/scene_02.wav",
+      "final_duration_sec": 39.02,
+      "visual_type": "bullets",
+      "asset_status": "ready"
+    }
+  ],
+  "problems": []
+}

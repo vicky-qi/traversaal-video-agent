@@ -1,13 +1,13 @@
 # Scene format (`04_script.json`)
 
-Owner: Julia. **Locked Oct 7.** Any change is announced in the group chat before it is pushed.
+Owner: Julia. **Updated Oct 16 for the cinematic definition** (Video Definition v2): the script now holds only the narration and its story position; the pictures are planned in `05_storyboard.json` (`docs/storyboard-format.md`). Any change is announced in the group chat before it is pushed.
 
-The script agent writes one JSON file per run, `runs/<topic-slug>/04_script.json`. Voiceover, the scene builder and assembly all read it.
+The script agent writes one JSON file per run, `runs/<topic-slug>/04_script.json`. The voiceover, storyboard and fact-check stages read it.
 
 - `docs/example-script.json`: a valid 2-scene example (real scripts have 10–15 scenes).
 - `docs/example-script-full.json`: a 12-scene example built from `runs/how-ev-batteries-work/01_brief.md` that uses all five visual types.
 
-Both examples show format, length and writing style only. Their chart numbers, quote and source URLs are placeholders, not checked facts.
+Both examples show length and writing style only, and they still carry the first definition's `visual_type` and `visual_content`, which film scripts no longer have. Their chart numbers, quote and source URLs are placeholders, not checked facts.
 
 ## File
 
@@ -31,10 +31,9 @@ Both examples show format, length and writing style only. Their chart numbers, q
 {
   "id": 1,
   "title": "Inside a single cell",
+  "act": 2,
   "narration": "Start with a single cell, the basic building block...",
   "duration_sec": 40,
-  "visual_type": "bullets",
-  "visual_content": { "heading": "Inside a single cell", "bullets": ["Anode", "Cathode", "Electrolyte", "Separator"] },
   "sources": ["https://example.com/source-page"]
 }
 ```
@@ -45,11 +44,10 @@ Both examples show format, length and writing style only. Their chart numbers, q
 | `title` | string | yes | Short scene name, same as the brief's scene outline |
 | `narration` | string | yes | Exactly what the voiceover says. Plain spoken text: no Markdown, URLs, brackets or symbols such as `%` and `$` |
 | `duration_sec` | integer | yes | Target length in seconds, 30–45, from the brief. A target only; see Timing |
-| `visual_type` | string | yes | Exactly one of `title`, `bullets`, `image`, `chart`, `quote` |
-| `visual_content` | object | yes | What appears on screen; its fields depend on `visual_type` (below) |
+| `act` | integer | yes | 1, 2 or 3, from the brief's scene outline (set-up, journey, payoff) |
 | `sources` | array of strings | yes | Full URLs of the facts the scene uses, copied from `03_checked.md`. `[]` only if the scene states no facts |
 
-No other fields. Every later stage copies these fields as they are.
+No other fields. Every later stage copies these fields as they are. (Scripts from the first definition have `visual_type` and `visual_content` instead of `act`; `check_script.py` still accepts them so old runs can be re-rendered.)
 
 ## Timing
 
@@ -57,7 +55,9 @@ No other fields. Every later stage copies these fields as they are.
 - **The voiceover's real length always overrides `duration_sec`.** The scene builder measures each scene's audio file and the renderer uses only that measured length. Nobody edits the script to make the numbers match.
 - Audio file names: the voiceover for scene `id` 1 is `runs/<topic-slug>/audio/scene_01.<ext>`, id 12 is `scene_12.<ext>` (two digits; `.wav`, `.mp3` or `.m4a`). Scene files use the same names: `scenes/scene_01.json`.
 
-## `visual_content` by `visual_type`
+## First definition only: `visual_content` by `visual_type`
+
+Kept for scripts made before Oct 16 (slide mode). Film scripts do not use this section.
 
 On-screen text supports the narration; it never repeats it word for word. Fields not listed for a type are not allowed.
 
