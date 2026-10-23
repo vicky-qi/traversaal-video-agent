@@ -34,7 +34,7 @@ Nothing else is paid: the voice, music, sound effects and video rendering all ru
 Your browser opens **Traversaal Video Studio** (http://127.0.0.1:8765). The setup check on the left should show only green ticks.
 
 1. Type what the video should explain, for example "How do electric vehicle batteries work?"
-2. Choose **2-minute demo** (about 15–25 minutes to make) or **7-minute film** (about 45–65 minutes).
+2. Choose **2-minute demo** (about 40 minutes to make) or **7-minute film** (about 1–1.5 hours).
 3. Click **Generate video** and watch the nine steps light up: brief, research, fact-check, script, voiceover, storyboard, final check, scenes, render.
 4. When it finishes, the video plays in the page. **Download MP4** saves it; **Sources and checked facts** shows where every fact came from.
 
@@ -62,7 +62,7 @@ Every file a run produces stays in `runs/<run name>/`.
 |---|---|
 | A red cross in the setup check | Follow the line under it |
 | "Not logged in" in a run | Sign in once in this folder (Set up, step 3) |
-| A run stops at Research or Fact-check | Usually Claude's usage limit; wait for it to reset and start a new run, or use a Max plan |
-| A run stops at Scenes or Render | Open the run's folder; `run_log.md` says which scene failed and why |
+| A run stops partway ("Stopped before the video was finished") | The activity list says why (often Claude's usage limit: wait for it to reset). Then click **Continue this run**: it keeps the finished steps and picks up at the first unfinished one |
+| A run keeps failing at Scenes or Render | Open the run's folder; `run_log.md` says which scene failed and why |
 
 Runs use only the tools listed in `.claude/settings.json` and never ask questions while they run (`--permission-mode dontAsk`).
