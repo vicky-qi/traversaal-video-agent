@@ -1,6 +1,6 @@
 # Storyboard format (`05_storyboard.json`)
 
-Owner: Jiaxin. Part of the cinematic definition (`Video Definition v2: Cinematic Explainer`, Oct 16). The storyboard agent writes it after the voiceover, so every shot can start on a real sentence; the scene builders turn it into HyperFrames scenes. Check it with:
+The storyboard agent writes it after the voiceover, so every shot can start on a real sentence; the scene builders turn it into HyperFrames scenes. Check it with:
 
 ```bash
 python3 .claude/skills/make-video/check_storyboard.py runs/<topic-slug>

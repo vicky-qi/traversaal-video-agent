@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# (From Jiaxin's pipeline branch.) Run a command inside the `video` conda env (Node, FFmpeg, Python + Kokoro TTS).
+# Run a command inside the `video` conda env (Node, FFmpeg, Python + Kokoro TTS).
 # Usage: render/env.sh <command> [args...]
 #   e.g. render/env.sh python render/voiceover.py runs/my-video
 # Works even when the calling shell has not activated conda (e.g. the Claude desktop app).

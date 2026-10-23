@@ -3,12 +3,9 @@
 Usage (from the repo root):
     render/env.sh python render/render.py runs/<slug> [--scene 3] [--draft] [--no-check] [--check-only]
 
-Film mode (cinematic definition, used when runs/<slug>/05_storyboard.json exists):
-  For each scene it puts the scene builder's runs/<slug>/scenes/scene_NN/scene.html into
-  templates/film/shell.html with the storyboard's shot timing, runs `hyperframes check`, renders
-  it, joins all scenes, then mixes in a music bed and sound effects (render/sound.py).
-Slide mode (the first definition, kept so earlier runs still render):
-  Reads scenes/index.json and scene_NN.json and fills templates/base.html + <visual_type>.js.
+For each scene it puts the scene builder's runs/<slug>/scenes/scene_NN/scene.html into
+templates/film/shell.html with the storyboard's shot timing, runs `hyperframes check`, renders
+it, joins all scenes, then mixes in a music bed and sound effects (render/sound.py).
 
   --scene N     build/check/render only scene N, then join again if every scene is rendered
   --check-only  build and check only (with --scene: one scene); no rendering. Scene builders use this.
@@ -17,12 +14,10 @@ Slide mode (the first definition, kept so earlier runs still render):
 """
 import argparse
 import json
-import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path
-from urllib.parse import urlparse
 
 REPO = Path(__file__).resolve().parent.parent
 TEMPLATES = REPO / "templates"
@@ -33,52 +28,6 @@ def duration(path):
     out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
                          capture_output=True, text=True, check=True)
     return float(out.stdout.strip())
-
-
-def source_line(scene):
-    vc = scene.get("visual_content") or {}
-    if scene.get("visual_type") == "chart" and vc.get("source_note"):
-        return "Source: " + vc["source_note"]
-    hosts = []
-    for s in scene.get("sources") or []:
-        host = urlparse(s).netloc.lower().removeprefix("www.") if "://" in s else ""
-        if host and host != "example.com" and host not in hosts:
-            hosts.append(host)
-    if not hosts:
-        return ""
-    return ("Source: " if len(hosts) == 1 else "Sources: ") + " · ".join(hosts[:3])
-
-
-def build_scene(run, scene, timing, topic, out_dir):
-    vtype = scene["layout"]["template"] if scene.get("layout") else scene["visual_type"]
-    type_js = TEMPLATES / f"{vtype}.js"
-    if not type_js.exists():
-        sys.exit(f"{scene['id']}: no template for visual_type '{vtype}'")
-    dur = float(scene["final_duration_sec"])
-    if abs(dur - timing["duration"]) > 0.1:
-        print(f"  warning: {scene['id']} scene file says {dur}s but the audio measures {timing['duration']}s; using the audio")
-        dur = timing["duration"]
-    data = {
-        "topic": topic,
-        "title": scene["title"],
-        "visual_type": vtype,
-        "visual_content": scene.get("visual_content") or {},
-        "lines": timing["lines"],
-        "duration": dur,
-        "source_line": source_line(scene),
-    }
-    html = (TEMPLATES / "base.html").read_text()
-    html = html.replace("__DURATION__", f"{dur:.3f}")
-    html = html.replace("__SCENE_JSON__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
-    html = html.replace("__TYPE_SCRIPT__", type_js.read_text())
-    out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "index.html").write_text(html)
-    shutil.copy(TEMPLATES / "hyperframes.json", out_dir / "hyperframes.json")
-    audio = REPO / scene["audio_file"]
-    if not audio.exists():
-        audio = run / "audio" / Path(scene["audio_file"]).name
-    shutil.copy(audio, out_dir / "vo.wav")
-    return dur
 
 
 def check(out_dir, name):
@@ -160,27 +109,13 @@ def main():
     timing = json.loads((run / "audio" / "timing.json").read_text())["scenes"]
     topic = json.loads((run / "04_script.json").read_text()).get("topic", "")
     build = run / "build"
-    film = (run / "05_storyboard.json").exists()
+    board = json.loads((run / "05_storyboard.json").read_text())
     quality = "draft" if args.draft else "standard"
 
     jobs = []  # (order, name, builder)
-    if film:
-        board = json.loads((run / "05_storyboard.json").read_text())
-        for bs in board["scenes"]:
-            name = f"scene_{int(bs['id']):02d}"
-            jobs.append((int(bs["id"]), name, lambda bs=bs, name=name: build_film_scene(run, board, bs, timing[name], topic, build / name)))
-    else:
-        index = json.loads((run / "scenes" / "index.json").read_text())
-        if index.get("status") != "complete":
-            sys.exit(f"scenes/index.json status is '{index.get('status')}', not 'complete'. Problems: {index.get('problems')}")
-        for entry in index["scenes"]:
-            scene_file = REPO / entry["scene_file"]
-            if not scene_file.exists():
-                scene_file = run / "scenes" / Path(entry["scene_file"]).name
-            scene = json.loads(scene_file.read_text())
-            name = Path(scene["audio_file"]).stem
-            order = int(scene.get("order", re.sub(r"\D", "", name) or 0))
-            jobs.append((order, name, lambda scene=scene, name=name: build_scene(run, scene, timing[name], topic, build / name)))
+    for bs in board["scenes"]:
+        name = f"scene_{int(bs['id']):02d}"
+        jobs.append((int(bs["id"]), name, lambda bs=bs, name=name: build_film_scene(run, board, bs, timing[name], topic, build / name)))
 
     clips, failed = [], []
     for order, name, builder in jobs:
@@ -189,7 +124,7 @@ def main():
         if args.scene and order != args.scene:
             continue
         dur = builder()
-        print(f"{name} ({'film' if film else 'slides'}, {dur:.1f}s)")
+        print(f"{name} ({dur:.1f}s)")
         if not args.no_check and not check(build / name, name):
             failed.append(order)
             if not args.check_only:
@@ -207,11 +142,8 @@ def main():
         sys.exit(f"Not joined yet; still to render: {missing}")
     joined = join(clips, run)
     final = run / "final.mp4"
-    if film:
-        from sound import mix
-        mix(run, joined, final, board, timing)
-    else:
-        shutil.copy(joined, final)
+    from sound import mix
+    mix(run, joined, final, board, timing)
     print(f"final.mp4: {duration(final):.1f}s, {len(clips)} scenes -> {final.relative_to(REPO)}")
 
 

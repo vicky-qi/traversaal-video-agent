@@ -1,10 +1,9 @@
 """Check a 04_script.json against docs/scene-format.md.
 
-Film scripts (cinematic definition, Oct 16) have per scene: id, title, act, narration, duration_sec, sources.
-Scripts from the first (slide) definition also have visual_type and visual_content; those are still checked.
+Each scene has exactly: id, title, act, narration, duration_sec, sources.
 
 Usage: python3 .claude/skills/make-video/check_script.py runs/<topic-slug>/04_script.json [--minutes 7]
-       python3 .claude/skills/make-video/check_script.py --example docs/example-script.json
+       python3 .claude/skills/make-video/check_script.py --example examples/snow-white/04_script.json
 --example skips the scene-count and total-word checks, for short format examples.
 --minutes sets the target film length (default 7): it decides the allowed scene count and total words.
 Prints every problem found and exits with code 1 if there are any.
@@ -14,63 +13,11 @@ import sys
 
 WORDS_PER_SEC = 2.4  # 145 words per minute
 TOLERANCE = 0.15
-FILM_FIELDS = ("id", "title", "act", "narration", "duration_sec", "sources")
-SLIDE_FIELDS = ("id", "title", "narration", "duration_sec", "visual_type", "visual_content", "sources")
+FIELDS = ("id", "title", "act", "narration", "duration_sec", "sources")
 BAD_IN_NARRATION = ("http", "*", "#", "[", "]", "%", "$")
-
-VISUAL_FIELDS = {
-    # visual_type: {field: (required, max_words or None)}
-    "title": {"headline": (True, 8), "subheadline": (False, 12), "background_description": (False, 25)},
-    "bullets": {"heading": (False, 8), "bullets": (True, None)},
-    "image": {"image_description": (True, 25), "caption": (False, 12), "image_path": (False, None)},
-    "chart": {"chart_type": (True, None), "chart_title": (True, 10), "labels": (True, None),
-              "values": (True, None), "unit": (True, None), "source_note": (True, None)},
-    "quote": {"quote_text": (True, 30), "attribution": (True, None)},
-}
-
 
 def words(text):
     return len(text.split())
-
-
-def check_visual(n, vtype, vc, problems):
-    spec = VISUAL_FIELDS[vtype]
-    for field, (required, max_words) in spec.items():
-        if field not in vc:
-            if required:
-                problems.append(f"Scene {n}: {vtype} needs visual_content.{field}")
-            continue
-        if max_words and words(str(vc[field])) > max_words:
-            problems.append(f"Scene {n}: visual_content.{field} is over {max_words} words")
-    for field in vc:
-        if field not in spec:
-            problems.append(f"Scene {n}: field visual_content.{field} is not allowed for {vtype}")
-    for field, value in vc.items():
-        if field != "image_path" and isinstance(value, str) and "http" in value:
-            problems.append(f"Scene {n}: visual_content.{field} must not contain a URL")
-
-    if vtype == "bullets" and "bullets" in vc:
-        items = vc["bullets"]
-        if not isinstance(items, list) or not 2 <= len(items) <= 5:
-            problems.append(f"Scene {n}: bullets needs 2-5 items")
-        else:
-            for item in items:
-                if words(item) > 12:
-                    problems.append(f"Scene {n}: bullet over 12 words: {item!r}")
-    if vtype == "image" and vc.get("image_path") is not None:
-        problems.append(f"Scene {n}: image_path must be null in the script")
-    if vtype == "chart":
-        if vc.get("chart_type") not in ("bar", "line", "pie"):
-            problems.append(f"Scene {n}: chart_type must be 'bar', 'line' or 'pie'")
-        labels, values = vc.get("labels", []), vc.get("values", [])
-        if not 2 <= len(labels) <= 8:
-            problems.append(f"Scene {n}: chart needs 2-8 labels")
-        if not all(isinstance(label, str) for label in labels):
-            problems.append(f"Scene {n}: chart labels must be strings (write years as \"2015\")")
-        if len(labels) != len(values):
-            problems.append(f"Scene {n}: chart labels and values differ in length")
-        if not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in values):
-            problems.append(f"Scene {n}: chart values must be numbers")
 
 
 def targets(minutes):
@@ -105,15 +52,13 @@ def check(path, example=False, minutes=7):
         n = scene.get("id", f"#{i}")
         if scene.get("id") != i:
             problems.append(f"Scene {i}: id is {scene.get('id')!r}; ids must be integers 1, 2, 3...")
-        slides = "visual_type" in scene or "visual_content" in scene
-        fields = SLIDE_FIELDS if slides else FILM_FIELDS
-        for field in fields:
+        for field in FIELDS:
             if field not in scene:
                 problems.append(f"Scene {n}: missing {field}")
         for field in scene:
-            if field not in fields:
+            if field not in FIELDS:
                 problems.append(f"Scene {n}: field {field} is not allowed")
-        if not slides and scene.get("act") not in (1, 2, 3):
+        if scene.get("act") not in (1, 2, 3):
             problems.append(f"Scene {n}: act must be 1, 2 or 3")
 
         narration = scene.get("narration", "")
@@ -129,16 +74,6 @@ def check(path, example=False, minutes=7):
             target = duration * WORDS_PER_SEC
             if abs(words(narration) / target - 1) > TOLERANCE:
                 problems.append(f"Scene {n}: {words(narration)} words; target is about {target:.0f} for {duration}s")
-
-        vtype = scene.get("visual_type")
-        if not slides:
-            pass
-        elif vtype not in VISUAL_FIELDS:
-            problems.append(f"Scene {n}: visual_type {vtype!r} is not one of {', '.join(VISUAL_FIELDS)}")
-        elif isinstance(scene.get("visual_content"), dict):
-            check_visual(n, vtype, scene["visual_content"], problems)
-        else:
-            problems.append(f"Scene {n}: visual_content must be an object")
 
         sources = scene.get("sources", [])
         if not isinstance(sources, list) or not all(isinstance(s, str) and s.startswith("http") for s in sources):

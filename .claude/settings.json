@@ -4,7 +4,6 @@
       "Read",
       "Write(runs/**)",
       "Edit(runs/**)",
-      "Edit(tests/log.md)",
       "WebSearch",
       "WebFetch",
       "Agent",

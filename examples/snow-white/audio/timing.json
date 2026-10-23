@@ -1,0 +1,185 @@
+{
+  "voice": "af_heart",
+  "speed": 0.85,
+  "scenes": {
+    "scene_01": {
+      "audio_file": "runs/1019-1726-tell-story-snow-white-as/audio/scene_01.wav",
+      "duration": 30.087,
+      "lines": [
+        {
+          "text": "A storybook creaks open, and a golden mirror begins to glow.",
+          "start": 0.4,
+          "end": 4.453
+        },
+        {
+          "text": "What happens in Snow White, in the Grimms' own words?",
+          "start": 4.753,
+          "end": 7.953
+        },
+        {
+          "text": "We follow their final edition, from eighteen fifty-seven.",
+          "start": 8.253,
+          "end": 11.944
+        },
+        {
+          "text": "A queen wishes for a child as white as snow, as red as blood.",
+          "start": 12.244,
+          "end": 16.425
+        },
+        {
+          "text": "At the birth, the queen dies.",
+          "start": 16.725,
+          "end": 18.581
+        },
+        {
+          "text": "The king remarries a proud woman with a magic mirror.",
+          "start": 18.881,
+          "end": 22.316
+        },
+        {
+          "text": "In the first edition, from eighteen twelve, the villain was Snow White's own mother.",
+          "start": 22.616,
+          "end": 27.501
+        },
+        {
+          "text": "Watch what else changes.",
+          "start": 27.801,
+          "end": 29.487
+        }
+      ]
+    },
+    "scene_02": {
+      "audio_file": "runs/1019-1726-tell-story-snow-white-as/audio/scene_02.wav",
+      "duration": 26.479,
+      "lines": [
+        {
+          "text": "When Snow White is seven, the mirror names her fairer than the queen.",
+          "start": 0.4,
+          "end": 4.24
+        },
+        {
+          "text": "The queen orders a huntsman to kill the girl in the woods and bring back her lungs and liver.",
+          "start": 4.54,
+          "end": 10.215
+        },
+        {
+          "text": "She begs, and he lets her run.",
+          "start": 10.515,
+          "end": 12.541
+        },
+        {
+          "text": "He brings back a young boar's instead, and the queen eats them, believing they are the girl's.",
+          "start": 12.841,
+          "end": 18.452
+        },
+        {
+          "text": "Snow White runs through thorns to a little house.",
+          "start": 18.752,
+          "end": 21.632
+        },
+        {
+          "text": "Its seven dwarfs let her stay, but warn her: let no one in.",
+          "start": 21.932,
+          "end": 25.879
+        }
+      ]
+    },
+    "scene_03": {
+      "audio_file": "runs/1019-1726-tell-story-snow-white-as/audio/scene_03.wav",
+      "duration": 31.133,
+      "lines": [
+        {
+          "text": "The queen comes back, three times, in disguise.",
+          "start": 0.4,
+          "end": 3.387
+        },
+        {
+          "text": "First, an old peddler woman laces her bodice so tight she falls as if dead.",
+          "start": 3.687,
+          "end": 9.148
+        },
+        {
+          "text": "The dwarfs cut the laces, and she breathes again.",
+          "start": 9.448,
+          "end": 12.413
+        },
+        {
+          "text": "Next, another old woman brings a poisoned comb.",
+          "start": 12.713,
+          "end": 15.999
+        },
+        {
+          "text": "The dwarfs pull it out, and she wakes.",
+          "start": 16.299,
+          "end": 18.432
+        },
+        {
+          "text": "Last, a peasant woman offers an apple, poisoned only on its red half.",
+          "start": 18.732,
+          "end": 23.788
+        },
+        {
+          "text": "The queen eats the white.",
+          "start": 24.088,
+          "end": 25.667
+        },
+        {
+          "text": "Snow White bites the red, and falls dead.",
+          "start": 25.967,
+          "end": 28.612
+        },
+        {
+          "text": "The dwarfs cannot wake her.",
+          "start": 28.912,
+          "end": 30.533
+        }
+      ]
+    },
+    "scene_04": {
+      "audio_file": "runs/1019-1726-tell-story-snow-white-as/audio/scene_04.wav",
+      "duration": 30.044,
+      "lines": [
+        {
+          "text": "She looks so alive that the dwarfs lay her in a glass coffin.",
+          "start": 0.4,
+          "end": 4.133
+        },
+        {
+          "text": "A prince's servants carry it away, stumble, and the apple piece shakes from her throat.",
+          "start": 4.433,
+          "end": 9.639
+        },
+        {
+          "text": "She sits up, alive.",
+          "start": 9.939,
+          "end": 11.389
+        },
+        {
+          "text": "At the wedding, her stepmother is made to dance in red-hot iron shoes until she falls dead.",
+          "start": 11.689,
+          "end": 17.62
+        },
+        {
+          "text": "Disney's film dropped the first two disguised visits, named the dwarfs, and woke her with a kiss.",
+          "start": 17.92,
+          "end": 24.256
+        },
+        {
+          "text": "The Grimms wrote a stumble.",
+          "start": 24.556,
+          "end": 26.177
+        },
+        {
+          "text": "The book closes.",
+          "start": 26.477,
+          "end": 27.715
+        },
+        {
+          "text": "The mirror goes dark.",
+          "start": 28.015,
+          "end": 29.444
+        }
+      ]
+    }
+  }
+}

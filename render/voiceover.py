@@ -11,7 +11,7 @@ text has not changed are not spoken again.
 
 The measured audio length is the scene length. Exit code 2 means the total is more than
 15% away from the script's target (the sum of duration_sec), so the script needs trimming
-or padding. Approach based on Jiaxin's tools/voiceover.py.
+or padding.
 """
 import argparse
 import hashlib

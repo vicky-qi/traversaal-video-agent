@@ -1,6 +1,6 @@
 # Visual style
 
-Owner: Jiaxin. **Updated Oct 16 for the cinematic definition** (Video Definition v2): the film is told through moving, full-frame pictures, not cards of text. Each film's own look comes from the brief's **Art direction**; this file sets the rules every film follows. The shot library in `templates/film/` implements them. (The first definition's slide layouts are described in git history before Oct 16.)
+The film is told through moving, full-frame pictures, not cards of text. Each film's own look comes from the brief's **Art direction**; this file sets the rules every film follows. The shot library in `templates/film/` implements them.
 
 ## Canvas
 
@@ -43,7 +43,7 @@ Used when the brief does not set one.
 | Big number | the value plus its unit |
 | Source credit | publisher and year |
 
-## Pictures in version 1
+## Pictures
 
 Built in code only: inline SVG, CSS shapes, gradients, particles and animated diagrams. No photographs, footage, logos, real people or specific products until Traversaal.ai confirms what images are allowed. Pictures must not imply anything the verified facts do not support.
 

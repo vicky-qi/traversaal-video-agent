@@ -1,6 +1,6 @@
 # Rendering: from `04_script.json` to `final.mp4`
 
-Owner: Cynthia. Uses HyperFrames (see `render/comparison.md`). The `/make-video` workflow follows these steps.
+Voice, scenes and sound, rendered with [HyperFrames](https://hyperframes.heygen.com). The `/make-video` workflow runs these steps; `./setup.sh` does the one-time setup.
 
 ## One-time setup (about 10 minutes)
 
@@ -16,7 +16,7 @@ conda env create -f environment.yml
 
 This creates a conda environment called `video` with Node 22+, FFmpeg and Python. Every command below runs inside it through `render/env.sh`, which works even when conda is not activated (for example in the Claude desktop app). The first voiceover downloads the voice model (about 27 MB); the first render downloads HyperFrames' browser and fonts.
 
-## Film mode (cinematic definition, Oct 16)
+## Steps
 
 Replace `<slug>` with the run folder name. The `/make-video` workflow runs these in order.
 
@@ -48,20 +48,13 @@ For each scene it places the scene's fragment into `templates/film/shell.html` w
 - `--draft`: faster, lower-quality render for previews.
 - It stops at the first scene that fails `hyperframes check` and prints why.
 
-## Slide mode (first definition)
-
-Runs made before Oct 16 have no `05_storyboard.json`; `render.py` renders them the old way, from `scenes/index.json` and the slide templates in `templates/`.
-
 ## Where things go
 
-| Path | What | In GitHub? |
-|---|---|---|
-| `runs/<slug>/audio/` | Voiceover files and `timing.json` | No (`.gitignore`) |
-| `runs/<slug>/scenes/` | Scene fragments from the scene builders (the film's source) | Yes |
-| `runs/<slug>/build/` | One HyperFrames project and MP4 per scene, plus the sound files | No |
-| `runs/<slug>/final.mp4` | The finished video | No: share it through the team Google Drive |
+| Path | What |
+|---|---|
+| `runs/<slug>/audio/` | Voiceover files, `timing.json` and `subtitles.srt` |
+| `runs/<slug>/scenes/` | Scene fragments from the scene builders (the film's source) |
+| `runs/<slug>/build/` | One HyperFrames project and MP4 per scene, plus the sound files |
+| `runs/<slug>/final.mp4` | The finished video |
 
-## Examples
-
-- `runs/sample/`: Julia's 2-scene example script (`docs/example-script.json`) run through all three steps; 65.7 s.
-- `runs/template-test/`: one scene of each chart type, a quote and an image, with placeholder numbers, used to test the templates.
+Runs stay on your computer: `runs/` is not part of the repository. A finished example is in `examples/snow-white/`.

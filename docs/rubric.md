@@ -1,6 +1,6 @@
 # Video scoring rubric
 
-Owner: Jiaxin. Used to score every test video (key result: average 4 out of 5 or higher). At least two people score each video independently, then compare; if two scores differ by more than 1 point, discuss and agree.
+How to judge a finished video. The target is an average of 4 out of 5 or higher. For a fair score, have two people score each video independently; if their scores differ by more than 1 point, discuss and agree.
 
 Score each of the six criteria from 1 to 5. Each level has one sentence describing what it looks like, so two people scoring the same video give similar scores.
 
@@ -58,8 +58,6 @@ Score each of the six criteria from 1 to 5. Each level has one sentence describi
 
 ### 6. Cinematic quality: does it feel like a film, not a narrated slide deck?
 
-Added Oct 16 with the cinematic definition (Video Definition v2).
-
 | Score | What it looks like |
 |---|---|
 | 5 | Feels like a short documentary: full-frame pictures, constant purposeful motion, music and sound, and the story carried mostly by images. |
@@ -72,17 +70,10 @@ Accuracy is checked against `03_checked.md` and, for any doubt, the source page 
 
 ## Scoring sheet
 
-One row per scorer per prompt (prompts from `tests/prompts.md`). Average = mean of the six scores.
+One row per scorer per video. Average = mean of the six scores.
 
-| Date | Prompt # | Scorer | Clarity | Visual | Narration | Coherence | Accuracy | Cinematic | Average | Length (min:s) | Notes |
+| Date | Video | Scorer | Clarity | Visual | Narration | Coherence | Accuracy | Cinematic | Average | Length (min:s) | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| | 1 | | | | | | | | | | |
-| | 2 | | | | | | | | | | |
-| | 3 | | | | | | | | | | |
-| | 4 | | | | | | | | | | |
-| | 5 | | | | | | | | | | |
-| | 6 | | | | | | | | | | |
-| | 7 | | | | | | | | | | |
-| | 8 | | | | | | | | | | |
-| | 9 | | | | | | | | | | |
-| | 10 | | | | | | | | | | |
+| | | | | | | | | | | | |
+| | | | | | | | | | | | |
+| | | | | | | | | | | | |

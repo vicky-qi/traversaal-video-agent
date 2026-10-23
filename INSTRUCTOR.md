@@ -13,9 +13,17 @@ Type a topic in a web page and get back a fact-checked, narrated **cinematic exp
 
 Nothing else is paid: the voice, music, sound effects and video rendering all run on your computer for free.
 
+To see what the result looks like first, watch the finished example: `examples/snow-white/snow-white.mp4`.
+
 ## Set up (once, about 10 minutes)
 
-1. Get the project folder (from the team's GitHub repository) and open a terminal in it.
+1. Download the project and open a terminal in it:
+
+   ```bash
+   git clone https://github.com/vicky-qi/traversaal-video-agent.git
+   cd traversaal-video-agent
+   ```
+
 2. Run:
 
    ```bash

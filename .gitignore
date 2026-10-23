@@ -1,18 +1,15 @@
 # Secrets
 .env
 
-# Large generated media: share finished videos through the team Google Drive
-runs/**/*.mp4
-runs/**/*.mov
-runs/**/audio/
+# Your runs stay on your computer (examples/ holds a finished one)
+runs/*
+!runs/.gitkeep
+
+# Example media that is not needed to read the example
+examples/**/build/
+examples/**/*.wav
 
 # Tools
 node_modules/
 .DS_Store
-
-# Render build folders (one HyperFrames project and MP4 per scene)
-runs/**/build/
-
-# Web app run logs: large, machine-specific, include account details
-runs/**/agent_log.jsonl
-runs/**/job.json
+__pycache__/

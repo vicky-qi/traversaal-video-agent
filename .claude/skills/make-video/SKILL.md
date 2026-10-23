@@ -6,9 +6,7 @@ argument-hint: '"<prompt>" [--minutes 7] [--slug name]'
 
 # make-video: prompt → cinematic explainer MP4
 
-The film follows `Video Definition v2: Cinematic Explainer` (Oct 16): one question followed to its answer, told through moving full-frame pictures, camera work, music and sound, with every fact verified.
-
-Owner: Julia. Adapted from the orchestrator on Jiaxin's pipeline branch to the file names on main (`CLAUDE.md`, `docs/scene-format.md`).
+A cinematic explainer is one question followed to its answer, told through moving full-frame pictures, camera work, music and sound, with every fact verified.
 
 You are the orchestrator. Run the stages below in order, give each subagent its inputs, check that its output file exists and looks right, and log every stage. **Do not do the subagents' work yourself**: no researching, writing narration or writing scene files in the main conversation. If a stage fails, retry or repair it as described below, never by skipping it.
 
@@ -34,7 +32,7 @@ Use the **intake** subagent with the prompt. Read the slug from its reply. Check
 
 ## 2. Research (parallel, one researcher per question)
 
-Launch one **researcher** subagent per key question, **all in the same message** so they run at the same time: "Topic slug: <slug>. Question number: <N>." Each writes `runs/<slug>/research/q<N>.md`. (A single researcher doing all questions in order took over 30 minutes; this is the speed-up from Jiaxin's branch.)
+Launch one **researcher** subagent per key question, **all in the same message** so they run at the same time: "Topic slug: <slug>. Question number: <N>." Each writes `runs/<slug>/research/q<N>.md`. (One researcher doing every question in turn takes over 30 minutes.)
 
 When all have finished, merge them:
 
@@ -90,7 +88,7 @@ If it prints any `FAIL`, send the failures back to the storyboard agent (at most
 
 ## 7. Final fact-check of script and storyboard (at most 2 rounds)
 
-This runs after the length fit and the storyboard, so it checks the final words and pictures. Jiaxin's test and the Oct 7 full run both found the script stretching facts that were correct in the research.
+This runs after the length fit and the storyboard, so it checks the final words and pictures. Scripts can stretch facts that were correct in the research.
 
 1. Use a **fresh fact-checker** subagent in Mode 2: "Topic slug: <slug>. Final check (Mode 2): script and storyboard." It writes `runs/<slug>/06_final_check.md`.
 2. `PASS`: go to step 8.
@@ -114,7 +112,7 @@ It checks and renders each scene, joins them, then mixes a music bed (the storyb
 
 ## 10. Report
 
-Add one row to `tests/log.md`, then tell the user briefly:
+Tell the user briefly:
 
 - the video path and its length vs the 7-minute target
 - the film's numbers from `check_storyboard.py` (shots per minute, camera movement, on-screen text)

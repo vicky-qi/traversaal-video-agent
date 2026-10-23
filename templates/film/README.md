@@ -1,6 +1,6 @@
 # Film shot library
 
-Owner: Jiaxin (with Cynthia and Maggie). The building blocks for cinematic scenes (Video Definition v2, Oct 16). They replace the five slide layouts in `templates/*.js`, which stay only for runs made before Oct 16.
+The building blocks for cinematic scenes.
 
 - `shell.html`: the scene page. `render/render.py` fills it with the scene's timing, storyboard shots and palette, and drops the scene builder's fragment (`runs/<slug>/scenes/scene_NN/scene.html`) into `#world`. The shell also plays the scene's `transition_in` and shows small subtitles.
 - `example-scene.html`: a finished 6-shot reference scene ("Inside a single cell"), every picture built in SVG.
