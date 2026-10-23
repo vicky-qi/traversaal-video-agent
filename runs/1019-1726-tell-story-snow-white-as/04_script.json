@@ -1,0 +1,55 @@
+{
+  "topic": "Snow White as the Brothers Grimm Wrote It",
+  "total_words": 312,
+  "scenes": [
+    {
+      "id": 1,
+      "title": "The Book Opens",
+      "act": 1,
+      "narration": "A storybook creaks open, and a golden mirror begins to glow. What happens in Snow White, in the Grimms' own words? We follow their final edition, from eighteen fifty-seven. A queen wishes for a child as white as snow, as red as blood. At the birth, the queen dies. The king remarries a proud woman with a magic mirror. In the first edition, from eighteen twelve, the villain was Snow White's own mother. Watch what else changes.",
+      "duration_sec": 30,
+      "sources": [
+        "https://sites.pitt.edu/~dash/grimm053.html",
+        "https://de.wikisource.org/wiki/Sneewittchen_(1857)",
+        "https://staatsbibliothek-berlin.de/die-staatsbibliothek/abteilungen/kinder-und-jugendbuecher/aktuelles/ausstellung/erstausgabe",
+        "https://sites.pitt.edu/~dash/type0709.html"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Into the Forest",
+      "act": 2,
+      "narration": "When Snow White is seven, the mirror names her fairer than the queen. The queen orders a huntsman to kill the girl in the woods and bring back her lungs and liver. She begs, and he lets her run. He brings back a young boar's instead, and the queen eats them, believing they are the girl's. Snow White runs through thorns to a little house. Its seven dwarfs let her stay, but warn her: let no one in.",
+      "duration_sec": 30,
+      "sources": [
+        "https://sites.pitt.edu/~dash/grimm053.html",
+        "https://de.wikisource.org/wiki/Sneewittchen_(1857)"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "The Queen Returns",
+      "act": 2,
+      "narration": "The queen comes back, three times, in disguise. First, an old peddler woman laces her bodice so tight she falls as if dead. The dwarfs cut the laces, and she breathes again. Next, another old woman brings a poisoned comb. The dwarfs pull it out, and she wakes. Last, a peasant woman offers an apple, poisoned only on its red half. The queen eats the white. Snow White bites the red, and falls dead. The dwarfs cannot wake her.",
+      "duration_sec": 30,
+      "sources": [
+        "https://sites.pitt.edu/~dash/grimm053.html",
+        "https://de.wikisource.org/wiki/Sneewittchen_(1857)",
+        "https://www.gutenberg.org/files/5314/5314-h/5314-h.htm"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "How the Grimms End It",
+      "act": 3,
+      "narration": "She looks so alive that the dwarfs lay her in a glass coffin. A prince's servants carry it away, stumble, and the apple piece shakes from her throat. She sits up, alive. At the wedding, her stepmother is made to dance in red-hot iron shoes until she falls dead. Disney's film dropped the first two disguised visits, named the dwarfs, and woke her with a kiss. The Grimms wrote a stumble. The book closes. The mirror goes dark.",
+      "duration_sec": 30,
+      "sources": [
+        "https://sites.pitt.edu/~dash/grimm053.html",
+        "https://de.wikisource.org/wiki/Sneewittchen_(1857)",
+        "https://archive.org/stream/oapen-20.500.12657-58858/9781501351204_djvu.txt",
+        "https://d23.com/a-to-z/snow-white-and-the-seven-dwarfs-film/"
+      ]
+    }
+  ]
+}

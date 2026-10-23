@@ -12,3 +12,7 @@ node_modules/
 
 # Render build folders (one HyperFrames project and MP4 per scene)
 runs/**/build/
+
+# Web app run logs: large, machine-specific, include account details
+runs/**/agent_log.jsonl
+runs/**/job.json

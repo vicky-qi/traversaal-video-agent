@@ -69,6 +69,7 @@
   .actions a { color: var(--accent); }
   .feed { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; max-height: 300px; overflow: auto; font-size: 13px; display: grid; gap: 6px; }
   .feed .tool { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+  .feed .warn { color: var(--bad); font-family: var(--mono); font-size: 12px; }
   .empty { color: var(--muted); padding: 40px 0; text-align: center; }
   .doc { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; max-height: 520px; overflow: auto; white-space: pre-wrap; font: 13px/1.55 var(--mono); }
 </style>
@@ -197,6 +198,8 @@ function renderDetail(d) {
       ${d.stages[2].file ? `<a href="#" data-file="03_checked.md">Sources and checked facts</a>` : ""}
       ${d.stages[6].file ? `<a href="#" data-file="06_final_check.md">Final fact-check</a>` : ""}</div>` : ""}
     ${d.state === "running" ? `<div class="actions"><button class="secondary" id="cancel" type="button">Stop this run</button></div>` : ""}
+    ${d.state === "failed" || d.state === "cancelled" ? `<div class="actions"><button id="resume" type="button">Continue this run</button>
+      <span class="sub">Keeps the finished steps and picks up at the first unfinished one.</span></div>` : ""}
     ${res && !res.ok ? `<p class="msg">${esc(res.text.slice(0, 400))}</p>` : ""}
     <h2>${docOpen ? esc(docOpen) : "Activity"}</h2>
     ${docOpen ? `<div class="doc" id="doc">Loading…</div><div class="actions"><a href="#" id="closeDoc">Back to activity</a></div>` : `<div class="feed">${feed}</div>`}`;
@@ -204,6 +207,12 @@ function renderDetail(d) {
   if (docOpen) openDoc(d.slug, docOpen);
   const c = $("#closeDoc"); if (c) c.onclick = (e) => { e.preventDefault(); docOpen = null; refresh(); };
   const x = $("#cancel"); if (x) x.onclick = async () => { await api(`/api/runs/${d.slug}/cancel`, { method: "POST" }); refresh(); };
+  const r = $("#resume"); if (r) r.onclick = async () => {
+    r.disabled = true;
+    try { await api(`/api/runs/${d.slug}/resume`, { method: "POST" }); }
+    catch (e) { r.disabled = false; r.insertAdjacentHTML("afterend", `<p class="msg">${esc(e.message)}</p>`); }
+    refresh();
+  };
 }
 
 let lastDetailKey = "";

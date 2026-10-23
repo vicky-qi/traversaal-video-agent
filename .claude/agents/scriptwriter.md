@@ -43,3 +43,7 @@ When asked for a revision, start from the version named (for example `04_script.
 - [ ] The first scene opens on the brief's opening moment and asks the question; the last scene answers it.
 - [ ] Every number, name and quote traces to a verified fact in `03_checked.md`, worded within its WARN notes, with its URL in that scene's `sources`.
 - [ ] No symbols, abbreviations or URLs in any narration.
+
+## Commands
+
+Run one command per Bash call, from the repo root, with relative paths exactly as written above (for example `python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json`). No `cd`, `&&`, `;`, pipes or inline scripts: runs from the web app refuse anything outside the allowlist in `.claude/settings.json`. Create and change files with the Write and Edit tools.

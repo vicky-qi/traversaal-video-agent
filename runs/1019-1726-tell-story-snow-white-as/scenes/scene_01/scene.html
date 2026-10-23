@@ -1,0 +1,478 @@
+<!--
+  Scene 1, "The Book Opens". Layered paper-cut storybook, every picture built in SVG.
+    1 push_in   a closed storybook opens; three paper layers fold up into a castle; a gold mirror on its wall starts to glow
+    2 push_in   close on the gold mirror: its surface ripples and squiggles of script drift across it
+    3 pan_up    the title page: oak-leaf frame, six ghost pages behind and a bright seventh in front   (data: 1857 year)
+    4 parallax  winter window: queen sewing, snow falling, three red drops on the sill; the candle goes out, a cradle remains
+    5 pan_left  warm castle hall: the king takes the new queen's hand; she turns to the mirror, which flares
+    6 pull_out  pages riffle back to old yellowed paper; the sewing queen and the mirror queen merge into one   (data: 1812 year)
+    7 push_in   the old page flips away, back to the 1857 castle; the mirror pulses and its glow fills the frame
+-->
+<style>
+  /* Backgrounds are oversized so camera pans never show an edge. */
+  .void, .void2, .aged, .hall { position: absolute; left: -160px; top: -100px; width: 2240px; height: 1280px; }
+  .void { background: radial-gradient(1100px 760px at 50% 48%, #262038 0%, #14121F 72%); }
+  .void2 { background: radial-gradient(900px 700px at 50% 44%, #2c2540 0%, #17141f 75%); }
+  .aged { background: radial-gradient(1200px 820px at 50% 45%, #eadbb2 0%, #d9c595 60%, #a88d5c 100%); }
+  .hall { background: radial-gradient(1300px 800px at 55% 35%, #f3e3bd 0%, #dcc08a 65%, #a7814f 100%); }
+  .cam svg { overflow: visible; }
+  .label { background: rgba(20, 18, 31, 0.82); border-color: rgba(201, 164, 76, 0.85); color: #F2EAD8; }
+  .big-number { color: #C9A44C; font-family: Georgia, "Times New Roman", serif; letter-spacing: -0.02em;
+                text-shadow: 0 0 30px rgba(201, 164, 76, 0.35); }
+  .big-unit { color: #F2EAD8; font-family: Georgia, "Times New Roman", serif; font-style: italic; }
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="pc" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity="0.5" />
+    </filter>
+    <filter id="pcs" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity="0.4" />
+    </filter>
+    <radialGradient id="gGold">
+      <stop offset="0" stop-color="#FFE9A8" stop-opacity="0.95" />
+      <stop offset="0.35" stop-color="#C9A44C" stop-opacity="0.45" />
+      <stop offset="1" stop-color="#C9A44C" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="gWarm">
+      <stop offset="0" stop-color="#FFD98A" stop-opacity="0.95" />
+      <stop offset="0.5" stop-color="#C9A44C" stop-opacity="0.45" />
+      <stop offset="1" stop-color="#3a2a22" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="gPale">
+      <stop offset="0" stop-color="#F2EAD8" stop-opacity="0.85" />
+      <stop offset="0.6" stop-color="#F2EAD8" stop-opacity="0.25" />
+      <stop offset="1" stop-color="#F2EAD8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="gRed">
+      <stop offset="0" stop-color="#B3202E" stop-opacity="0.75" />
+      <stop offset="1" stop-color="#B3202E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="gGlass" cx="0.4" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#6E6A86" />
+      <stop offset="0.6" stop-color="#2e2944" />
+      <stop offset="1" stop-color="#16131f" />
+    </radialGradient>
+    <clipPath id="mclip"><ellipse cx="960" cy="460" rx="278" ry="356" /></clipPath>
+  </defs>
+</svg>
+
+<!-- Shot 1: the book opens into a pop-up castle -->
+<div class="shot" id="s1"><div class="cam" id="cam1">
+  <div class="void"></div>
+  <div id="castle1"></div>
+</div></div>
+
+<!-- Shot 2: the mirror up close -->
+<div class="shot" id="s2"><div class="cam">
+  <div class="void2"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <g id="wall2"></g>
+    <circle id="halo2" cx="960" cy="460" r="620" fill="url(#gGold)" opacity="0.35" />
+    <g filter="url(#pc)">
+      <g id="scallops2"></g>
+      <ellipse cx="960" cy="460" rx="322" ry="402" fill="#C9A44C" />
+      <ellipse cx="960" cy="460" rx="300" ry="378" fill="#8a6d2c" />
+    </g>
+    <ellipse cx="960" cy="460" rx="278" ry="356" fill="url(#gGlass)" />
+    <g clip-path="url(#mclip)">
+      <g id="ripples2"></g>
+      <g id="script2"></g>
+      <path d="M760 200 L900 140 L1000 820 L860 860 Z" fill="#F2EAD8" opacity="0.06" />
+    </g>
+    <g id="motes2"></g>
+  </svg>
+</div></div>
+
+<!-- Shot 3: the title page of the seventh edition -->
+<div class="shot" id="s3"><div class="cam">
+  <div class="void"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <g id="ghosts3"></g>
+    <g filter="url(#pc)">
+      <rect id="page3" x="500" y="100" width="920" height="780" rx="10" fill="#F2EAD8" />
+    </g>
+    <rect id="edge3" x="500" y="100" width="920" height="780" rx="10" fill="none" stroke="#C9A44C" stroke-width="6" opacity="0" />
+    <g id="oak3"></g>
+    <rect x="590" y="200" width="740" height="580" rx="22" fill="#1d1a2b" stroke="#C9A44C" stroke-width="3" />
+    <rect x="606" y="216" width="708" height="548" rx="16" fill="none" stroke="#C9A44C" stroke-width="1.5" opacity="0.5" />
+    <circle id="plateglow3" cx="960" cy="380" r="300" fill="url(#gGold)" opacity="0" />
+  </svg>
+</div></div>
+
+<!-- Shot 4: the winter window (layers for parallax) -->
+<div class="shot" id="s4"><div class="cam">
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" data-depth="0.15">
+    <rect x="-160" y="-100" width="2240" height="1280" fill="#14121F" />
+    <rect x="500" y="120" width="920" height="660" fill="#33251f" />
+    <path d="M1240 700 L1240 420 Q1240 360 1300 360 L1420 360 L1420 700 Z" fill="#241a17" />
+    <circle id="warm4" cx="1180" cy="560" r="560" fill="url(#gWarm)" />
+    <circle id="pale4" cx="900" cy="650" r="300" fill="url(#gPale)" opacity="0" />
+  </svg>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" data-depth="0.45">
+    <g transform="translate(790 700)"><g id="q4"></g></g>
+    <g id="cradle4" opacity="0">
+      <path d="M800 700 Q880 732 960 700" fill="none" stroke="#120f1a" stroke-width="9" stroke-linecap="round" />
+      <path d="M812 694 Q812 640 846 630 L928 630 Q950 640 950 694 Z" fill="#120f1a" />
+      <path d="M812 660 Q808 600 860 596 Q872 620 868 640 Z" fill="#120f1a" />
+    </g>
+    <rect x="1168" y="600" width="28" height="100" rx="4" fill="#F2EAD8" />
+    <ellipse id="flame4" cx="1182" cy="582" rx="11" ry="22" fill="#FFD98A" />
+    <path id="smoke4" d="M1182 590 C1170 560 1196 540 1182 510 C1170 486 1192 470 1184 450" fill="none" stroke="#6E6A86" stroke-width="4" stroke-linecap="round" opacity="0" />
+    <path fill-rule="evenodd" fill="#2a2538" filter="url(#pc)"
+          d="M-200 -120 H2120 V1200 H-200 Z M600 700 L600 300 Q600 170 960 170 Q1320 170 1320 300 L1320 700 Z" />
+    <g id="stones4"></g>
+    <path d="M600 700 L600 300 Q600 170 960 170 Q1320 170 1320 300 L1320 700" fill="none" stroke="#07060b" stroke-width="34" />
+    <rect x="556" y="700" width="808" height="44" rx="4" fill="#07060b" filter="url(#pcs)" />
+    <path d="M552 708 Q600 684 652 700 Q720 680 784 698 Q850 682 912 700 Q990 680 1060 699 Q1130 682 1196 700 Q1270 684 1368 706 L1368 716 L552 716 Z" fill="#F2EAD8" />
+    <g id="drops4"></g>
+  </svg>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" data-depth="0.7">
+    <g id="snowmid4"></g>
+  </svg>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080" data-depth="1.1">
+    <g filter="url(#pc)">
+      <path d="M-160 120 C80 140 220 200 380 300 L372 316 C220 226 80 168 -160 150 Z" fill="#07060b" />
+      <path d="M180 196 C220 150 260 120 320 100 L326 112 C270 136 232 166 196 206 Z" fill="#07060b" />
+      <path d="M-160 118 C60 132 200 186 300 240 C290 226 200 170 60 126 Z" fill="#F2EAD8" />
+      <path d="M180 194 C220 148 262 118 320 98 C300 112 236 140 190 188 Z" fill="#F2EAD8" />
+    </g>
+    <g id="snowfar4"></g>
+  </svg>
+</div></div>
+
+<!-- Shot 5: the warm castle hall, the king remarries -->
+<div class="shot" id="s5"><div class="cam">
+  <div class="hall"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <g filter="url(#pc)">
+      <path d="M140 790 L140 330 Q140 220 250 220 Q360 220 360 330 L360 790 Z" fill="#cfb27a" />
+      <path d="M520 790 L520 300 Q520 170 650 170 Q780 170 780 300 L780 790 Z" fill="#d6bb84" />
+      <path d="M1160 790 L1160 300 Q1160 170 1290 170 Q1420 170 1420 300 L1420 790 Z" fill="#d6bb84" />
+      <path d="M1700 790 L1700 330 Q1700 220 1810 220 Q1920 220 1920 330 L1920 790 Z" fill="#cfb27a" />
+    </g>
+    <g filter="url(#pc)">
+      <path d="M380 -110 L460 -110 L460 300 L420 270 L380 300 Z" fill="#B3202E" />
+      <path d="M940 -110 L1020 -110 L1020 260 L980 230 L940 260 Z" fill="#B3202E" />
+      <path d="M1560 -110 L1640 -110 L1640 300 L1600 270 L1560 300 Z" fill="#B3202E" />
+    </g>
+    <rect x="-160" y="780" width="2240" height="400" fill="#6d4e34" />
+    <rect x="-160" y="780" width="2240" height="10" fill="#4a3424" />
+    <circle id="glow5" cx="1560" cy="420" r="420" fill="url(#gGold)" opacity="0.15" />
+    <g filter="url(#pc)">
+      <ellipse cx="1560" cy="420" rx="84" ry="112" fill="#C9A44C" />
+      <ellipse cx="1560" cy="420" rx="66" ry="92" fill="url(#gGlass)" />
+    </g>
+    <ellipse id="mcore5" cx="1560" cy="420" rx="60" ry="86" fill="#FFE9A8" opacity="0" />
+    <g transform="translate(700 790)"><g id="king5"></g></g>
+    <g transform="translate(1030 790)"><g id="queen5"></g></g>
+  </svg>
+</div></div>
+
+<!-- Shot 6: the older, yellowed page of 1812 -->
+<div class="shot" id="s6"><div class="cam">
+  <div class="aged"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <circle cx="420" cy="720" r="90" fill="#a88d5c" opacity="0.18" />
+    <circle cx="1500" cy="300" r="130" fill="#a88d5c" opacity="0.14" />
+    <path d="M960 60 L960 900" stroke="#a88d5c" stroke-width="3" opacity="0.5" />
+    <circle id="red6" cx="960" cy="560" r="360" fill="url(#gRed)" opacity="0" />
+    <g transform="translate(560 770)"><g id="sq6"></g></g>
+    <g transform="translate(1360 780)"><g id="tq6"></g></g>
+    <g transform="translate(960 780)"><g id="mq6" opacity="0"></g></g>
+    <g id="riffle6"></g>
+  </svg>
+</div></div>
+
+<!-- Shot 7: back to the 1857 castle; the mirror's glow fills the frame -->
+<div class="shot" id="s7"><div class="cam">
+  <div class="void"></div>
+  <div id="castle7"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <rect id="wash7" x="-160" y="-100" width="2240" height="1280" fill="#C9A44C" opacity="0" />
+    <g id="old7">
+      <rect x="-160" y="-100" width="2240" height="1280" fill="#dcc999" />
+      <rect x="2040" y="-100" width="40" height="1280" fill="#a88d5c" opacity="0.6" />
+    </g>
+  </svg>
+</div></div>
+
+<script>
+  {
+    const NS = "http://www.w3.org/2000/svg";
+    const make = (tag, attrs, parent) => {
+      const e = document.createElementNS(NS, tag);
+      Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+      parent.appendChild(e);
+      return e;
+    };
+    const $id = (id) => document.getElementById(id);
+    // A year should read 1857, not 1,857: strip the thousands separator the counter adds.
+    const noComma = (el) => {
+      const ob = new MutationObserver(() => {
+        if (el.textContent.indexOf(",") >= 0) el.textContent = el.textContent.split(",").join("");
+      });
+      ob.observe(el, { childList: true, characterData: true, subtree: true });
+    };
+    // Floating gold dust, deterministic positions.
+    const motes = (g, n, start, dur, color) => {
+      for (let i = 0; i < n; i++) {
+        const c = make("circle", { cx: 80 + ((i * 397) % 1760), cy: 140 + ((i * 211) % 700), r: 2 + (i % 3), fill: color, opacity: 0 }, g);
+        tl.fromTo(c, { y: 0, opacity: 0 }, { y: -140 - (i % 4) * 30, opacity: 0.8, duration: dur / 2, ease: "sine.inOut", repeat: 1, yoyo: true },
+          start + (i % 6) * 0.2);
+      }
+    };
+
+    // ---- silhouettes (local coordinates: feet at 0,0) ----
+    const seatedQueen = (fill) => `
+      <path d="M-14 -268 L14 -268 L44 -200 L60 -120 L112 -62 L112 0 L-72 0 L-62 -120 L-44 -200 Z" fill="${fill}" />
+      <circle cx="0" cy="-300" r="34" fill="${fill}" />
+      <polygon points="30,-308 46,-298 30,-290" fill="${fill}" />
+      <polygon points="-28,-326 -28,-352 -15,-338 0,-364 15,-338 28,-352 28,-326" fill="${P[4]}" />
+      <path d="M8 -248 L28 -254 L120 -164 L106 -150 Z" fill="${fill}" />
+      <circle cx="122" cy="-152" r="26" fill="none" stroke="${fill}" stroke-width="7" />`;
+    const tallQueen = (fill, headId, armId) => `
+      <path d="M-16 -330 L16 -330 L40 -240 L74 0 L-74 0 L-40 -240 Z" fill="${fill}" />
+      <polygon points="-18,-336 -64,-428 -6,-366" fill="${fill}" stroke="${P[2]}" stroke-width="3" />
+      <polygon points="18,-336 64,-428 6,-366" fill="${fill}" stroke="${P[2]}" stroke-width="3" />
+      <g ${headId ? `id="${headId}"` : ""}>
+        <circle cx="0" cy="-362" r="30" fill="${fill}" />
+        <polygon points="26,-370 42,-360 26,-352" fill="${fill}" />
+        <polygon points="-22,-386 -22,-406 -11,-396 0,-414 11,-396 22,-406 22,-386" fill="${P[4]}" />
+      </g>
+      <path ${armId ? `id="${armId}"` : ""} d="M-10 -282 L-26 -290 L-122 -238 L-114 -222 Z" fill="${fill}" />`;
+    const king = (fill, armId) => `
+      <path d="M-20 -280 L20 -280 L62 -200 L94 0 L-94 0 L-62 -200 Z" fill="${fill}" />
+      <circle cx="0" cy="-312" r="33" fill="${fill}" />
+      <path d="M-4 -300 Q12 -250 30 -296 Z" fill="${fill}" />
+      <polygon points="28,-320 44,-310 28,-302" fill="${fill}" />
+      <polygon points="-32,-338 -32,-372 -16,-354 0,-382 16,-354 32,-372 32,-338" fill="${P[4]}" />
+      <path ${armId ? `id="${armId}"` : ""} d="M10 -258 L26 -265 L122 -234 L116 -218 Z" fill="${fill}" />`;
+
+    // ---- the pop-up castle on the open book (shots 1 and 7) ----
+    const castleSVG = (s, withCover) => {
+      let hedge = "M420 776 L420 724";
+      for (let x = 420; x < 1500; x += 60) hedge += ` Q${x + 30} ${(x / 60) % 2 ? 676 : 690} ${x + 60} 724`;
+      hedge += " L1500 776 Z";
+      let cren = "";
+      for (let i = 0; i < 5; i++) cren += `<rect x="${770 + i * 80}" y="374" width="50" height="42" fill="${P[1]}" />`;
+      return `
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+        <ellipse cx="960" cy="886" rx="720" ry="44" fill="#000" opacity="0.5" />
+        <g id="right${s}">
+          <rect x="958" y="758" width="594" height="122" rx="12" fill="#6b1a24" />
+          <path d="M962 774 Q1240 744 1524 770 L1524 866 Q1240 842 962 870 Z" fill="#cdbf9f" />
+          <path d="M962 766 Q1240 734 1516 758 L1516 852 Q1240 830 962 860 Z" fill="${P[1]}" filter="url(#pcs)" />
+        </g>
+        <g id="left${s}">
+          <rect x="368" y="758" width="594" height="122" rx="12" fill="#6b1a24" />
+          <path d="M958 774 Q680 744 396 770 L396 866 Q680 842 958 870 Z" fill="#cdbf9f" />
+          <path d="M958 766 Q680 734 404 758 L404 852 Q680 830 958 860 Z" fill="${P[1]}" filter="url(#pcs)" />
+        </g>
+        <g id="lay1${s}" filter="url(#pc)">
+          <path d="M440 776 L440 600 Q520 520 600 590 Q680 470 780 560 Q880 430 960 520 Q1050 420 1150 560 Q1250 470 1330 590 Q1410 520 1480 600 L1480 776 Z" fill="${P[5]}" />
+        </g>
+        <g id="lay2${s}" filter="url(#pc)">
+          <rect x="770" y="412" width="380" height="364" fill="${P[1]}" />${cren}
+          <rect x="628" y="300" width="128" height="476" fill="${P[1]}" />
+          <rect x="1164" y="300" width="128" height="476" fill="${P[1]}" />
+          <polygon points="612,302 692,158 772,302" fill="${P[2]}" />
+          <polygon points="1148,302 1228,158 1308,302" fill="${P[2]}" />
+          <path d="M692 160 L692 116 L728 128 L692 140" fill="${P[2]}" stroke="${P[2]}" stroke-width="3" />
+          <path d="M1228 160 L1228 116 L1264 128 L1228 140" fill="${P[2]}" stroke="${P[2]}" stroke-width="3" />
+          <rect x="680" y="360" width="24" height="54" rx="12" fill="${P[0]}" />
+          <rect x="1216" y="360" width="24" height="54" rx="12" fill="${P[0]}" />
+          <rect x="680" y="520" width="24" height="54" rx="12" fill="${P[0]}" />
+          <rect x="1216" y="520" width="24" height="54" rx="12" fill="${P[0]}" />
+          <path d="M905 776 L905 692 Q960 640 1015 692 L1015 776 Z" fill="${P[0]}" />
+          <ellipse cx="960" cy="540" rx="50" ry="66" fill="${P[4]}" />
+          <ellipse cx="960" cy="540" rx="38" ry="54" fill="#2b2540" />
+        </g>
+        <g id="lay3${s}" filter="url(#pc)"><path d="${hedge}" fill="${P[3]}" /></g>
+        <circle id="glow${s}" cx="960" cy="540" r="460" fill="url(#gGold)" opacity="0" />
+        <ellipse id="mcore${s}" cx="960" cy="540" rx="38" ry="54" fill="#FFE9A8" opacity="0" />
+        ${withCover ? `<g id="cover${s}" filter="url(#pc)">
+          <rect x="958" y="746" width="600" height="136" rx="14" fill="${P[2]}" />
+          <rect x="982" y="762" width="552" height="104" rx="8" fill="none" stroke="${P[4]}" stroke-width="3" />
+          <ellipse cx="1258" cy="814" rx="24" ry="32" fill="none" stroke="${P[4]}" stroke-width="5" />
+        </g>` : ""}
+        <g id="motes${s}"></g>
+      </svg>`;
+    };
+    $id("castle1").innerHTML = castleSVG("1", true);
+    $id("castle7").innerHTML = castleSVG("7", false);
+
+    // ================= Shot 1: the book creaks open, the castle pops up, the mirror glows =================
+    shot(1, "#s1");
+    const a1 = shotStart(1);
+    tl.set("#left1", { scaleX: 0, svgOrigin: "960 820" }, 0);
+    tl.set(["#lay11", "#lay21", "#lay31"], { scaleY: 0, svgOrigin: "960 776" }, 0);
+    tl.fromTo("#cover1", { scaleX: 1, svgOrigin: "960 814" }, { scaleX: 0, duration: 0.55, ease: "power2.in" }, a1 + 0.35);
+    tl.to("#left1", { scaleX: 1, duration: 0.6, ease: "power2.out" }, a1 + 0.9);
+    tl.to("#lay11", { scaleY: 1, duration: 0.7, ease: "back.out(1.4)" }, a1 + 1.3);
+    tl.to("#lay21", { scaleY: 1, duration: 0.8, ease: "back.out(1.4)" }, a1 + 1.6);
+    tl.to("#lay31", { scaleY: 1, duration: 0.6, ease: "back.out(1.6)" }, a1 + 1.95);
+    tl.fromTo("#mcore1", { opacity: 0 }, { opacity: 0.9, duration: 1.0, ease: "sine.inOut" }, lineStart(0) + 2.3);
+    tl.fromTo("#glow1", { opacity: 0, scale: 0.3, svgOrigin: "960 540" }, { opacity: 0.85, scale: 1, duration: 1.6, ease: "sine.out" }, lineStart(0) + 2.4);
+    motes($id("motes1"), 22, a1 + 1.8, 3.0, P[4]);
+
+    // ================= Shot 2: the mirror's surface ripples, script stirs =================
+    const wall2 = $id("wall2");
+    for (let r = -1; r < 17; r++) for (let c = -1; c < 15; c++) {
+      make("rect", { x: -80 + c * 160 + (r % 2 ? 80 : 0), y: r * 70, width: 150, height: 62, rx: 6, fill: "#2a2639" }, wall2);
+    }
+    const sc2 = $id("scallops2");
+    for (let k = 0; k < 40; k++) {
+      const a = (k / 40) * Math.PI * 2;
+      make("circle", { cx: 960 + 334 * Math.cos(a), cy: 460 + 414 * Math.sin(a), r: 18, fill: P[4] }, sc2);
+    }
+    const rip2 = $id("ripples2"), ripples = [];
+    for (let i = 0; i < 5; i++) ripples.push(make("ellipse", { cx: 960, cy: 460, rx: 60, ry: 76, fill: "none", stroke: P[1], "stroke-width": 3, opacity: 0 }, rip2));
+    const scr2 = $id("script2"), lines2 = [];
+    for (let i = 0; i < 11; i++) {
+      let d = `M${720 + (i % 3) * 34} ${210 + i * 50}`;
+      const words = 3 + (i % 3);
+      for (let w = 0; w < words; w++) {
+        d += " q8 -16 16 0";
+        const segs = 2 + ((i + w) % 4);
+        for (let s = 0; s < segs; s++) d += s % 2 ? " t16 0" : " q8 14 16 0";
+        d += " m26 0";
+      }
+      lines2.push(make("path", { d, fill: "none", stroke: P[1], "stroke-width": 4, "stroke-linecap": "round", opacity: 0 }, scr2));
+    }
+    shot(2, "#s2");
+    const a2 = shotStart(2), L2 = shotLen(2);
+    tl.fromTo("#halo2", { opacity: 0.2 }, { opacity: 0.55, duration: 0.9, repeat: 3, yoyo: true, ease: "sine.inOut" }, a2);
+    ripples.forEach((e, i) => {
+      tl.fromTo(e, { scale: 0.3, opacity: 0.7, svgOrigin: "960 460" }, { scale: 4.6, opacity: 0, duration: 2.0, ease: "sine.out" }, a2 + 0.1 + i * 0.4);
+    });
+    lines2.forEach((e, i) => {
+      const dir = i % 2 ? -1 : 1;
+      tl.fromTo(e, { x: -90 * dir }, { x: 90 * dir, duration: L2 + 0.3, ease: "none" }, a2 - 0.1);
+      tl.fromTo(e, { opacity: 0 }, { opacity: 0.75, duration: 1.1, repeat: 1, yoyo: true, ease: "sine.inOut" }, a2 + 0.3 + (i % 4) * 0.2);
+    });
+    motes($id("motes2"), 18, a2, L2, P[4]);
+
+    // ================= Shot 3: the seventh edition, 1857 =================
+    const gh3 = $id("ghosts3"), ghosts = [];
+    for (let i = 0; i < 6; i++) {
+      ghosts.push(make("rect", { x: 500, y: 100, width: 920, height: 780, rx: 10, fill: "#cfc3ab", opacity: 0 }, gh3));
+    }
+    const oak = "M0 0 C-6 -6 -14 -8 -10 -14 C-17 -18 -15 -26 -8 -27 C-12 -33 -6 -40 0 -46 C6 -40 12 -33 8 -27 C15 -26 17 -18 10 -14 C14 -8 6 -6 0 0 Z";
+    const oak3 = $id("oak3"), leaves = [];
+    const leaf = (x, y, rot, k) => {
+      const g = make("g", { transform: `translate(${x} ${y}) rotate(${rot})` }, oak3);
+      leaves.push(make("path", { d: oak, fill: k % 2 ? P[3] : "#3f7a64" }, g));
+    };
+    let k3 = 0;
+    for (let x = 548; x <= 1372; x += 48) { leaf(x, 160, (k3 % 2 ? 20 : -20), k3); leaf(x, 820, 180 + (k3 % 2 ? 20 : -20), k3 + 1); k3++; }
+    for (let y = 208; y <= 772; y += 48) { leaf(540, y, -90 + (k3 % 2 ? 20 : -20), k3); leaf(1380, y, 90 + (k3 % 2 ? 20 : -20), k3 + 1); k3++; }
+    [[540, 160], [1380, 160], [540, 820], [1380, 820]].forEach(([x, y]) => {
+      make("ellipse", { cx: x, cy: y + 6, rx: 12, ry: 16, fill: P[4] }, oak3);
+      make("path", { d: `M${x - 14} ${y} Q${x} ${y - 18} ${x + 14} ${y} Z`, fill: "#6b4a22" }, oak3);
+    });
+    shot(3, "#s3");
+    const a3 = shotStart(3);
+    ghosts.forEach((g, i) => {
+      const kk = 6 - i; // the farthest page first
+      tl.fromTo(g, { x: 0, y: 0, opacity: 0 }, { x: kk * 16, y: -kk * 10, opacity: 0.2 + i * 0.1, duration: 0.6, ease: "power2.out" }, a3 + 0.1 + i * 0.12);
+    });
+    tl.fromTo(leaves, { scale: 0, transformOrigin: "50% 100%" }, { scale: 1, duration: 0.4, stagger: 0.008, ease: "back.out(2)" }, a3 + 0.2);
+    tl.fromTo("#edge3", { opacity: 0 }, { opacity: 1, duration: 0.6, repeat: 1, yoyo: true, ease: "sine.inOut" }, a3 + 0.9);
+    tl.fromTo("#plateglow3", { opacity: 0 }, { opacity: 0.55, duration: 1.0, ease: "sine.out" }, a3 + 0.6);
+    const n3 = bigNumber(1857, "year", 728, 236, a3 + 0.6, shotEnd(3));
+    noComma(n3);
+    const l3 = label("Final edition, the ‘Ausgabe letzter Hand’", 596, 604, a3 + 1.4, shotEnd(3));
+    l3.style.fontSize = "30px";
+    credit("Source: Staatsbibliothek zu Berlin", a3 + 0.6, shotEnd(3));
+
+    // ================= Shot 4: snow, three red drops, the candle goes out =================
+    $id("q4").innerHTML = seatedQueen("#120f1a");
+    const st4 = $id("stones4");
+    for (let r = -1; r < 13; r++) for (let c = -1; c < 15; c++) {
+      const x = -120 + c * 150 + (r % 2 ? 75 : 0), y = r * 92;
+      if (x > 440 && x < 1360 && y > 80 && y < 760) continue;
+      make("rect", { x, y, width: 138, height: 82, rx: 6, fill: "#221e2e" }, st4);
+    }
+    const flakes = (g, n, rmin, rspan, op, seed) => {
+      const out = [];
+      for (let i = 0; i < n; i++) {
+        out.push(make("circle", { cx: -60 + ((i * 331 + seed) % 2040), cy: -60 + ((i * 157 + seed) % 900), r: rmin + ((i * 7) % rspan), fill: P[1], opacity: op }, g));
+      }
+      return out;
+    };
+    const mid = flakes($id("snowmid4"), 36, 3, 4, 0.75, 13), far = flakes($id("snowfar4"), 12, 9, 5, 0.85, 71);
+    shot(4, "#s4");
+    const a4 = shotStart(4), L4 = shotLen(4);
+    mid.forEach((f, i) => tl.fromTo(f, { y: 0, x: 0 }, { y: 260 + (i % 5) * 30, x: (i % 2 ? 40 : -30), duration: L4 + 0.4, ease: "none" }, a4 - 0.2));
+    far.forEach((f, i) => tl.fromTo(f, { y: 0, x: 0 }, { y: 420 + (i % 3) * 60, x: (i % 2 ? -50 : 60), duration: L4 + 0.4, ease: "none" }, a4 - 0.2));
+    tl.to("#flame4", { scaleY: 0.78, scaleX: 1.12, transformOrigin: "50% 100%", duration: 0.18, repeat: 24, yoyo: true, ease: "sine.inOut" }, a4 + 0.1);
+    const dr4 = $id("drops4");
+    for (let i = 0; i < 3; i++) {
+      const d = make("ellipse", { cx: 914 + i * 26, cy: 578, rx: 7, ry: 9, fill: P[2] }, dr4);
+      const t = lineStart(3) + 1.9 + i * 0.45;
+      tl.fromTo(d, { opacity: 0, y: 0 }, { opacity: 1, duration: 0.15 }, t);
+      tl.to(d, { y: 124, duration: 0.55, ease: "power2.in" }, t + 0.1);
+      tl.to(d, { scaleX: 1.7, scaleY: 0.55, transformOrigin: "50% 100%", duration: 0.2, ease: "power2.out" }, t + 0.65);
+    }
+    const out4 = lineStart(4) + 0.2;
+    tl.to("#flame4", { scale: 0, opacity: 0, duration: 0.5, ease: "power2.in" }, out4);
+    tl.fromTo("#smoke4", { opacity: 0, y: 0 }, { opacity: 0.8, y: -30, duration: 0.8, ease: "sine.out" }, out4 + 0.4);
+    tl.to("#smoke4", { opacity: 0, duration: 0.8 }, out4 + 1.2);
+    tl.to("#warm4", { opacity: 0.1, duration: 1.0, ease: "power2.out" }, out4 + 0.3);
+    tl.to("#q4", { opacity: 0, duration: 0.9, ease: "sine.in" }, out4 + 0.4);
+    tl.fromTo("#pale4", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "sine.out" }, out4 + 0.8);
+    tl.fromTo("#cradle4", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "sine.out" }, out4 + 1.0);
+
+    // ================= Shot 5: the king takes a proud new queen's hand; the mirror flares =================
+    $id("king5").innerHTML = `<g transform="scale(1.25)">${king("#1a1424", "karm5")}</g>`;
+    $id("queen5").innerHTML = `<g transform="scale(1.3)">${tallQueen("#1a1424", "qhead5", "qarm5")}</g>`;
+    shot(5, "#s5");
+    const a5 = shotStart(5);
+    tl.fromTo("#karm5", { rotate: 52, transformOrigin: "4% 20%" }, { rotate: 0, duration: 1.0, ease: "power2.inOut" }, a5 + 0.3);
+    tl.fromTo("#qarm5", { rotate: -52, transformOrigin: "96% 20%" }, { rotate: 0, duration: 1.0, ease: "power2.inOut" }, a5 + 0.4);
+    tl.fromTo("#queen5", { x: 30 }, { x: 0, duration: 1.2, ease: "sine.inOut" }, a5 + 0.2);
+    tl.fromTo("#qhead5", { scaleX: -1, transformOrigin: "50% 60%" }, { scaleX: 1, duration: 0.35, ease: "power2.inOut" }, a5 + 1.7);
+    tl.fromTo("#glow5", { opacity: 0.15, scale: 0.5, svgOrigin: "1560 420" }, { opacity: 1, scale: 1.4, duration: 0.8, ease: "power2.out" }, a5 + 2.0);
+    tl.fromTo("#mcore5", { opacity: 0 }, { opacity: 0.9, duration: 0.5, ease: "power2.out" }, a5 + 2.0);
+
+    // ================= Shot 6: back to 1812; two queens become one woman =================
+    $id("sq6").innerHTML = `<g transform="scale(1.1)">${seatedQueen("#2b1e16")}</g>`;
+    $id("tq6").innerHTML = `<g transform="scale(1.05)">${tallQueen("#2b1e16")}</g>`;
+    $id("mq6").innerHTML = `<g transform="scale(1.12)">${tallQueen("#2b1e16")}</g>`;
+    const rf6 = $id("riffle6"), pages6 = [];
+    ["#efe2bf", "#e6d6aa", "#ddca99", "#d4bf8c", "#e3d3a8"].forEach((f) => {
+      pages6.push(make("rect", { x: 960, y: 70, width: 800, height: 830, fill: f, filter: "url(#pcs)" }, rf6));
+    });
+    shot(6, "#s6");
+    const a6 = shotStart(6);
+    pages6.forEach((p, i) => {
+      tl.fromTo(p, { scaleX: 1, opacity: 1, svgOrigin: "960 485" }, { scaleX: -1, duration: 0.32, ease: "power1.inOut" }, a6 + i * 0.12);
+      tl.to(p, { opacity: 0, duration: 0.25 }, a6 + 0.3 + i * 0.12);
+    });
+    tl.fromTo("#sq6", { x: 0 }, { x: 400, duration: 1.4, ease: "power2.inOut" }, a6 + 1.1);
+    tl.fromTo("#tq6", { x: 0 }, { x: -400, duration: 1.4, ease: "power2.inOut" }, a6 + 1.1);
+    tl.to(["#sq6", "#tq6"], { opacity: 0, duration: 0.5 }, a6 + 2.2);
+    tl.fromTo("#mq6", { opacity: 0, scale: 0.92, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }, a6 + 2.25);
+    tl.fromTo("#red6", { opacity: 0, scale: 0.6, svgOrigin: "960 560" }, { opacity: 1, scale: 1, duration: 0.9, ease: "power2.out" }, a6 + 2.3);
+    const n6 = bigNumber(1812, "year", 110, 90, a6 + 0.6, shotEnd(6));
+    noComma(n6);
+    n6.style.color = "#2b1e16"; n6.style.textShadow = "none";
+    n6.nextSibling.style.color = "#2b1e16";
+    label("First edition: the villain is her own mother", 566, 800, a6 + 1.2, shotEnd(6));
+    const c6 = credit("Source: D. L. Ashliman, University of Pittsburgh", a6 + 0.6, shotEnd(6));
+    c6.style.color = "#2b1e16";
+
+    // ================= Shot 7: forward to 1857 again; the mirror's glow fills the frame =================
+    shot(7, "#s7");
+    const a7 = shotStart(7), L7 = shotLen(7);
+    tl.fromTo("#old7", { scaleX: 1, svgOrigin: "-160 540" }, { scaleX: 0, duration: 0.7, ease: "power2.in" }, a7 + 0.1);
+    tl.fromTo("#mcore7", { opacity: 0 }, { opacity: 1, duration: 0.35, repeat: 1, yoyo: true, ease: "sine.inOut" }, a7 + 0.8);
+    tl.to("#mcore7", { opacity: 0.9, duration: 0.4 }, a7 + 1.5);
+    tl.fromTo("#glow7", { opacity: 0, scale: 0.4, svgOrigin: "960 540" }, { opacity: 1, scale: 1, duration: 0.7, ease: "power2.out" }, a7 + 0.8);
+    tl.to("#glow7", { scale: 4.2, duration: Math.max(L7 - 1.5, 0.5), ease: "power1.in" }, a7 + 1.5);
+    tl.fromTo("#wash7", { opacity: 0 }, { opacity: 0.45, duration: Math.max(L7 - 1.7, 0.5), ease: "power1.in" }, a7 + 1.7);
+    motes($id("motes7"), 22, a7 + 0.6, 2.0, P[4]);
+  }
+</script>

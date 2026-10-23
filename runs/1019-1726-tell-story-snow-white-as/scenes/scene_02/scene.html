@@ -1,0 +1,421 @@
+<!--
+  Scene 2 "Into the Forest" (Snow White as the Brothers Grimm wrote it). Layered paper-cut storybook.
+    1 pull_out  the gold mirror: the queen's reflection gives way to the girl; the queen's shadow recoils, rim turns green
+    2 pan_left  throne room: the queen points, the huntsman bows, forest slides in, he leads the girl toward it
+    3 parallax  paper forest: his raised arm lowers, the girl runs off, a young boar trots out
+    4 push_in   candlelit castle: the lidded box handed over, steaming covered bowl, the queen's long shadow, faint mirror
+    5 parallax  dusk: the girl runs through thorns and stones toward a far gold cottage window
+    6 pull_out  the cottage pops up: seven beds, seven lantern-bearers, door shuts and the bolt slides   (label: Let no one in)
+-->
+<style>
+  .bg { position: absolute; inset: 0; }
+  .ps { filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.55)); }
+  .ps2 { filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.45)); }
+  .gold-glow { filter: drop-shadow(0 0 22px rgba(201, 164, 76, 0.85)); }
+  .cream-glow { filter: drop-shadow(0 0 18px rgba(242, 234, 216, 0.7)); }
+  .green-glow { filter: drop-shadow(0 0 20px rgba(150, 175, 60, 0.9)); }
+  .wide { margin-left: -120px; }
+</style>
+
+<!-- Shot 1: the mirror -->
+<div class="shot" id="s1"><div class="cam">
+  <div class="bg" style="background: radial-gradient(900px 760px at 50% 45%, #3b2f2b 0%, #1c1828 55%, #0c0a14 100%);"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <defs>
+      <radialGradient id="glass1" cx="50%" cy="42%" r="62%">
+        <stop offset="0" stop-color="#4a4166" /><stop offset="0.6" stop-color="#241f36" /><stop offset="1" stop-color="#100e19" />
+      </radialGradient>
+      <radialGradient id="girlGlow1" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#F2EAD8" stop-opacity="0.55" /><stop offset="1" stop-color="#F2EAD8" stop-opacity="0" />
+      </radialGradient>
+      <clipPath id="clip1"><ellipse cx="960" cy="490" rx="350" ry="440" /></clipPath>
+    </defs>
+    <!-- paper wall layers behind the mirror -->
+    <g class="ps"><ellipse cx="960" cy="490" rx="560" ry="620" fill="#241e30" /></g>
+    <g class="ps"><ellipse cx="960" cy="490" rx="470" ry="560" fill="#2c2539" /></g>
+    <g id="leaves1" class="ps2"></g>
+    <g id="rimdots1" class="gold-glow"></g>
+    <ellipse cx="960" cy="490" rx="350" ry="440" fill="url(#glass1)" />
+    <g clip-path="url(#clip1)">
+      <g id="ripples1"></g>
+      <g transform="translate(960,935) scale(1.6)"><g id="q1"></g></g>
+      <ellipse id="gglow1" cx="960" cy="620" rx="280" ry="360" fill="url(#girlGlow1)" opacity="0" />
+      <g transform="translate(960,915) scale(2.3)"><g id="g1" class="cream-glow"></g></g>
+      <g id="motes1"></g>
+    </g>
+    <g class="gold-glow"><ellipse cx="960" cy="490" rx="366" ry="456" fill="none" stroke="#C9A44C" stroke-width="30" /></g>
+    <ellipse id="green1" cx="960" cy="490" rx="376" ry="466" fill="none" stroke="#8fa13c" stroke-width="16" opacity="0" class="green-glow" />
+    <ellipse cx="960" cy="490" rx="336" ry="426" fill="none" stroke="#F2EAD8" stroke-width="3" opacity="0.45" />
+    <g transform="translate(250,1190) scale(2.5)"><g id="qs1"></g></g>
+  </svg>
+</div></div>
+
+<!-- Shot 2: throne room -->
+<div class="shot" id="s2"><div class="cam">
+  <div class="bg" style="background: linear-gradient(180deg, #251f35 0%, #1a1626 100%);"></div>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide">
+    <defs>
+      <linearGradient id="curl2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#F2EAD8" /><stop offset="1" stop-color="#9d937f" />
+      </linearGradient>
+    </defs>
+    <g id="arches2" class="ps"></g>
+    <g id="banners2" class="ps2"></g>
+    <g class="ps"><rect x="-120" y="830" width="2160" height="250" fill="#15121d" /><rect x="-120" y="826" width="2160" height="8" fill="#3a3350" /></g>
+    <!-- throne -->
+    <g class="ps"><path d="M190,830 L190,520 Q190,470 230,450 L260,380 L290,450 Q330,470 330,520 L330,830 L300,830 L300,700 L220,700 L220,830 Z" fill="#C9A44C" />
+      <rect x="180" y="690" width="160" height="22" fill="#a8873a" /></g>
+    <g id="trees2" class="ps"></g>
+    <g transform="translate(470,832)" class="ps"><g id="queen2"></g>
+      <g transform="translate(26,-262)"><g id="arm2"><path d="M0,-9 L150,-6 L168,0 L150,6 L0,9 Z" fill="#0b0a12" /></g></g></g>
+    <g transform="translate(720,832) scale(1.05)" class="ps"><g id="girlw2"><g id="girl2"></g></g></g>
+    <g transform="translate(940,832)" class="ps"><g id="huntw2"><g id="huntflip2"><g id="huntbow2"></g></g></g></g>
+    <path id="curl2p" d="M2040,0 L1840,0 Q1900,90 2040,180 Z" fill="url(#curl2)" opacity="0.9" />
+  </svg>
+</div></div>
+
+<!-- Shot 3: deep in the paper forest (parallax layers) -->
+<div class="shot" id="s3"><div class="cam">
+  <div class="bg" style="background: radial-gradient(1200px 800px at 60% 30%, #2a4a40 0%, #142520 60%, #0b1411 100%);"></div>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="0.3"><g id="back3" class="ps2"></g><g id="shafts3"></g></svg>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="0.6"><g id="mid3" class="ps"></g><g id="flies3" class="gold-glow"></g></svg>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="0.9">
+    <g class="ps"><path d="M-120,850 Q300,820 700,845 T1500,840 T2040,850 L2040,1080 L-120,1080 Z" fill="#173029" /></g>
+    <g transform="translate(470,872) scale(0.95)" class="ps"><g id="boar3"></g></g>
+    <g transform="translate(820,862)" class="ps"><g id="hunt3"></g>
+      <g transform="translate(14,-262)"><g id="arm3"><path d="M0,-9 L120,-7 L134,0 L120,7 L0,9 Z" fill="#0b0a12" /></g></g></g>
+    <g transform="translate(1080,862) scale(1.05)" class="ps"><g id="girlw3"><g id="girlf3"><g id="girl3"></g></g></g></g>
+  </svg>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="1.4"><g id="front3" class="ps"></g></svg>
+</div></div>
+
+<!-- Shot 4: the castle by candlelight -->
+<div class="shot" id="s4"><div class="cam">
+  <div class="bg" style="background: radial-gradient(900px 640px at 36% 52%, #5a3f2c 0%, #2a1f2c 55%, #120f19 100%);"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <defs>
+      <radialGradient id="candle4" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#C9A44C" stop-opacity="0.55" /><stop offset="1" stop-color="#C9A44C" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <g id="stones4" opacity="0.35"></g>
+    <!-- the queen's long shadow on the wall -->
+    <g transform="translate(1130,700) skewX(-12) scale(1.85)"><g id="shadow4" opacity="0.42"></g></g>
+    <!-- faint mirror -->
+    <g class="gold-glow" id="mirror4"><ellipse cx="1500" cy="330" rx="105" ry="135" fill="#2a2440" stroke="#C9A44C" stroke-width="14" /></g>
+    <ellipse cx="1500" cy="330" rx="88" ry="118" fill="#C9A44C" opacity="0.08" id="mirrorlight4" />
+    <ellipse id="glow4" cx="640" cy="600" rx="420" ry="320" fill="url(#candle4)" />
+    <!-- queen seated behind the table -->
+    <g transform="translate(1000,900)" class="ps"><g id="queen4"></g></g>
+    <!-- huntsman -->
+    <g transform="translate(330,860)" class="ps"><g id="huntw4"><g id="hunt4"></g></g></g>
+    <!-- table -->
+    <g class="ps">
+      <rect x="440" y="690" width="1200" height="26" rx="4" fill="#4a3426" />
+      <rect x="460" y="716" width="1160" height="70" fill="#2c1f19" />
+      <rect x="500" y="786" width="26" height="80" fill="#2c1f19" /><rect x="1554" y="786" width="26" height="80" fill="#2c1f19" />
+    </g>
+    <!-- candle -->
+    <rect x="628" y="600" width="24" height="90" rx="3" fill="#F2EAD8" />
+    <g class="gold-glow"><ellipse id="flame4" cx="640" cy="584" rx="10" ry="20" fill="#f6d27a" /></g>
+    <!-- covered bowl -->
+    <g class="ps"><path d="M800,690 Q800,600 900,595 Q1000,600 1000,690 Z" fill="#C9A44C" />
+      <rect x="785" y="682" width="230" height="12" rx="5" fill="#a8873a" /><circle cx="900" cy="590" r="11" fill="#a8873a" /></g>
+    <g id="steam4"></g>
+    <!-- lidded box -->
+    <g transform="translate(470,610)" class="ps"><g id="box4">
+      <rect x="0" y="12" width="70" height="44" rx="4" fill="#6b4a32" /><rect x="-4" y="0" width="78" height="16" rx="4" fill="#8a6342" />
+      <rect x="30" y="-6" width="10" height="8" rx="2" fill="#C9A44C" /></g></g>
+    <g id="motes4" class="gold-glow"></g>
+  </svg>
+</div></div>
+
+<!-- Shot 5: through the thorns at dusk -->
+<div class="shot" id="s5"><div class="cam">
+  <div class="bg" style="background: linear-gradient(180deg, #8a84a2 0%, #6E6A86 40%, #3a3650 100%);"></div>
+  <div class="bg" id="dusk5" style="background: linear-gradient(180deg, #14121F 0%, #2a2640 100%); opacity: 0;"></div>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="0.2">
+    <g class="ps2"><path d="M-120,700 Q200,560 520,650 T1100,620 T1700,600 T2040,640 L2040,1080 L-120,1080 Z" fill="#4b4766" /></g>
+    <g transform="translate(1640,640)" class="ps2">
+      <path d="M-40,0 L-40,-46 L0,-80 L40,-46 L40,0 Z" fill="#2b2840" />
+      <rect id="win5" x="-12" y="-38" width="22" height="20" fill="#f3cf6e" class="gold-glow" />
+    </g>
+  </svg>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="0.5"><g id="stones5" class="ps"></g></svg>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="0.8">
+    <g class="ps"><path d="M-120,860 Q500,835 1000,858 T2040,850 L2040,1080 L-120,1080 Z" fill="#221f31" /></g>
+    <g transform="translate(220,862) scale(1.1)" class="ps"><g id="runw5"><g id="runner5"></g></g></g>
+  </svg>
+  <svg width="2160" height="1080" viewBox="-120 0 2160 1080" class="wide" data-depth="1.5"><g id="thorns5" class="ps"></g></svg>
+</div></div>
+
+<!-- Shot 6: the cottage pops up -->
+<div class="shot" id="s6"><div class="cam">
+  <div class="bg" style="background: radial-gradient(1100px 700px at 50% 55%, #3a3350 0%, #1b1828 60%, #0e0c16 100%);"></div>
+  <svg width="1920" height="1080" viewBox="0 0 1920 1080">
+    <defs>
+      <radialGradient id="lamp6" cx="50%" cy="50%" r="50%">
+        <stop offset="0" stop-color="#C9A44C" stop-opacity="0.45" /><stop offset="1" stop-color="#C9A44C" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <!-- the open page the cottage rises from -->
+    <g class="ps"><path d="M120,880 L1800,880 L1880,1080 L40,1080 Z" fill="#F2EAD8" /><path d="M958,880 L962,880 L966,1080 L954,1080 Z" fill="#b9ad95" /></g>
+    <g id="cottage6">
+      <g class="ps">
+        <rect x="380" y="300" width="1160" height="582" fill="#e8dcc2" />
+        <path d="M330,312 L960,120 L1590,312 Z" fill="#B3202E" />
+        <rect x="1300" y="150" width="60" height="110" fill="#8e1a25" />
+      </g>
+      <rect x="420" y="336" width="960" height="530" fill="#2b2230" />
+      <ellipse cx="900" cy="700" rx="520" ry="260" fill="url(#lamp6)" />
+      <g id="beds6"></g>
+      <rect x="420" y="846" width="960" height="20" fill="#3d2f2a" />
+      <!-- doorway on the right wall -->
+      <rect x="1410" y="590" width="104" height="276" fill="#14121F" />
+      <g transform="translate(1410,590)"><g id="door6">
+        <rect x="0" y="0" width="104" height="276" fill="#6b4a32" stroke="#4a3426" stroke-width="5" />
+        <rect x="14" y="20" width="76" height="100" fill="none" stroke="#4a3426" stroke-width="4" />
+        <rect x="14" y="150" width="76" height="100" fill="none" stroke="#4a3426" stroke-width="4" />
+      </g></g>
+      <g transform="translate(1398,712)"><g id="bolt6">
+        <rect x="0" y="0" width="128" height="18" rx="4" fill="#C9A44C" /><rect x="96" y="-10" width="14" height="38" rx="3" fill="#a8873a" />
+      </g></g>
+      <g transform="translate(900,866) scale(1.15)" class="cream-glow"><g id="girl6"></g></g>
+      <g id="dwarfs6"></g>
+    </g>
+    <g id="motes6" class="gold-glow"></g>
+  </svg>
+</div></div>
+
+<script>
+  {
+    const $id = (id) => document.getElementById(id);
+    const put = (id, html) => { $id(id).innerHTML = html; };
+    const rnd = (i) => { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
+
+    // ---- paper-cut figures, feet at (0,0), facing right ----
+    const queen = (f) => `<g fill="${f}">
+      <polygon points="-22,-352 -22,-380 -11,-366 0,-390 11,-366 22,-380 22,-352" />
+      <circle cx="0" cy="-326" r="27" />
+      <path d="M-66,-350 L-26,-292 L26,-292 L66,-350 L48,-276 L-48,-276 Z" />
+      <rect x="-10" y="-304" width="20" height="18" />
+      <path d="M-34,-290 L34,-290 L46,-190 L118,0 L-118,0 L-46,-190 Z" /></g>`;
+    const girl = (f, legs) => `<g>
+      <circle cx="0" cy="-176" r="20" fill="${f}" />
+      <path d="M-21,-180 A21 21 0 0 1 21,-180 L22,-162 Q18,-176 0,-182 Q-18,-176 -22,-162 Z" fill="#14121F" />
+      <path d="M-2,-197 L-26,-212 L-24,-186 Z M2,-197 L26,-212 L24,-186 Z" fill="#B3202E" />
+      <rect x="-7" y="-158" width="14" height="10" fill="${f}" />
+      ${legs ? `<g id="${legs}a"><rect x="-14" y="-52" width="10" height="52" rx="4" fill="${f}" /></g>
+                <g id="${legs}b"><rect x="4" y="-52" width="10" height="52" rx="4" fill="${f}" /></g>
+                <path d="M-16,-152 L16,-152 L22,-110 L44,-46 L-44,-46 L-22,-110 Z" fill="${f}" />`
+             : `<path d="M-16,-152 L16,-152 L22,-100 L58,0 L-58,0 L-22,-100 Z" fill="${f}" />`}</g>`;
+    const hunter = (f) => `<g fill="${f}">
+      <path d="M-52,-312 Q-112,-212 -52,-112" fill="none" stroke="${f}" stroke-width="7" />
+      <line x1="-52" y1="-312" x2="-52" y2="-112" stroke="${f}" stroke-width="2" />
+      <path d="M-30,-342 Q0,-380 32,-342 Z" /><path d="M14,-366 Q46,-406 66,-392 Q38,-378 20,-356 Z" />
+      <circle cx="0" cy="-320" r="24" />
+      <path d="M-40,-294 L40,-294 L54,-128 L-54,-128 Z" />
+      <rect x="-36" y="-130" width="24" height="130" rx="6" /><rect x="12" y="-130" width="24" height="130" rx="6" /></g>`;
+    const dwarf = (f) => `<g fill="${f}">
+      <path d="M-20,-100 L2,-156 L24,-100 Z" fill="#B3202E" />
+      <circle cx="0" cy="-88" r="16" />
+      <path d="M-14,-84 Q2,-44 16,-84 Z" fill="#d9cdb3" />
+      <path d="M-26,-72 L26,-72 L32,0 L-32,0 Z" /></g>`;
+    const boar = (f) => `<g fill="${f}">
+      <path d="M-92,-34 Q-98,-84 -40,-94 L24,-96 Q74,-92 88,-62 L126,-52 L124,-34 L84,-30 Q62,-20 40,-20 L-62,-20 Z" />
+      <path d="M-70,-88 L-58,-108 L-48,-92 L-34,-112 L-22,-95 L-8,-114 L6,-96 L20,-112 L30,-94 Z" />
+      <path d="M52,-84 L62,-112 L74,-80 Z" />
+      <path d="M112,-38 Q122,-30 116,-20" fill="none" stroke="#F2EAD8" stroke-width="4" />
+      <rect x="-70" y="-26" width="14" height="26" rx="4" /><rect x="-40" y="-26" width="14" height="26" rx="4" />
+      <rect x="30" y="-26" width="14" height="26" rx="4" /><rect x="58" y="-26" width="14" height="26" rx="4" /></g>`;
+    const pine = (x, base, h, f) => {
+      let s = `<rect x="${x - h * 0.03}" y="${base - h * 0.2}" width="${h * 0.06}" height="${h * 0.2}" fill="${f}" />`;
+      for (let i = 0; i < 3; i++) {
+        const top = base - h + i * h * 0.24, bot = top + h * 0.46, w = h * (0.16 + 0.07 * i);
+        s += `<polygon points="${x},${top} ${x + w},${bot} ${x - w},${bot}" fill="${f}" />`;
+      }
+      return s;
+    };
+    const branch = (x0, y0, len, dir, f) => {
+      let s = `<path d="M${x0},${y0} q${len * 0.5},${-40 * dir} ${len},${10 * dir}" fill="none" stroke="${f}" stroke-width="14" stroke-linecap="round" />`;
+      for (let k = 1; k < 9; k++) { const x = x0 + (len * k) / 9, y = y0 - 22 * dir * Math.sin((k / 9) * Math.PI);
+        s += `<polygon points="${x - 8},${y} ${x + 8},${y} ${x + 2},${y - 34 * dir * (k % 2 ? 1 : -1)}" fill="${f}" />`; }
+      return s;
+    };
+
+    // =================== Shot 1: the mirror ===================
+    put("q1", queen("#0c0a14"));
+    put("g1", girl("#F2EAD8"));
+    put("qs1", queen("#07060b"));
+    let dots = "", leaves = "";
+    for (let i = 0; i < 40; i++) {
+      const a = (i / 40) * Math.PI * 2;
+      dots += `<circle cx="${960 + Math.cos(a) * 392}" cy="${490 + Math.sin(a) * 482}" r="${i % 2 ? 7 : 11}" fill="#C9A44C" />`;
+    }
+    for (let i = 0; i < 18; i++) {
+      const a = (i / 18) * Math.PI * 2, cx = 960 + Math.cos(a) * 430, cy = 490 + Math.sin(a) * 522, deg = (a * 180) / Math.PI + 90;
+      leaves += `<ellipse cx="${cx}" cy="${cy}" rx="18" ry="44" fill="#3a3148" transform="rotate(${deg} ${cx} ${cy})" />`;
+    }
+    put("rimdots1", dots); put("leaves1", leaves);
+    let rip = "";
+    for (let i = 0; i < 5; i++) rip += `<ellipse class="rip1" cx="960" cy="520" rx="${80 + i * 60}" ry="${30 + i * 22}" fill="none" stroke="#F2EAD8" stroke-width="2" opacity="0.18" />`;
+    put("ripples1", rip);
+    let motes = "";
+    for (let i = 0; i < 18; i++) motes += `<circle class="mote1" cx="${700 + rnd(i) * 520}" cy="${180 + rnd(i + 50) * 640}" r="${2 + rnd(i + 9) * 4}" fill="#C9A44C" opacity="0.6" />`;
+    put("motes1", motes);
+
+    shot(1, "#s1");
+    const a1 = shotStart(1);
+    tl.fromTo(".rip1", { scale: 0.7, transformOrigin: "50% 50%", opacity: 0 },
+      { scale: 1.25, opacity: 0.22, duration: 2.2, stagger: 0.25, ease: "sine.out", repeat: 1, yoyo: true }, a1);
+    tl.to("#q1", { opacity: 0, duration: 1.2, ease: "power1.in" }, a1 + 1.4);
+    tl.fromTo("#g1", { opacity: 0, scale: 0.9, transformOrigin: "50% 100%" }, { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" }, a1 + 1.9);
+    tl.to("#gglow1", { opacity: 1, duration: 1.2 }, a1 + 2.0);
+    tl.to("#qs1", { x: -110, y: 30, rotate: -6, transformOrigin: "50% 100%", duration: 0.8, ease: "power3.out" }, a1 + 2.6);
+    tl.to("#green1", { opacity: 0.9, duration: 1.0, ease: "power1.inOut" }, a1 + 2.8);
+    tl.fromTo(".mote1", { y: 0 }, { y: -90, duration: shotLen(1), stagger: 0.05, ease: "none" }, a1);
+
+    // =================== Shot 2: throne room ===================
+    let arches = "";
+    for (let i = 0; i < 6; i++) {
+      const x = 40 + i * 330;
+      arches += `<path d="M${x},780 L${x},360 A90 90 0 0 1 ${x + 180},360 L${x + 180},780 Z" fill="#30293f" />
+                 <path d="M${x + 30},760 L${x + 30},380 A60 60 0 0 1 ${x + 150},380 L${x + 150},760 Z" fill="#3c3552" />`;
+    }
+    put("arches2", arches);
+    let banners = "";
+    for (let i = 0; i < 6; i++) { const x = 250 + i * 330; banners += `<path d="M${x},120 L${x + 60},120 L${x + 60},420 L${x + 30},390 L${x},420 Z" fill="#B3202E" />`; }
+    put("banners2", banners);
+    let trees2 = "";
+    for (let i = 0; i < 7; i++) trees2 += pine(1450 + i * 95 + (i % 2) * 30, 840, 420 + (i % 3) * 110, i % 2 ? "#2E5E4E" : "#244b3f");
+    put("trees2", trees2);
+    put("queen2", queen("#0b0a12"));
+    put("girl2", girl("#F2EAD8"));
+    put("huntbow2", hunter("#0b0a12"));
+
+    shot(2, "#s2");
+    const a2 = shotStart(2);
+    tl.set("#huntflip2", { scaleX: -1, transformOrigin: "50% 100%" }, 0);
+    tl.fromTo("#arm2", { rotate: 70, transformOrigin: "0% 50%" }, { rotate: -6, duration: 0.9, ease: "power2.out" }, a2 + 0.3);
+    tl.to("#huntbow2", { rotate: -22, transformOrigin: "50% 100%", duration: 0.8, ease: "power2.inOut" }, a2 + 0.9);
+    tl.to("#huntbow2", { rotate: 0, duration: 0.6, ease: "power2.inOut" }, a2 + 2.2);
+    tl.fromTo("#trees2", { x: 760 }, { x: 0, duration: 1.8, ease: "power3.out" }, lineStart(1) + 2.4);
+    tl.fromTo("#curl2p", { scale: 0.2, transformOrigin: "100% 0%" }, { scale: 1.3, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 1 }, a2 + 1.0);
+    tl.to("#huntflip2", { scaleX: 1, duration: 0.3 }, a2 + 3.0);
+    tl.to("#huntw2", { x: 430, duration: 2.6, ease: "sine.inOut" }, a2 + 3.2);
+    tl.to("#girlw2", { x: 470, duration: 2.6, ease: "sine.inOut" }, a2 + 3.4);
+    tl.to(["#huntbow2", "#girl2"], { y: -8, duration: 0.25, repeat: 9, yoyo: true, ease: "sine.inOut" }, a2 + 3.3);
+    tl.to("#arm2", { rotate: 40, duration: 0.8 }, a2 + 3.4);
+
+    // =================== Shot 3: the forest ===================
+    let back = "", mid = "", front = "", flies = "", shafts = "";
+    for (let i = 0; i < 16; i++) back += pine(-80 + i * 135 + rnd(i) * 40, 905, 560 + rnd(i + 3) * 200, "#1d3a33");
+    for (let i = 0; i < 9; i++) mid += pine(-60 + i * 250 + rnd(i + 20) * 60, 900, 670 + rnd(i + 7) * 180, "#2E5E4E");
+    for (let i = 0; i < 4; i++) shafts += `<polygon points="${300 + i * 420},0 ${380 + i * 420},0 ${560 + i * 420},880 ${420 + i * 420},880" fill="#C9A44C" opacity="0.06" />`;
+    for (let i = 0; i < 16; i++) flies += `<circle class="fly3" cx="${100 + rnd(i + 30) * 1800}" cy="${300 + rnd(i + 60) * 480}" r="4" fill="#e9cf84" />`;
+    front = `<path d="M-120,0 L60,0 L40,1080 L-120,1080 Z" fill="#0b1512" />
+      <path d="M1900,0 L2040,0 L2040,1080 L1860,1080 Z" fill="#0b1512" />
+      <path d="M-120,1080 Q40,900 140,960 Q220,880 300,1000 Q360,940 420,1080 Z" fill="#0d1a16" />
+      <path d="M1560,1080 Q1640,920 1740,980 Q1820,900 1900,960 Q1980,920 2040,1000 L2040,1080 Z" fill="#0d1a16" />`;
+    put("back3", back); put("mid3", mid); put("front3", front); put("flies3", flies); put("shafts3", shafts);
+    put("hunt3", hunter("#0b0a12"));
+    put("girl3", girl("#F2EAD8"));
+    put("boar3", boar("#0b0a12"));
+
+    shot(3, "#s3");
+    const a3 = shotStart(3);
+    tl.set("#girlf3", { scaleX: -1, transformOrigin: "50% 100%" }, 0);
+    tl.fromTo("#arm3", { rotate: -70, transformOrigin: "0% 50%" }, { rotate: 50, duration: 1.6, ease: "sine.inOut" }, a3 + 0.3);
+    tl.to("#girlw3", { x: 70, duration: 1.1, ease: "power1.out" }, a3 + 0.2);
+    tl.to("#girlf3", { scaleX: 1, duration: 0.25 }, a3 + 1.4);
+    tl.to("#girlw3", { x: 1050, duration: 1.6, ease: "power2.in" }, a3 + 1.5);
+    tl.to("#girl3", { y: -10, duration: 0.18, repeat: 8, yoyo: true }, a3 + 1.5);
+    tl.fromTo("#boar3", { x: -640 }, { x: 0, duration: 1.7, ease: "power2.out" }, lineStart(3) + 0.1);
+    tl.to("#boar3", { y: -6, duration: 0.17, repeat: 9, yoyo: true }, lineStart(3) + 0.1);
+    tl.fromTo(".fly3", { y: 0, opacity: 0.2 }, { y: -50, opacity: 0.9, duration: 1.6, stagger: 0.1, repeat: 1, yoyo: true, ease: "sine.inOut" }, a3);
+
+    // =================== Shot 4: the castle by candlelight ===================
+    let stones = "";
+    for (let r = 0; r < 10; r++) for (let c = 0; c < 12; c++)
+      stones += `<rect x="${(r % 2) * 80 + c * 160 - 40}" y="${r * 70}" width="156" height="66" fill="none" stroke="#14121F" stroke-width="3" />`;
+    put("stones4", stones);
+    put("queen4", queen("#0b0a12"));
+    put("shadow4", queen("#000000"));
+    put("hunt4", hunter("#0b0a12"));
+    let steam = "";
+    for (let i = 0; i < 3; i++) steam += `<path class="steam4" d="M${870 + i * 30},580 q-18,-30 0,-60 q18,-30 0,-60" fill="none" stroke="#F2EAD8" stroke-width="5" stroke-linecap="round" opacity="0" />`;
+    put("steam4", steam);
+    let m4 = "";
+    for (let i = 0; i < 14; i++) m4 += `<circle class="mote4" cx="${420 + rnd(i + 80) * 700}" cy="${300 + rnd(i + 90) * 380}" r="${2 + rnd(i + 5) * 3}" fill="#e9cf84" opacity="0.5" />`;
+    put("motes4", m4);
+
+    shot(4, "#s4");
+    const a4 = shotStart(4);
+    tl.fromTo("#box4", { x: 0, y: 0 }, { x: 330, y: 68, duration: 1.2, ease: "power2.inOut" }, a4 + 0.2);
+    tl.to("#huntw4", { x: -70, duration: 1.0, ease: "sine.inOut" }, a4 + 1.5);
+    tl.fromTo(".steam4", { y: 10, opacity: 0 }, { y: -40, opacity: 0.6, duration: 1.3, stagger: 0.35, repeat: 2, yoyo: true, ease: "sine.inOut" }, a4 + 0.3);
+    tl.fromTo("#flame4", { scaleY: 1, transformOrigin: "50% 100%" }, { scaleY: 1.25, scaleX: 0.85, duration: 0.3, repeat: 12, yoyo: true, ease: "sine.inOut" }, a4);
+    tl.fromTo("#glow4", { opacity: 0.85 }, { opacity: 1, duration: 0.45, repeat: 8, yoyo: true }, a4);
+    tl.fromTo("#shadow4", { scaleY: 1, transformOrigin: "50% 100%" }, { scaleY: 1.14, duration: shotLen(4), ease: "sine.inOut" }, a4);
+    tl.to("#queen4", { rotate: 5, transformOrigin: "50% 100%", duration: 1.2, ease: "sine.inOut", yoyo: true, repeat: 1 }, a4 + 1.4);
+    tl.fromTo("#mirrorlight4", { opacity: 0.05 }, { opacity: 0.35, duration: 1.0, repeat: 3, yoyo: true, ease: "sine.inOut" }, a4);
+    tl.fromTo(".mote4", { y: 0 }, { y: -60, duration: shotLen(4), ease: "none" }, a4);
+
+    // =================== Shot 5: through the thorns ===================
+    let st = "";
+    for (let i = 0; i < 9; i++) { const x = 60 + i * 230 + rnd(i + 40) * 60, h = 90 + rnd(i + 41) * 120;
+      st += `<polygon points="${x - 50},870 ${x - 8},${870 - h} ${x + 14},${870 - h * 0.75} ${x + 52},870" fill="#353148" />`; }
+    st += branch(80, 760, 620, 1, "#2a2638") + branch(1000, 740, 760, -1, "#2a2638") + branch(500, 300, 640, -1, "#2a2638") + branch(1400, 420, 520, 1, "#2a2638");
+    put("stones5", st);
+    let th = "";
+    th += branch(-120, 120, 760, -1, "#100e18") + branch(1500, 80, 560, -1, "#100e18") + branch(900, 200, 420, 1, "#16131f");
+    th += branch(-60, 980, 700, 1, "#100e18") + branch(1300, 1000, 760, 1, "#100e18") + branch(700, 1050, 520, 1, "#16131f");
+    th += `<path d="M-120,0 L240,0 Q120,80 -120,200 Z" fill="#100e18" /><path d="M2040,0 L1760,0 Q1900,90 2040,240 Z" fill="#100e18" />`;
+    put("thorns5", th);
+    put("runner5", girl("#F2EAD8", "leg5"));
+
+    shot(5, "#s5");
+    const a5 = shotStart(5);
+    tl.fromTo("#runw5", { x: 0 }, { x: 1180, duration: shotLen(5) + 0.3, ease: "none" }, a5 - 0.15);
+    tl.fromTo("#runner5", { y: 0 }, { y: -12, duration: 0.16, repeat: 21, yoyo: true, ease: "sine.inOut" }, a5);
+    tl.fromTo("#leg5a", { rotate: -32, transformOrigin: "50% 0%" }, { rotate: 32, duration: 0.32, repeat: 10, yoyo: true, ease: "sine.inOut" }, a5);
+    tl.fromTo("#leg5b", { rotate: 32, transformOrigin: "50% 0%" }, { rotate: -32, duration: 0.32, repeat: 10, yoyo: true, ease: "sine.inOut" }, a5);
+    tl.to("#dusk5", { opacity: 0.5, duration: shotLen(5), ease: "sine.in" }, a5);
+    tl.fromTo("#win5", { opacity: 0.5 }, { opacity: 1, duration: 0.6, repeat: 4, yoyo: true }, a5);
+
+    // =================== Shot 6: the cottage ===================
+    let beds = "";
+    for (let i = 0; i < 7; i++) { const x = 455 + i * 128;
+      beds += `<g class="ps2"><rect x="${x}" y="520" width="12" height="90" fill="#6b4a32" />
+        <rect x="${x}" y="566" width="108" height="34" rx="4" fill="#B3202E" /><rect x="${x + 12}" y="556" width="30" height="14" rx="5" fill="#F2EAD8" />
+        <rect x="${x + 98}" y="550" width="10" height="60" fill="#6b4a32" /></g>`; }
+    put("beds6", beds);
+    put("girl6", girl("#F2EAD8"));
+    const dx = [500, 600, 700, 790, 1010, 1110, 1210];
+    let dw = "";
+    dx.forEach((x, i) => {
+      const flip = i >= 4 ? -1 : 1;
+      dw += `<g transform="translate(${x},866) scale(${1.25 * flip},1.25)"><g class="nod6 ps2">${dwarf("#0b0a12")}
+        <rect x="18" y="-58" width="26" height="9" rx="4" fill="#0b0a12" /></g>
+        <g transform="translate(42,-54)"><g class="lamp6"><line x1="0" y1="0" x2="0" y2="22" stroke="#0b0a12" stroke-width="3" />
+          <rect x="-9" y="22" width="18" height="24" rx="4" fill="#f3cf6e" class="gold-glow" /></g></g></g>`;
+    });
+    put("dwarfs6", dw);
+    let m6 = "";
+    for (let i = 0; i < 16; i++) m6 += `<circle class="mote6" cx="${460 + rnd(i + 120) * 960}" cy="${360 + rnd(i + 130) * 420}" r="${2 + rnd(i + 140) * 3}" fill="#e9cf84" opacity="0.5" />`;
+    put("motes6", m6);
+
+    shot(6, "#s6");
+    const a6 = shotStart(6);
+    tl.fromTo("#cottage6", { scaleY: 0.05, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.9, ease: "back.out(1.4)" }, a6 - 0.1);
+    tl.fromTo("#girl6", { opacity: 0 }, { opacity: 1, duration: 0.5 }, a6 + 0.5);
+    tl.fromTo(".nod6", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" }, a6 + 0.6);
+    tl.fromTo(".lamp6", { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 }, a6 + 0.6);
+    tl.to(".nod6", { rotate: 8, transformOrigin: "50% 100%", duration: 0.35, yoyo: true, repeat: 1, stagger: 0.07, ease: "sine.inOut" }, a6 + 1.5);
+    tl.fromTo(".lamp6", { rotate: 0, transformOrigin: "50% 0%" }, { rotate: 22, duration: 0.4, yoyo: true, repeat: 1, stagger: 0.07, ease: "sine.inOut" }, a6 + 1.5);
+    tl.fromTo("#door6", { scaleX: 0.12, transformOrigin: "100% 50%" }, { scaleX: 1, duration: 0.6, ease: "power2.in" }, a6 + 2.4);
+    tl.fromTo("#bolt6", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, a6 + 3.1);
+    tl.fromTo(".mote6", { y: 0 }, { y: -70, duration: shotLen(6), ease: "none" }, a6);
+    label("Let no one in", 840, 40, a6 + 2.6);
+  }
+</script>

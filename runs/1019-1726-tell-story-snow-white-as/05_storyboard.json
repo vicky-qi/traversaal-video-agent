@@ -1,0 +1,344 @@
+{
+  "topic": "Snow White as the Brothers Grimm Wrote It",
+  "art_direction": {
+    "style": "Layered paper-cut storybook: flat silhouette shapes on stacked paper layers with soft drop shadows, gentle parallax as the camera drifts between layers, and a warm glow for magic.",
+    "palette": ["#14121F", "#F2EAD8", "#B3202E", "#2E5E4E", "#C9A44C", "#6E6A86"],
+    "mood": "Hushed and curious, darkening through the middle, landing on a quiet, slightly chilling close.",
+    "hero_visual": "An open pop-up storybook whose pages turn to reveal each paper-cut set (castle, forest, cottage, coffin), with a gold oval mirror that reappears on every spread and glows whenever the queen acts. All of it is shapes, gradients and silhouettes drawn in code."
+  },
+  "music": { "mood": "tense", "key": "D minor" },
+  "scenes": [
+    {
+      "id": 1,
+      "transition_in": "fade",
+      "shots": [
+        {
+          "n": 1,
+          "sentence": 0,
+          "offset": 0,
+          "frame": "Near-black #14121F void. A worn paper-white storybook lies closed in the centre; its cover swings open on a hinge, and three paper layers fold upward into a pop-up castle with towers. On the castle's inner wall a small gold oval mirror starts to glow, a soft gold radial gradient spreading over the paper.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "rise",
+          "facts": []
+        },
+        {
+          "n": 2,
+          "sentence": 1,
+          "offset": 0,
+          "frame": "Close on the gold oval mirror inside the pop-up castle. Its surface ripples like water, and faint paper-white lines of handwritten script (unreadable squiggles, not real text) drift across it as if the book's own words are stirring.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": []
+        },
+        {
+          "n": 3,
+          "sentence": 2,
+          "offset": 0,
+          "frame": "The camera slides down to the book's open title page: a paper-cut frame of oak leaves around a large gold number, with six thin ghosted page-edges stacked behind it and a seventh, brightest page in front, the last of the seven editions.",
+          "camera": "pan_up",
+          "text": null,
+          "data": { "value": 1857, "unit": "year", "label": "Final edition, the 'Ausgabe letzter Hand'", "fact": "Q1-F1" },
+          "sound": "chime",
+          "facts": ["Q1-F1", "Q2-F5"]
+        },
+        {
+          "n": 4,
+          "sentence": 3,
+          "offset": 0,
+          "frame": "The page turns to a winter spread: a black ebony window frame cut from paper, a crowned queen silhouette sewing at it, snowflake particles falling. Three small apple-red drops fall from her hand onto the white snow on the sill. Then the candle beside her flickers and goes out, leaving a tiny cradle silhouette in a pool of pale light.",
+          "camera": "parallax",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q1-F3", "Q2-F4"]
+        },
+        {
+          "n": 5,
+          "sentence": 5,
+          "offset": 0,
+          "frame": "Same castle spread, now lit warm: a king silhouette takes the hand of a tall new queen with a high pointed collar. She turns her head toward the gold oval mirror on the wall, which flares bright gold as she looks into it.",
+          "camera": "pan_left",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": ["Q1-F4", "Q2-F4"]
+        },
+        {
+          "n": 6,
+          "sentence": 6,
+          "offset": 0,
+          "frame": "The pages riffle backwards to an older, yellowed paper layer. The sewing queen silhouette from the window and the jealous queen at the mirror slide toward each other and merge into one single figure, showing they are the same woman in this first version.",
+          "camera": "pull_out",
+          "text": null,
+          "data": { "value": 1812, "unit": "year", "label": "First edition: the villain is her own mother", "fact": "Q2-F1" },
+          "sound": "hit",
+          "facts": ["Q2-F1", "Q2-F2", "Q1-F10"]
+        },
+        {
+          "n": 7,
+          "sentence": 6,
+          "offset": 4.7,
+          "frame": "The yellowed page flips forward again, back to the bright 1857 castle spread; the gold mirror on the wall pulses once, and its glow fills more and more of the frame.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "transition_in": "match_cut",
+      "shots": [
+        {
+          "n": 1,
+          "sentence": 0,
+          "offset": 0,
+          "frame": "The gold oval mirror fills the frame. In it, the queen's tall silhouette fades and the small silhouette of a girl with a bow takes her place; in the foreground the queen's shadow recoils, and the mirror's gold rim tints sickly green at the edges.",
+          "camera": "pull_out",
+          "text": null,
+          "data": null,
+          "sound": "rise",
+          "facts": ["Q1-F5"]
+        },
+        {
+          "n": 2,
+          "sentence": 1,
+          "offset": 0,
+          "frame": "Throne-room spread: the queen silhouette points a long arm; a huntsman silhouette with a bow on his back bows low. The page edge curls and dark forest-green paper trees begin sliding in from the right as he leads the small girl silhouette toward them.",
+          "camera": "pan_left",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q3-F1", "Q3-F2", "Q1-F6"]
+        },
+        {
+          "n": 3,
+          "sentence": 2,
+          "offset": 0,
+          "frame": "Deep in the paper forest, three layers of trees. The huntsman's raised arm slowly lowers; the girl silhouette backs away and runs off between the trees. A small young boar silhouette trots out of the undergrowth behind him.",
+          "camera": "parallax",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q3-F4", "Q3-F5", "Q3-F6"]
+        },
+        {
+          "n": 4,
+          "sentence": 3,
+          "offset": 2.0,
+          "frame": "Back in the castle by candlelight: the huntsman hands over a small lidded box. On a long table a covered bowl sends up thin curls of steam, and the queen silhouette sits before it, her shadow stretched long up the wall beside the faintly glowing mirror. Nothing inside the bowl is shown.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q3-F6", "Q3-F7"]
+        },
+        {
+          "n": 5,
+          "sentence": 4,
+          "offset": 0,
+          "frame": "The girl silhouette runs left to right through dense paper layers of thorn branches and pointed stones; dusk deepens to #6E6A86, and far ahead a tiny cottage window glows warm gold.",
+          "camera": "parallax",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": ["Q3-F8"]
+        },
+        {
+          "n": 6,
+          "sentence": 5,
+          "offset": 0,
+          "frame": "The cottage pops up from the page: inside, seven little beds in a row and seven small lantern-carrying silhouettes gathered around the girl. Each lantern swings once as they nod; then the cottage door swings shut and a wooden bolt slides across it.",
+          "camera": "pull_out",
+          "text": "Let no one in",
+          "data": null,
+          "sound": "chime",
+          "facts": ["Q1-F7"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "transition_in": "wipe",
+      "shots": [
+        {
+          "n": 1,
+          "sentence": 0,
+          "offset": 0,
+          "frame": "The gold mirror flares in the dark castle. The queen silhouette in front of it unfolds into three cloaked shapes side by side, each a different hooded outline, like three paper cut-outs fanned from one sheet.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "rise",
+          "facts": ["Q1-F8", "Q6-F2"]
+        },
+        {
+          "n": 2,
+          "sentence": 1,
+          "offset": 0,
+          "frame": "Cottage door spread: a bent old peddler silhouette holds out ribbons of coloured laces. The laces wind around the girl's waist and pull tight in quick tugs; the girl silhouette tips slowly backward and lies still on the paper floor.",
+          "camera": "pan_left",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q4-F1", "Q4-F2"]
+        },
+        {
+          "n": 3,
+          "sentence": 2,
+          "offset": 0,
+          "frame": "Lantern light floods in as small dwarf silhouettes hurry around her; a pair of paper scissors snips the lace in two, the cut ends spring apart, and a soft white glow rises from her chest as she breathes.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "chime",
+          "facts": ["Q4-F3"]
+        },
+        {
+          "n": 4,
+          "sentence": 3,
+          "offset": 0,
+          "frame": "The page turns; the mirror on the castle wall flares a second time. A different hooded old-woman silhouette arrives at the cottage door holding up an ornate comb that glows a faint poisonous green.",
+          "camera": "pan_right",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": ["Q4-F5"]
+        },
+        {
+          "n": 5,
+          "sentence": 4,
+          "offset": 0,
+          "frame": "The girl lies still with the green-glowing comb in her hair; a dwarf's small hand draws it out, the green glow drains away, and she sits up.",
+          "camera": "orbit",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q4-F6"]
+        },
+        {
+          "n": 6,
+          "sentence": 5,
+          "offset": 1.0,
+          "frame": "The mirror flares a third time. A peasant-woman silhouette holds out a single apple, half paper-white and half apple-red; a faint dark shimmer crawls over only the red half.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "rise",
+          "facts": ["Q4-F7", "Q4-F8"]
+        },
+        {
+          "n": 7,
+          "sentence": 6,
+          "offset": 0,
+          "frame": "The apple splits into two halves. The peasant woman lifts the white half to her mouth; the girl takes the red half and a small bite-shaped notch appears in it.",
+          "camera": "pan_left",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q4-F8"]
+        },
+        {
+          "n": 8,
+          "sentence": 7,
+          "offset": 1.5,
+          "frame": "The red half falls from the girl's hand and rolls across the paper floor. She lies still in the centre while seven dwarf silhouettes stand in a ring around her; one by one their lanterns dim.",
+          "camera": "static",
+          "text": null,
+          "data": null,
+          "sound": "hit",
+          "facts": ["Q1-F8", "Q4-F9"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "transition_in": "match_cut",
+      "shots": [
+        {
+          "n": 1,
+          "sentence": 0,
+          "offset": 0,
+          "frame": "The same lying silhouette, now inside a transparent glass coffin drawn as pale outlined panels with a soft sheen, set on a paper mountain top under a dusk sky. The dwarfs lower the lid; light glints along the glass edges.",
+          "camera": "pull_out",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q1-F9"]
+        },
+        {
+          "n": 2,
+          "sentence": 1,
+          "offset": 0,
+          "frame": "A prince silhouette gestures; servant silhouettes lift the coffin onto their shoulders and walk it left across the page. The front servants' feet catch on a low paper shrub and the coffin lurches and tilts.",
+          "camera": "pan_right",
+          "text": null,
+          "data": null,
+          "sound": "whoosh",
+          "facts": ["Q5-F2", "Q5-F3", "Q1-F9"]
+        },
+        {
+          "n": 3,
+          "sentence": 1,
+          "offset": 4.0,
+          "frame": "Close on the tilted coffin: a small red apple piece drops out of the girl's silhouette and falls away. The glass lid lifts, and the girl sits up, a warm glow returning to her outline.",
+          "camera": "push_in",
+          "text": null,
+          "data": null,
+          "sound": "chime",
+          "facts": ["Q5-F3", "Q5-F4"]
+        },
+        {
+          "n": 4,
+          "sentence": 3,
+          "offset": 0,
+          "frame": "Wedding-hall spread with paper garlands. On a bed of glowing coals sit a pair of iron shoes, heating from grey to orange-red; tongs lift them out. On the far wall only the stepmother's long shadow is seen whirling, faster and faster, until it slips down out of frame. No body or injury is shown, and no mirror appears in this hall.",
+          "camera": "orbit",
+          "text": null,
+          "data": null,
+          "sound": "hit",
+          "facts": ["Q1-F10", "Q5-F8"]
+        },
+        {
+          "n": 5,
+          "sentence": 4,
+          "offset": 0,
+          "frame": "The page splits down the middle. Left half, cream paper: three hooded visitors in a row and seven identical unnamed dwarf silhouettes. Right half, same scene redrawn: two of the three hooded visitors fade away, and above each of the seven dwarfs a small blank banner unfurls, standing for a name (no names written).",
+          "camera": "pan_left",
+          "text": "Grimm 1857 | Disney film 1937",
+          "data": null,
+          "sound": "whoosh",
+          "facts": ["Q6-F1", "Q6-F2", "Q6-F6"]
+        },
+        {
+          "n": 6,
+          "sentence": 4,
+          "offset": 4.6,
+          "frame": "On the right half a prince silhouette leans over the sleeping girl and a soft heart-shaped glow blooms; then the right half folds shut like a flap. The left half widens to fill the frame, replaying the servants' stumble over the shrub and the apple piece dropping out.",
+          "camera": "pan_right",
+          "text": null,
+          "data": null,
+          "sound": "none",
+          "facts": ["Q6-F3", "Q6-F4", "Q5-F3"]
+        },
+        {
+          "n": 7,
+          "sentence": 6,
+          "offset": 0,
+          "frame": "The whole pop-up folds flat as the storybook closes. On the dark cover, an inlaid gold oval mirror glows one last time, then its light drains to nothing, leaving the closed book in the #14121F dark.",
+          "camera": "pull_out",
+          "text": null,
+          "data": null,
+          "sound": "rise",
+          "facts": []
+        }
+      ]
+    }
+  ]
+}

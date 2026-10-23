@@ -1,0 +1,467 @@
+<!--
+  Scene 4: "How the Grimms End It". Layered paper-cut storybook, 7 shots, all built in SVG.
+    1 pull_out  glass coffin on a paper mountain top at dusk; dwarfs lower the lid, light glints on the glass
+    2 pan_right prince gestures; servants carry the coffin left, stumble on a shrub, the coffin lurches
+    3 push_in   close on the tilted coffin: the apple piece drops out, the lid lifts, she sits up glowing
+    4 orbit     wedding hall: iron shoes heat on coals, tongs lift them, a long shadow whirls and slips away
+    5 pan_left  split page, Grimm 1857 vs Disney film 1937: two visitors fade, blank name banners unfurl
+    6 pan_right right half: prince and heart glow, then the flap folds shut; left page replays the stumble
+    7 pull_out  the pop-up folds flat, the book closes, the gold mirror on the cover glows and goes dark
+  Note: every fromTo that sets a transformOrigin sets it in the "from" vars too, so GSAP does not
+  shift the element when the origin changes (smoothOrigin) after a scale-0 start.
+-->
+<style>
+  .cam > .s4bg { left: -140px; top: -140px; width: 2200px; height: 1360px; }
+  .s4dusk { background: linear-gradient(to bottom, #14121F 0%, #262238 42%, #4d4867 72%, #6E6A86 100%); }
+  .s4hall { background: radial-gradient(900px 620px at 38% 72%, #4a2724 0%, #261a26 48%, #14121F 100%); }
+  .s4void { background: radial-gradient(1000px 700px at 50% 50%, #1d1a2c 0%, #14121F 70%); }
+  .s4cream { background: #F2EAD8; }
+  .s4svg { overflow: visible; }
+</style>
+
+<!-- shared filters and gradients -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="s4paper" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="9" flood-color="#000" flood-opacity="0.5" />
+    </filter>
+    <filter id="s4paperLite" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#3b2f1e" flood-opacity="0.35" />
+    </filter>
+    <filter id="s4glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="6" result="b" />
+      <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+    <filter id="s4soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" />
+    </filter>
+    <radialGradient id="s4gold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F7D98A" stop-opacity="0.95" />
+      <stop offset="45%" stop-color="#C9A44C" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#C9A44C" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="s4heat" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff8a3d" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#B3202E" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#B3202E" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="s4moon" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F2EAD8" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#F2EAD8" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="s4wall" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e8b86a" stop-opacity="0.42" />
+      <stop offset="100%" stop-color="#e8b86a" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="s4fold" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#14121F" stop-opacity="0" />
+      <stop offset="50%" stop-color="#14121F" stop-opacity="0.28" />
+      <stop offset="100%" stop-color="#14121F" stop-opacity="0" />
+    </linearGradient>
+    <radialGradient id="s4mirrorIn" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#3a3550" />
+      <stop offset="100%" stop-color="#14121F" />
+    </radialGradient>
+  </defs>
+</svg>
+
+<!-- Shot 1: coffin on the mountain top -->
+<div class="shot" id="s4s1"><div class="cam">
+  <div class="s4bg s4dusk"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv1"></svg>
+</div></div>
+
+<!-- Shot 2: the procession and the stumble -->
+<div class="shot" id="s4s2"><div class="cam">
+  <div class="s4bg s4dusk"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv2"></svg>
+</div></div>
+
+<!-- Shot 3: close on the tilted coffin -->
+<div class="shot" id="s4s3"><div class="cam">
+  <div class="s4bg s4dusk"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv3"></svg>
+</div></div>
+
+<!-- Shot 4: the wedding hall -->
+<div class="shot" id="s4s4"><div class="cam">
+  <div class="s4bg s4hall"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv4"></svg>
+</div></div>
+
+<!-- Shot 5: split page, Grimm vs Disney -->
+<div class="shot" id="s4s5"><div class="cam">
+  <div class="s4bg s4cream"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv5"></svg>
+</div></div>
+
+<!-- Shot 6: the flap folds shut, the stumble replays -->
+<div class="shot" id="s4s6"><div class="cam">
+  <div class="s4bg s4cream"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv6"></svg>
+</div></div>
+
+<!-- Shot 7: the book closes, the mirror goes dark -->
+<div class="shot" id="s4s7"><div class="cam">
+  <div class="s4bg s4void"></div>
+  <svg class="s4svg" width="1920" height="1080" viewBox="0 0 1920 1080" id="s4sv7"></svg>
+</div></div>
+
+<script>
+  {
+    const INK = P[0] || "#14121F", CREAM = P[1] || "#F2EAD8", RED = P[2] || "#B3202E",
+          GREEN = P[3] || "#2E5E4E", GOLD = P[4] || "#C9A44C", DUSK = P[5] || "#6E6A86";
+    const at = (x, y, s, inner) => `<g transform="translate(${x},${y}) scale(${s})">${inner}</g>`;
+    const put = (id, html) => { document.getElementById(id).innerHTML = html; };
+
+    // ---------- figure library (feet at 0,0) ----------
+    const girl = (pre, fill, bow, apple) => `
+      <g id="${pre}upper">
+        <path class="${pre}gf" d="M2,-13 L-104,-17 Q-116,0 -104,15 L2,13 Z" fill="${fill}"/>
+        <circle class="${pre}gf" cx="-130" cy="-1" r="21" fill="${fill}"/>
+        <path d="M-140,-20 L-156,-31 L-154,-12 Z M-140,-20 L-126,-33 L-127,-13 Z" fill="${bow}"/>
+      </g>
+      <path class="${pre}gf" d="M0,-15 Q60,-30 118,-14 L126,13 L0,14 Z" fill="${fill}"/>
+      <path class="${pre}gf" d="M118,-10 L146,-8 L146,6 L124,10 Z" fill="${fill}"/>
+      ${apple ? `<g id="${pre}apple"><path d="M-114,-7 Q-101,-14 -95,-2 Q-99,9 -112,6 Z" fill="${RED}" stroke="${CREAM}" stroke-width="1.5"/></g>` : ""}`;
+
+    const coffin = (pre, glass, girlFill, bow, apple) => `
+      <defs><clipPath id="${pre}clip"><rect x="-222" y="-128" width="444" height="128" rx="6"/></clipPath></defs>
+      <g transform="translate(8,-44)">${girl(pre, girlFill, bow, apple)}</g>
+      <rect x="-210" y="-100" width="420" height="100" rx="6" fill="${glass}" fill-opacity="0.13" stroke="${glass}" stroke-opacity="0.85" stroke-width="4"/>
+      <path d="M-105,-96 V-4 M0,-96 V-4 M105,-96 V-4" stroke="${glass}" stroke-opacity="0.3" stroke-width="2"/>
+      <g id="${pre}lid">
+        <rect x="-222" y="-128" width="444" height="28" rx="6" fill="${glass}" fill-opacity="0.2" stroke="${glass}" stroke-opacity="0.9" stroke-width="4"/>
+        <path d="M-200,-118 H120" stroke="#ffffff" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g clip-path="url(#${pre}clip)"><g id="${pre}glint">
+        <rect x="-430" y="-150" width="46" height="170" fill="#ffffff" opacity="0.55" transform="skewX(-22)"/>
+        <rect x="-370" y="-150" width="12" height="170" fill="#ffffff" opacity="0.4" transform="skewX(-22)"/>
+      </g></g>`;
+
+    const person = (id, fill, extra = "", carry = false) => `
+      <g id="${id}">
+        ${extra.split("|")[0] || ""}
+        <g class="legA"><path d="M-22,-114 L-4,-114 L-7,0 L-25,0 Z" fill="${fill}"/></g>
+        <g class="legB"><path d="M4,-114 L22,-114 L25,0 L7,0 Z" fill="${fill}"/></g>
+        <path d="M-36,-104 L-29,-196 Q0,-208 29,-196 L36,-104 Z" fill="${fill}"/>
+        <rect x="-8" y="-216" width="16" height="22" fill="${fill}"/>
+        <circle cx="0" cy="-232" r="21" fill="${fill}"/>
+        ${carry ? `<path d="M-24,-192 L-30,-270 M24,-192 L30,-270" stroke="${fill}" stroke-width="13" stroke-linecap="round"/>` : ""}
+        ${extra.split("|")[1] || ""}
+      </g>`;
+
+    const princeParts = (id, fill) => [
+      `<path d="M-27,-198 L-66,-2 L-12,-2 Z" fill="${fill}" opacity="0.92"/>`,
+      `<path d="M-19,-248 L-19,-268 L-9,-257 L0,-272 L9,-257 L19,-268 L19,-248 Z" fill="${GOLD}"/>
+       <g id="${id}arm"><path d="M-20,-188 L-112,-146" stroke="${fill}" stroke-width="13" stroke-linecap="round"/></g>`,
+    ].join("|");
+
+    const hooded = (id, fill, prop) => `
+      <g id="${id}">
+        <line x1="-44" y1="0" x2="-56" y2="-150" stroke="${fill}" stroke-width="6" stroke-linecap="round"/>
+        <path d="M-50,0 L-36,-118 Q-40,-180 -6,-200 Q30,-186 30,-132 L44,0 Z" fill="${fill}"/>
+        <path d="M22,-112 L62,-98" stroke="${fill}" stroke-width="12" stroke-linecap="round"/>
+        ${prop}
+      </g>`;
+    const PROP = {
+      lace: `<path d="M68,-98 q12,22 0,44 q-12,22 0,44" stroke="${RED}" stroke-width="5" fill="none"/>
+             <path d="M77,-98 q12,22 0,44 q-12,22 0,44" stroke="${GOLD}" stroke-width="5" fill="none"/>`,
+      comb: `<rect x="62" y="-114" width="34" height="10" rx="3" fill="${GREEN}"/>
+             <path d="M65,-104 v12 M71,-104 v12 M77,-104 v12 M83,-104 v12 M89,-104 v12 M95,-104 v12" stroke="${GREEN}" stroke-width="3"/>`,
+      apple: `<circle cx="76" cy="-100" r="13" fill="${RED}"/><path d="M76,-113 l3,-8" stroke="${GREEN}" stroke-width="3"/>`,
+    };
+
+    const dwarf = (id, fill, lantern) => `
+      <g id="${id}">
+        <path d="M-17,-84 L3,-132 L19,-84 Z" fill="${fill}"/>
+        <circle cx="0" cy="-74" r="15" fill="${fill}"/>
+        <path d="M-27,0 L-23,-58 Q0,-70 23,-58 L27,0 Z" fill="${fill}"/>
+        ${lantern ? `<path d="M20,-46 L30,-32" stroke="${fill}" stroke-width="7" stroke-linecap="round"/>
+          <line x1="32" y1="-31" x2="32" y2="-21" stroke="${fill}" stroke-width="2"/>
+          <circle class="s4lamp" cx="32" cy="-13" r="8" fill="${GOLD}" filter="url(#s4glow)"/>` : ""}
+      </g>`;
+
+    const shrub = (fill) => `<path d="M-64,0 Q-70,-34 -44,-40 Q-40,-70 -10,-62 Q4,-86 28,-62 Q58,-66 56,-36 Q76,-26 66,0 Z" fill="${fill}" filter="url(#s4paper)"/>`;
+
+    const procession = (pre, fill, glass, girlFill, apple) => `
+      <g id="${pre}proc">
+        ${at(400, 0, 1, person(pre + "p3", fill, "", true))}
+        ${at(200, 0, 1, person(pre + "p2", fill, "", true))}
+        <g transform="translate(200,-272) scale(1.14)"><g id="${pre}tilt">${coffin(pre + "c", glass, girlFill, RED, apple)}</g></g>
+        ${at(0, 0, 1, person(pre + "p1", fill, "", true))}
+      </g>`;
+
+    const walk = (pre, t0, dur) => {
+      const n = Math.max(2, Math.round(dur / 0.36));
+      ["p1", "p2", "p3"].forEach((p, k) => {
+        const A = `#${pre}${p} .legA`, B = `#${pre}${p} .legB`;
+        tl.fromTo(A, { rotate: -16, transformOrigin: "50% 0%" }, { rotate: 16, duration: dur / n, repeat: n - 1, yoyo: true, ease: "sine.inOut" }, t0 + k * 0.06);
+        tl.fromTo(B, { rotate: 16, transformOrigin: "50% 0%" }, { rotate: -16, duration: dur / n, repeat: n - 1, yoyo: true, ease: "sine.inOut" }, t0 + k * 0.06);
+        tl.fromTo(`#${pre}${p}`, { y: 0 }, { y: -6, duration: dur / n / 2, repeat: n * 2 - 1, yoyo: true, ease: "sine.inOut" }, t0 + k * 0.06);
+      });
+    };
+    const stumble = (pre, t) => {
+      tl.to(`#${pre}p1`, { rotate: -13, transformOrigin: "50% 100%", duration: 0.25, ease: "power2.out" }, t);
+      tl.to(`#${pre}tilt`, { rotate: -7, transformOrigin: "50% 100%", duration: 0.35, ease: "back.out(2.5)" }, t + 0.05);
+      tl.fromTo(`#${pre}tilt`, { y: 0 }, { y: 12, duration: 0.12, repeat: 3, yoyo: true, ease: "sine.inOut" }, t + 0.05);
+    };
+
+    const stars = (count, seed) => {
+      let s = "";
+      for (let i = 0; i < count; i++) {
+        const x = (i * 397 + seed * 131) % 1920, y = 30 + ((i * 151 + seed * 59) % 380), r = 1.5 + (i % 3);
+        s += `<circle class="s4star${seed}" cx="${x}" cy="${y}" r="${r}" fill="${CREAM}" opacity="0.7"/>`;
+      }
+      return s;
+    };
+    const hills = `
+      <path d="M-200,700 Q200,560 520,640 Q860,520 1200,620 Q1560,540 2120,650 L2120,1200 L-200,1200 Z" fill="#4b4767" opacity="0.9" filter="url(#s4paper)"/>
+      <path d="M-200,770 Q260,660 640,730 Q1000,650 1380,720 Q1700,670 2120,740 L2120,1200 L-200,1200 Z" fill="#2c2942" filter="url(#s4paper)"/>`;
+
+    // =============== Shot 1: the glass coffin on the mountain ===============
+    {
+      const dw = [[480, 724], [560, 697], [640, 666], [712, 641], [1210, 641], [1285, 668], [1360, 697]];
+      put("s4sv1", `
+        ${stars(40, 1)}
+        <circle cx="1520" cy="200" r="150" fill="url(#s4moon)"/>
+        <circle cx="1520" cy="200" r="62" fill="${CREAM}" filter="url(#s4paper)"/>
+        <path d="M-200,640 L180,470 L420,560 L700,420 L980,540 L1260,430 L1560,560 L1800,470 L2120,600 L2120,1200 L-200,1200 Z" fill="#3a3656" filter="url(#s4paper)"/>
+        <path d="M-200,820 L0,820 L500,720 L760,620 L1160,620 L1420,720 L1920,800 L2120,810 L2120,1200 L-200,1200 Z" fill="#565073" filter="url(#s4paper)"/>
+        <rect x="730" y="618" width="460" height="22" rx="4" fill="#3a3656" filter="url(#s4paper)"/>
+        <g transform="translate(960,620)" filter="url(#s4paperLite)">${coffin("s4a", CREAM, CREAM, RED, false)}</g>
+        ${dw.map(([x, y], i) => at(x, y, 1.1, dwarf("s4d1_" + i, INK, true))).join("")}
+      `);
+      shot(1, "#s4s1");
+      const t = shotStart(1);
+      tl.fromTo("#s4alid", { y: -170, opacity: 0.6 }, { y: 0, opacity: 1, duration: 2.2, ease: "power2.inOut" }, t + 0.4);
+      tl.fromTo(dw.map((_, i) => "#s4d1_" + i), { rotate: 0, transformOrigin: "50% 100%" }, { rotate: 8, transformOrigin: "50% 100%", duration: 0.6, stagger: 0.07, ease: "sine.inOut" }, t + 2.5);
+      tl.fromTo("#s4aglint", { x: 0 }, { x: 720, duration: 1.1, ease: "power1.inOut" }, t + 2.7);
+      tl.fromTo("#s4s1 .s4star1", { opacity: 0.25 }, { opacity: 0.9, duration: 0.7, repeat: 5, yoyo: true, stagger: 0.04, ease: "sine.inOut" }, t);
+      tl.fromTo("#s4s1 .s4lamp", { opacity: 0.6 }, { opacity: 1, duration: 0.5, repeat: 7, yoyo: true, stagger: 0.09, ease: "sine.inOut" }, t);
+    }
+
+    // =============== Shot 2: the servants carry it away and stumble ===============
+    {
+      put("s4sv2", `
+        ${stars(24, 2)}
+        <circle cx="1650" cy="170" r="44" fill="${CREAM}" opacity="0.9"/>
+        ${hills}
+        ${[180, 330, 1180, 1330, 1760].map((x, i) => `<path d="M${x},${700 - (i % 2) * 30} l-46,90 h92 Z M${x},${650 - (i % 2) * 30} l-36,80 h72 Z" fill="${GREEN}" opacity="0.75"/>`).join("")}
+        <rect x="-200" y="760" width="2320" height="440" fill="#1f1c2f" filter="url(#s4paper)"/>
+        <g transform="translate(520,760)">${shrub(GREEN)}</g>
+        <g transform="translate(0,760)">${procession("s4b", INK, CREAM, CREAM, false)}</g>
+        ${at(1560, 760, 1, person("s4prince2", INK, princeParts("s4prince2", INK)))}
+      `);
+      shot(2, "#s4s2");
+      const t = shotStart(2), tStumble = t + 2.25;
+      tl.fromTo("#s4bproc", { x: 1010 }, { x: 610, duration: 2.2, ease: "none" }, t);
+      walk("s4b", t, 2.2);
+      stumble("s4b", tStumble);
+      tl.fromTo("#s4prince2arm", { rotate: 34, transformOrigin: "100% 0%" }, { rotate: 0, transformOrigin: "100% 0%", duration: 0.8, ease: "power2.out" }, t + 0.1);
+    }
+
+    // =============== Shot 3: the apple piece falls, she sits up ===============
+    {
+      put("s4sv3", `
+        ${stars(20, 3)}
+        ${hills}
+        <g transform="translate(520,940)">${shrub(GREEN)}</g>
+        <ellipse id="s4halo" cx="930" cy="480" rx="420" ry="300" fill="url(#s4gold)" opacity="0"/>
+        <g transform="translate(960,720) scale(2.3) rotate(-5)">${coffin("s4c", CREAM, "#d8d0bf", RED, true)}</g>
+        <path d="M590,1120 L640,752 M1330,1120 L1284,698" stroke="${INK}" stroke-width="28" stroke-linecap="round"/>
+      `);
+      shot(3, "#s4s3");
+      const t = shotStart(3), tUp = lineStart(2);
+      tl.fromTo("#s4capple", { x: 0, y: 0, rotate: 0, opacity: 1, transformOrigin: "50% 50%" }, { x: -24, y: 230, rotate: 200, opacity: 0, transformOrigin: "50% 50%", duration: 1.1, ease: "power2.in" }, t + 0.2);
+      tl.fromTo("#s4clid", { rotate: 0, y: 0, transformOrigin: "100% 100%" }, { rotate: 30, y: -6, transformOrigin: "100% 100%", duration: 0.7, ease: "power2.out" }, tUp - 0.55);
+      tl.fromTo("#s4cupper", { rotate: 0, transformOrigin: "100% 50%" }, { rotate: 78, transformOrigin: "100% 50%", duration: 0.9, ease: "power2.out" }, tUp + 0.05);
+      tl.fromTo("#s4halo", { opacity: 0, scale: 0.6, transformOrigin: "50% 50%" }, { opacity: 0.95, scale: 1, duration: 1.0, ease: "power2.out" }, tUp + 0.25);
+      tl.to("#s4s3 .s4cgf", { attr: { fill: "#FFF1CF" }, duration: 0.8 }, tUp + 0.3);
+      tl.fromTo("#s4cglint", { x: 0 }, { x: 720, duration: 1.0, ease: "power1.inOut" }, t + 0.3);
+    }
+
+    // =============== Shot 4: the wedding hall, the iron shoes ===============
+    {
+      const bunting = (p0, p1, p2, n, k) => {
+        let s = `<path d="M${p0[0]},${p0[1]} Q${p1[0]},${p1[1]} ${p2[0]},${p2[1]}" stroke="${CREAM}" stroke-opacity="0.6" stroke-width="3" fill="none"/>`;
+        const cols = [RED, GOLD, CREAM];
+        for (let i = 1; i < n; i++) {
+          const u = i / n, a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u;
+          const x = a * p0[0] + b * p1[0] + c * p2[0], y = a * p0[1] + b * p1[1] + c * p2[1];
+          s += `<g transform="translate(${x.toFixed(1)},${y.toFixed(1)})"><g class="s4flag"><path d="M-17,0 L17,0 L0,38 Z" fill="${cols[(i + k) % 3]}" filter="url(#s4paperLite)"/></g></g>`;
+        }
+        return s;
+      };
+      const shoe = `<path d="M0,0 L0,-36 Q0,-46 14,-46 L30,-46 L34,-22 Q72,-20 84,-6 L86,0 Z"/>`;
+      let coals = "", embers = "";
+      for (let i = 0; i < 15; i++) {
+        coals += `<circle class="s4coal" cx="${552 + i * 22}" cy="${714 + (i % 3) * 6}" r="${12 + (i % 2) * 4}" fill="${[RED, "#e2541f", GOLD][i % 3]}" filter="url(#s4glow)"/>`;
+      }
+      for (let i = 0; i < 12; i++) embers += `<circle class="s4ember" cx="${560 + ((i * 53) % 320)}" cy="700" r="${2.5 + (i % 3)}" fill="#ffb15c" opacity="0"/>`;
+      put("s4sv4", `
+        ${[330, 720].map((x) => `<path d="M${x - 110},620 L${x - 110},300 Q${x},170 ${x + 110},300 L${x + 110},620 Z" fill="${CREAM}" opacity="0.07" filter="url(#s4paper)"/>`).join("")}
+        <ellipse cx="1360" cy="500" rx="460" ry="380" fill="url(#s4wall)"/>
+        <g transform="translate(1110,430)">
+          <rect x="-8" y="0" width="16" height="70" fill="${CREAM}" opacity="0.8"/>
+          <g id="s4flame"><path d="M0,-34 Q14,-14 0,0 Q-14,-14 0,-34 Z" fill="${GOLD}" filter="url(#s4glow)"/></g>
+          <circle cx="0" cy="-14" r="90" fill="url(#s4gold)" opacity="0.5"/>
+        </g>
+        <g transform="translate(1390,780)"><g id="s4shadow" filter="url(#s4soft)">
+          <path d="M-72,0 L-40,-300 L-96,-386 L-70,-404 L-30,-352 Q-26,-420 -46,-474 L-20,-458 Q0,-500 20,-458 L46,-474 Q26,-420 30,-352 L70,-404 L96,-386 L40,-300 L72,0 Z" fill="#06050c" opacity="0.72"/>
+          <circle cx="0" cy="-488" r="26" fill="#06050c" opacity="0.72"/>
+          <path d="M-20,-508 L-20,-530 L-8,-518 L0,-536 L8,-518 L20,-530 L20,-508 Z" fill="#06050c" opacity="0.72"/>
+        </g></g>
+        ${bunting([-160, 110], [440, 330], [960, 96], 15, 0)}
+        ${bunting([960, 96], [1480, 330], [2080, 120], 15, 1)}
+        <rect x="-200" y="800" width="2320" height="420" fill="#1b1624" filter="url(#s4paper)"/>
+        <path d="M-200,800 H2120" stroke="${GOLD}" stroke-opacity="0.35" stroke-width="3"/>
+        <ellipse id="s4heatGlow" cx="712" cy="690" rx="260" ry="150" fill="url(#s4heat)" opacity="0.4"/>
+        <path d="M498,800 L540,722 L884,722 L926,800 Z" fill="#2c2433" filter="url(#s4paper)"/>
+        ${coals}
+        ${embers}
+        <g id="s4shoes">
+          <g class="s4shoe" transform="translate(588,712)" fill="#5d5a68" filter="url(#s4paperLite)">${shoe}</g>
+          <g class="s4shoe" transform="translate(722,712)" fill="#5d5a68" filter="url(#s4paperLite)">${shoe}</g>
+        </g>
+        <g id="s4tongs">
+          <path d="M700,-120 L628,664 M748,-120 L812,664" stroke="#8a8598" stroke-width="12" stroke-linecap="round"/>
+          <path d="M628,664 l18,4 M812,664 l-18,4" stroke="#8a8598" stroke-width="10" stroke-linecap="round"/>
+        </g>
+      `);
+      shot(4, "#s4s4");
+      const t = shotStart(4), tEnd = shotEnd(4);
+      tl.fromTo("#s4s4 .s4flag", { rotate: -6, transformOrigin: "50% 0%" }, { rotate: 6, transformOrigin: "50% 0%", duration: 1.1, repeat: 4, yoyo: true, stagger: 0.05, ease: "sine.inOut" }, t);
+      tl.fromTo("#s4s4 .s4coal", { opacity: 0.55 }, { opacity: 1, duration: 0.45, repeat: 11, yoyo: true, stagger: 0.07, ease: "sine.inOut" }, t);
+      tl.fromTo("#s4s4 .s4ember", { y: 0, opacity: 0.9 }, { y: -260, opacity: 0, duration: 1.6, repeat: 2, stagger: 0.17, ease: "power1.out" }, t + 0.2);
+      tl.fromTo("#s4flame", { scaleY: 0.85, transformOrigin: "50% 100%" }, { scaleY: 1.15, transformOrigin: "50% 100%", duration: 0.22, repeat: 25, yoyo: true, ease: "sine.inOut" }, t);
+      // the shoes heat from grey to red-hot
+      tl.to("#s4s4 .s4shoe", { attr: { fill: "#e2541f" }, duration: 2.4, ease: "power1.in" }, t + 0.3);
+      tl.to("#s4heatGlow", { opacity: 1, duration: 2.4 }, t + 0.3);
+      // tongs come down and lift them out
+      tl.fromTo("#s4tongs", { y: -780 }, { y: 0, duration: 0.9, ease: "power2.out" }, t + 1.5);
+      tl.to(["#s4tongs", "#s4shoes"], { y: "-=150", duration: 0.8, ease: "power2.inOut" }, t + 2.6);
+      // the shadow on the far wall whirls faster and faster, then slips down out of frame
+      const durs = [0.5, 0.42, 0.36, 0.31, 0.27, 0.23, 0.2, 0.17, 0.15, 0.13, 0.12, 0.11, 0.1];
+      let tw = t + 2.9;
+      durs.forEach((d, i) => { tl.to("#s4shadow", { scaleX: i % 2 ? 1 : -1, transformOrigin: "50% 100%", duration: d, ease: "sine.inOut" }, tw); tw += d; });
+      tl.fromTo("#s4shadow", { y: 0, opacity: 1 }, { y: 640, opacity: 0, duration: 0.8, ease: "power2.in" }, Math.min(lineStart(3) + 5.1, tEnd - 1.0));
+    }
+
+    // =============== Shot 5: split page, Grimm 1857 | Disney film 1937 ===============
+    {
+      const props = [PROP.lace, PROP.comb, PROP.apple];
+      const side = (pre, x0, banners) => {
+        let s = "";
+        [0, 1, 2].forEach((i) => { s += at(x0 + 230 + i * 250, 480, 0.95, hooded(`${pre}h${i}`, INK, props[i])); });
+        for (let i = 0; i < 7; i++) {
+          const x = x0 + 120 + i * 120;
+          s += at(x, 810, 1, dwarf(`${pre}d${i}`, INK, false));
+          if (banners) s += `<g transform="translate(${x},630)"><g class="s4banner">
+              <path d="M-34,-12 L-46,-12 L-39,0 L-46,12 L-34,12 Z M34,-12 L46,-12 L39,0 L46,12 L34,12 Z" fill="#7d1520"/>
+              <rect x="-34" y="-14" width="68" height="28" rx="3" fill="${RED}"/></g></g>`;
+        }
+        s += `<path d="M${x0 + 60},482 H${x0 + 900} M${x0 + 60},812 H${x0 + 900}" stroke="${INK}" stroke-opacity="0.25" stroke-width="3"/>`;
+        return s;
+      };
+      put("s4sv5", `
+        <rect x="-220" y="-200" width="1180" height="1480" fill="${CREAM}"/>
+        <rect x="960" y="-200" width="1180" height="1480" fill="#E8DEC8"/>
+        <rect x="900" y="-200" width="120" height="1480" fill="url(#s4fold)"/>
+        <g filter="url(#s4paperLite)">${side("s4L", 0, false)}</g>
+        <g filter="url(#s4paperLite)">${side("s4R", 960, true)}</g>
+      `);
+      shot(5, "#s4s5");
+      const t = shotStart(5), l4 = lineStart(4);
+      tl.fromTo(["#s4Lh0", "#s4Lh1", "#s4Lh2", "#s4Rh0", "#s4Rh1", "#s4Rh2"], { rotate: -2, transformOrigin: "50% 100%" }, { rotate: 2, transformOrigin: "50% 100%", duration: 0.9, repeat: 4, yoyo: true, stagger: 0.1, ease: "sine.inOut" }, t);
+      tl.to(["#s4Rh0", "#s4Rh1"], { opacity: 0, y: -14, duration: 0.7, stagger: 0.25, ease: "power1.in" }, l4 + 1.1);
+      tl.fromTo("#s4s5 .s4banner", { scaleX: 0, opacity: 0, transformOrigin: "50% 50%" }, { scaleX: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.45, stagger: 0.12, ease: "back.out(2)" }, l4 + 2.8);
+      tl.fromTo(Array.from({ length: 7 }, (_, i) => "#s4Rd" + i), { y: 0 }, { y: -8, duration: 0.25, yoyo: true, repeat: 1, stagger: 0.12, ease: "sine.out" }, l4 + 2.8);
+      label("Grimm 1857 | Disney film 1937", 660, 70, t + 0.4, shotEnd(5));
+    }
+
+    // =============== Shot 6: the kiss flap folds shut; the Grimm stumble replays ===============
+    {
+      put("s4sv6", `
+        <rect x="-220" y="-200" width="2360" height="1480" fill="${CREAM}"/>
+        <path d="M-200,782 H2120" stroke="${INK}" stroke-opacity="0.25" stroke-width="3"/>
+        <g transform="translate(250,782)">${shrub(GREEN)}</g>
+        <g transform="translate(0,782) scale(0.85)" filter="url(#s4paperLite)">${procession("s4e", INK, INK, INK, true)}</g>
+        <g id="s4flap">
+          <rect x="960" y="-200" width="1180" height="1480" fill="#E8DEC8"/>
+          <rect x="960" y="-200" width="70" height="1480" fill="url(#s4fold)"/>
+          <ellipse id="s4heartGlow" cx="1500" cy="520" rx="200" ry="170" fill="url(#s4gold)" opacity="0"/>
+          <g transform="translate(1500,520)"><g id="s4heart"><path d="M0,40 C-70,-10 -50,-70 0,-38 C50,-70 70,-10 0,40 Z" fill="${RED}" filter="url(#s4glow)"/></g></g>
+          <rect x="1350" y="700" width="330" height="26" rx="6" fill="${INK}" opacity="0.85"/>
+          <g transform="translate(1520,690) scale(1.05)">${girl("s4f", INK, RED, false)}</g>
+          <g transform="translate(1300,782)"><g id="s4lean">${person("s4prince6", INK, princeParts("s4prince6", INK))}</g></g>
+          <rect id="s4flapShade" x="960" y="-200" width="1180" height="1480" fill="${INK}" opacity="0"/>
+        </g>
+      `);
+      shot(6, "#s4s6");
+      const t = shotStart(6), tStumble = lineStart(5);
+      tl.fromTo("#s4lean", { rotate: 0, transformOrigin: "50% 100%" }, { rotate: 16, transformOrigin: "50% 100%", duration: 0.8, ease: "power2.out" }, t);
+      tl.fromTo("#s4heart", { scale: 0, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, transformOrigin: "50% 50%", duration: 0.6, ease: "back.out(2)" }, t + 0.25);
+      tl.to("#s4heartGlow", { opacity: 1, duration: 0.6 }, t + 0.3);
+      // the flap's box runs from x=960 (the fold) to 2140, so "0% 50%" hinges it on the fold
+      tl.fromTo("#s4flap", { scaleX: 1, transformOrigin: "0% 50%" }, { scaleX: 0, transformOrigin: "0% 50%", duration: 0.7, ease: "power2.in" }, t + 1.15);
+      tl.to("#s4flapShade", { opacity: 0.55, duration: 0.7, ease: "power2.in" }, t + 1.15);
+      const walkDur = Math.max(1.2, tStumble - t);
+      tl.fromTo("#s4eproc", { x: 860 }, { x: 420, duration: walkDur, ease: "none" }, t);
+      walk("s4e", t, walkDur);
+      stumble("s4e", tStumble);
+      tl.fromTo("#s4ecapple", { x: 0, y: 0, rotate: 0, opacity: 1, transformOrigin: "50% 50%" }, { x: -30, y: 190, rotate: 220, opacity: 0, transformOrigin: "50% 50%", duration: 1.0, ease: "power2.in" }, tStumble + 0.3);
+    }
+
+    // =============== Shot 7: the book closes and the mirror goes dark ===============
+    {
+      let motes = "";
+      for (let i = 0; i < 14; i++) motes += `<circle class="s4mote" cx="${400 + ((i * 263) % 1120)}" cy="${300 + ((i * 97) % 420)}" r="${2 + (i % 3)}" fill="${GOLD}" opacity="0.7"/>`;
+      put("s4sv7", `
+        ${motes}
+        <g id="s4book">
+          <ellipse cx="960" cy="760" rx="680" ry="40" fill="#000" opacity="0.45" filter="url(#s4soft)"/>
+          <rect x="320" y="288" width="644" height="444" rx="14" fill="${GREEN}" filter="url(#s4paper)"/>
+          <rect x="340" y="300" width="615" height="420" rx="6" fill="${CREAM}"/>
+          <g opacity="0.85">
+            <path d="M420,640 L560,470 L640,560 L720,450 L880,640 Z" fill="${DUSK}"/>
+            <rect x="660" y="430" width="90" height="22" rx="4" fill="none" stroke="${INK}" stroke-width="3"/>
+          </g>
+          <g id="s4right">
+            <rect x="956" y="288" width="644" height="444" rx="14" fill="${GREEN}" filter="url(#s4paper)"/>
+            <rect x="965" y="300" width="615" height="420" rx="6" fill="#E8DEC8"/>
+            <path d="M1040,660 H1500" stroke="${INK}" stroke-opacity="0.2" stroke-width="3"/>
+          </g>
+          <rect x="930" y="300" width="60" height="420" fill="url(#s4fold)"/>
+          <g id="s4popup" filter="url(#s4paperLite)">
+            <path d="M800,690 L960,470 L1120,690 Z" fill="${DUSK}"/>
+            <rect x="912" y="456" width="96" height="24" rx="4" fill="${CREAM}" opacity="0.7" stroke="${CREAM}" stroke-width="2"/>
+            ${at(870, 690, 0.6, dwarf("s4d7a", INK, false))}${at(1050, 690, 0.6, dwarf("s4d7b", INK, false))}
+          </g>
+          <g id="s4cover">
+            <rect x="320" y="288" width="644" height="444" rx="14" fill="#25483d" filter="url(#s4paper)"/>
+            <rect x="350" y="318" width="584" height="384" rx="8" fill="none" stroke="${GOLD}" stroke-opacity="0.6" stroke-width="4"/>
+            <ellipse id="s4mglow" cx="642" cy="510" rx="300" ry="300" fill="url(#s4gold)" opacity="0"/>
+            <ellipse id="s4mframe" cx="642" cy="510" rx="96" ry="128" fill="url(#s4mirrorIn)" stroke="${GOLD}" stroke-width="14"/>
+            <ellipse id="s4mface" cx="642" cy="510" rx="80" ry="112" fill="#F7D98A" opacity="0"/>
+          </g>
+        </g>
+      `);
+      shot(7, "#s4s7");
+      const t = shotStart(7), l7 = lineStart(7);
+      tl.fromTo("#s4popup", { scaleY: 1, transformOrigin: "50% 100%" }, { scaleY: 0, transformOrigin: "50% 100%", duration: 0.4, ease: "power2.in" }, t + 0.05);
+      // right half box starts at the spine (x=956): hinge "0% 50%"; the cover box ends at the spine (x=964): hinge "100% 50%"
+      tl.fromTo("#s4right", { scaleX: 1, transformOrigin: "0% 50%" }, { scaleX: 0, transformOrigin: "0% 50%", duration: 0.45, ease: "power2.in" }, t + 0.35);
+      tl.fromTo("#s4cover", { scaleX: 0, transformOrigin: "100% 50%" }, { scaleX: 1, transformOrigin: "100% 50%", duration: 0.4, ease: "power2.out" }, t + 0.8);
+      tl.fromTo("#s4book", { x: 0 }, { x: 318, duration: 0.8, ease: "sine.inOut" }, t + 1.1);
+      tl.fromTo("#s4s7 .s4mote", { y: 0 }, { y: -90, duration: 3.4, stagger: 0.05, ease: "sine.inOut" }, t);
+      // the mirror glows one last time, then drains to nothing
+      tl.to("#s4mglow", { opacity: 1, duration: 0.35, ease: "power2.out" }, l7);
+      tl.to("#s4mface", { opacity: 0.9, duration: 0.35, ease: "power2.out" }, l7);
+      tl.to(["#s4mglow", "#s4mface"], { opacity: 0, duration: 1.0, ease: "power2.in" }, l7 + 0.55);
+      tl.to("#s4mframe", { attr: { stroke: "#3a3326" }, duration: 1.0, ease: "power2.in" }, l7 + 0.55);
+      tl.to("#s4s7 .s4mote", { opacity: 0, duration: 0.9 }, l7 + 0.55);
+      tl.to("#s4book", { opacity: 0.55, duration: 1.0, ease: "power1.in" }, l7 + 0.7);
+    }
+  }
+</script>

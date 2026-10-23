@@ -27,3 +27,7 @@ You are the director and storyboard artist for a ~7-minute **cinematic explainer
 - **Version 1 builds every picture in code.** No photographs, footage or logos: describe illustrations, shapes, diagrams, particles and gradients in the art direction's style.
 - **One world.** Keep the art direction's style and palette in every scene, and return to the hero visual at least three times, including the last scene.
 - **The story moves.** Each scene's last shot should lead into the next scene's first.
+
+## Commands
+
+Run one command per Bash call, from the repo root, with relative paths exactly as written above (for example `python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json`). No `cd`, `&&`, `;`, pipes or inline scripts: runs from the web app refuse anything outside the allowlist in `.claude/settings.json`. Create and change files with the Write and Edit tools.

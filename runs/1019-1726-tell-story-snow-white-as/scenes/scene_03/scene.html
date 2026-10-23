@@ -1,0 +1,440 @@
+<!--
+  Scene 3 "The Queen Returns" (paper-cut storybook). 8 shots, every picture built in SVG.
+    1 push_in   gold mirror flares in the dark castle; the queen fans out into three hooded cut-outs
+    2 pan_left  cottage door: peddler's laces wind round the girl's waist, tug tight, she tips back
+    3 push_in   lantern light floods in, dwarfs hurry round, scissors snip the lace, a white breath-glow
+    4 pan_right page turns; mirror flares again in a medallion; old woman arrives holding a green comb
+    5 orbit     close: comb glowing green in her hair; a dwarf's hand draws it out; she sits up
+    6 push_in   mirror flares a third time; peasant woman holds a half-white, half-red apple; shimmer on red
+    7 pan_left  apple splits; the woman lifts the white half to her mouth; the girl takes the red, a bite appears
+    8 static    the red half rolls away; girl lies still in a ring of seven dwarfs; lanterns dim one by one
+-->
+<style>
+  .stage { overflow: visible; }
+  .pp { filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.55)); }
+  .page4 { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0% 50%;
+           background: linear-gradient(90deg, #cfc2a6 0%, #F2EAD8 55%, #fff8e8 90%, #b3a586 100%);
+           box-shadow: 40px 0 80px rgba(0, 0, 0, 0.6); }
+  .vig { position: absolute; inset: 0; pointer-events: none;
+         background: radial-gradient(1300px 820px at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(8, 6, 14, 0.62) 100%); }
+  .defs3 { position: absolute; width: 0; height: 0; }
+</style>
+
+<svg class="defs3" width="0" height="0">
+  <defs>
+    <radialGradient id="gGlow3"><stop offset="0" stop-color="#F6DC8A" stop-opacity="0.95" /><stop offset="0.35" stop-color="#C9A44C" stop-opacity="0.45" /><stop offset="1" stop-color="#C9A44C" stop-opacity="0" /></radialGradient>
+    <radialGradient id="gWarm3"><stop offset="0" stop-color="#FFD98A" stop-opacity="0.85" /><stop offset="0.4" stop-color="#E9A84C" stop-opacity="0.3" /><stop offset="1" stop-color="#E9A84C" stop-opacity="0" /></radialGradient>
+    <radialGradient id="gGreen3"><stop offset="0" stop-color="#9BFFC4" stop-opacity="0.95" /><stop offset="0.4" stop-color="#3FBF7F" stop-opacity="0.4" /><stop offset="1" stop-color="#2E5E4E" stop-opacity="0" /></radialGradient>
+    <radialGradient id="gWhite3"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95" /><stop offset="0.45" stop-color="#F2EAD8" stop-opacity="0.35" /><stop offset="1" stop-color="#F2EAD8" stop-opacity="0" /></radialGradient>
+    <linearGradient id="gMirror3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8f8aa8" /><stop offset="0.5" stop-color="#3d3956" /><stop offset="1" stop-color="#6E6A86" /></linearGradient>
+    <linearGradient id="gNight3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14121F" /><stop offset="0.55" stop-color="#2c2943" /><stop offset="1" stop-color="#6E6A86" /></linearGradient>
+    <linearGradient id="gRoom3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17121c" /><stop offset="1" stop-color="#2c2128" /></linearGradient>
+    <clipPath id="cL3"><rect x="-140" y="-150" width="140" height="300" /></clipPath>
+    <clipPath id="cR3"><rect x="0" y="-150" width="140" height="300" /></clipPath>
+    <clipPath id="cAp3"><path d="M0 -70 C40 -108 108 -86 106 -10 C104 62 56 104 0 92 C-56 104 -104 62 -106 -10 C-108 -86 -40 -108 0 -70 Z" /></clipPath>
+    <mask id="mBite3" maskUnits="userSpaceOnUse" x="-200" y="-200" width="400" height="400">
+      <rect x="-200" y="-200" width="400" height="400" fill="#fff" /><circle id="biteC3" cx="100" cy="-40" r="0" fill="#000" />
+    </mask>
+    <mask id="mBite3b" maskUnits="userSpaceOnUse" x="-200" y="-200" width="400" height="400">
+      <rect x="-200" y="-200" width="400" height="400" fill="#fff" /><circle cx="100" cy="-40" r="34" fill="#000" />
+    </mask>
+  </defs>
+</svg>
+
+<div class="shot" id="s1"><div class="cam"><svg class="stage" id="v1" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="shot" id="s2"><div class="cam"><svg class="stage" id="v2" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="shot" id="s3"><div class="cam"><svg class="stage" id="v3" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="shot" id="s4"><div class="cam"><svg class="stage" id="v4" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div><div class="page4" id="page4"></div></div>
+<div class="shot" id="s5"><div class="cam"><svg class="stage" id="v5" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="shot" id="s6"><div class="cam"><svg class="stage" id="v6" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="shot" id="s7"><div class="cam"><svg class="stage" id="v7" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="shot" id="s8"><div class="cam"><svg class="stage" id="v8" width="1920" height="1080" viewBox="0 0 1920 1080"></svg></div></div>
+<div class="vig"></div>
+
+<script>
+  {
+    const byId = (id) => document.getElementById(id);
+    const CREAM = P[1] || "#F2EAD8", RED = P[2] || "#B3202E", GREEN = P[3] || "#2E5E4E", GOLD = P[4] || "#C9A44C", DUSK = P[5] || "#6E6A86";
+    const AP = "M0 -70 C40 -108 108 -86 106 -10 C104 62 56 104 0 92 C-56 104 -104 62 -106 -10 C-108 -86 -40 -108 0 -70 Z";
+
+    // ---------- drawing helpers (all deterministic) ----------
+    const place = (id, x, y, s, inner, extra = "") =>
+      `<g id="${id}" ${extra}><g transform="translate(${x} ${y}) scale(${s})">${inner}</g></g>`;
+    const bg = (fill) => `<rect x="-300" y="-300" width="2520" height="1680" fill="${fill}" />`;
+    const wave = (y, amp, f, ph, col) => {
+      let d = `M-300 1400 L-300 ${y}`;
+      for (let x = -300; x <= 2220; x += 40) {
+        const yy = y + amp * Math.sin(x * f + ph) + amp * 0.35 * Math.sin(x * f * 2.7 + ph * 1.7);
+        d += ` L${x} ${yy.toFixed(1)}`;
+      }
+      return `<path class="pp" d="${d} L2220 1400 Z" fill="${col}" />`;
+    };
+    const pine = (x, base, h, col) =>
+      `<path class="pp" fill="${col}" d="M${x} ${base - h} L${x + h * 0.28} ${base - h * 0.55} L${x + h * 0.14} ${base - h * 0.55} L${x + h * 0.36} ${base - h * 0.2} L${x + h * 0.18} ${base - h * 0.2} L${x + h * 0.42} ${base} L${x - h * 0.42} ${base} L${x - h * 0.18} ${base - h * 0.2} L${x - h * 0.36} ${base - h * 0.2} L${x - h * 0.14} ${base - h * 0.55} L${x - h * 0.28} ${base - h * 0.55} Z" />`;
+    const motes = (id, n, seed, col, ymax) => {
+      let s = `<g id="${id}">`;
+      for (let i = 0; i < n; i++) {
+        const x = ((i * 397 + seed * 131) % 2000) - 40, y = ((i * 233 + seed * 71) % ymax) + 40;
+        s += `<circle cx="${x}" cy="${y}" r="${1.5 + (i % 3) * 1.3}" fill="${col}" opacity="${0.25 + 0.15 * (i % 4)}" />`;
+      }
+      return s + "</g>";
+    };
+    const R = (rim) => (rim ? `stroke="${rim}" stroke-opacity="0.55" stroke-width="3"` : "");
+    const mirror = (id, cx, cy, s) => `<g transform="translate(${cx} ${cy}) scale(${s})">
+        <circle id="${id}g" r="330" fill="url(#gGlow3)" opacity="0.25" />
+        <g class="pp"><ellipse rx="122" ry="164" fill="${GOLD}" /><ellipse rx="122" ry="164" fill="none" stroke="#8a6d2a" stroke-width="4" />
+          <path d="M-44 -166 Q0 -222 44 -166 Q0 -186 -44 -166 Z" fill="${GOLD}" /><circle cy="-196" r="9" fill="#F6DC8A" />
+          <ellipse rx="102" ry="144" fill="url(#gMirror3)" /></g>
+        <ellipse id="${id}f" rx="102" ry="144" fill="#F8E9B6" opacity="0" />
+        <path d="M-62 -88 Q-32 -122 10 -128" stroke="${CREAM}" stroke-opacity="0.35" stroke-width="6" fill="none" stroke-linecap="round" />
+      </g>`;
+    const medallion = (id, cx, cy, r) => `<g class="pp"><circle cx="${cx}" cy="${cy}" r="${r}" fill="#1d1a2c" stroke="${GOLD}" stroke-width="6" />
+        <path d="M${cx - r * 0.62} ${cy + r * 0.7} L${cx - r * 0.62} ${cy - r * 0.15} Q${cx} ${cy - r * 0.95} ${cx + r * 0.62} ${cy - r * 0.15} L${cx + r * 0.62} ${cy + r * 0.7} Z" fill="#262138" /></g>
+        ${mirror(id, cx, cy + r * 0.05, r / 245)}`;
+    const queen = (rim) => `<g class="pp">
+        <path d="M-70 0 L-34 -190 L-64 -248 L-22 -228 L0 -258 L22 -228 L64 -248 L34 -190 L70 0 Z" fill="#0d0b16" ${R(rim)} />
+        <circle cy="-284" r="26" fill="#0d0b16" ${R(rim)} />
+        <path d="M-22 -304 L-22 -330 L-11 -316 L0 -338 L11 -316 L22 -330 L22 -304 Z" fill="${GOLD}" /></g>`;
+    const peddler = (rim) => `<g class="pp">
+        <circle cx="-54" cy="-150" r="42" fill="#3a3352" ${R(rim)} />
+        <path d="M-62 0 Q-70 -90 -48 -150 Q-30 -200 10 -214 Q46 -220 56 -190 Q62 -168 44 -158 Q30 -150 30 -140 Q46 -96 58 0 Z" fill="#2c2742" ${R(rim)} />
+        <path d="M16 -198 Q40 -204 46 -182 Q32 -174 22 -186 Z" fill="#0d0b16" />
+        <path d="M30 -148 Q62 -140 92 -132" stroke="#2c2742" stroke-width="16" stroke-linecap="round" fill="none" /></g>`;
+    const comb = (gid) => `<circle id="${gid}" r="95" fill="url(#gGreen3)" />
+        <rect x="-34" y="-12" width="68" height="14" rx="5" fill="${GOLD}" />
+        <path d="M-30 2 L-30 26 M-20 2 L-20 26 M-10 2 L-10 26 M0 2 L0 26 M10 2 L10 26 M20 2 L20 26 M30 2 L30 26" stroke="#9fdcb8" stroke-width="5" stroke-linecap="round" />
+        <circle cy="-12" r="7" fill="#7CE0A8" />`;
+    const oldWoman = (rim, combId) => `<g class="pp">
+        <line x1="-40" y1="-110" x2="-72" y2="0" stroke="#4a3b2b" stroke-width="7" stroke-linecap="round" />
+        <path d="M-56 0 Q-52 -110 -36 -176 Q-28 -232 8 -238 Q42 -236 44 -196 Q46 -176 36 -166 Q50 -100 58 0 Z" fill="#1f3a32" ${R(rim)} />
+        <path d="M18 -222 Q42 -220 42 -196 Q30 -188 22 -200 Z" fill="#0d1a16" />
+        <path d="${combId ? "M30 -160 Q64 -180 84 -226" : "M30 -160 Q50 -120 52 -96"}" stroke="#1f3a32" stroke-width="15" stroke-linecap="round" fill="none" /></g>
+        ${combId ? `<g transform="translate(86 -244)">${comb(combId)}</g>` : ""}`;
+    const peasant = (rim) => `<g class="pp">
+        <path d="M-80 -96 L-30 -96 L-38 -60 L-72 -60 Z" fill="#7a5a34" /><path d="M-76 -96 Q-55 -132 -34 -96" stroke="#7a5a34" stroke-width="5" fill="none" />
+        <path d="M-60 0 L-44 -130 Q-38 -176 0 -180 Q38 -176 44 -130 L60 0 Z" fill="#4a2630" ${R(rim)} />
+        <path d="M-30 -120 L30 -120 L40 0 L-40 0 Z" fill="#8f8270" />
+        <circle cy="-206" r="25" fill="#4a2630" ${R(rim)} />
+        <path d="M-31 -200 Q-34 -242 0 -244 Q34 -242 31 -200 Q18 -226 0 -226 Q-18 -226 -31 -200 Z M24 -214 L44 -196 L30 -192 Z" fill="#6b3440" />
+        <path d="M30 -150 Q70 -140 100 -150" stroke="#4a2630" stroke-width="15" stroke-linecap="round" fill="none" /></g>`;
+    const girl = (reach, extra = "") => `<g class="pp">
+        <path d="M-56 0 L-28 -118 Q0 -128 28 -118 L56 0 Z" fill="${CREAM}" />
+        <path d="M-22 -118 L-18 -172 Q0 -180 18 -172 L22 -118 Z" fill="#ddd1b6" />
+        <path d="${reach ? "M-16 -166 Q-50 -160 -70 -146" : "M-17 -166 Q-30 -140 -30 -112"}" stroke="#e6dcc4" stroke-width="10" stroke-linecap="round" fill="none" />
+        <path d="M17 -166 Q30 -140 30 -112" stroke="#e6dcc4" stroke-width="10" stroke-linecap="round" fill="none" />
+        <circle cy="-200" r="25" fill="${CREAM}" />
+        <path d="M-27 -196 Q-30 -236 0 -234 Q30 -236 27 -196 Q30 -172 22 -170 Q22 -212 0 -214 Q-22 -212 -22 -170 Q-30 -172 -27 -196 Z" fill="#14121F" />
+        <path d="M-2 -232 L-24 -248 L-22 -220 Z M2 -232 L24 -248 L22 -220 Z" fill="${RED}" /></g>${extra}`;
+    // Lying girl, hip at the origin, head to the left. Split in two so the torso can sit up.
+    const legs = `<g class="pp"><path d="M0 -48 L120 -66 Q134 -28 122 12 L0 -8 Z" fill="${CREAM}" />
+        <ellipse cx="128" cy="-42" rx="6" ry="9" fill="${RED}" /><ellipse cx="128" cy="-16" rx="6" ry="9" fill="${RED}" /></g>`;
+    const torso = `<g class="pp"><path d="M2 -46 L-56 -42 Q-62 -28 -56 -14 L2 -10 Z" fill="#ddd1b6" />
+        <path d="M-50 -16 Q-20 -2 12 -8" stroke="#e6dcc4" stroke-width="9" fill="none" stroke-linecap="round" />
+        <circle cx="-86" cy="-28" r="25" fill="${CREAM}" />
+        <path d="M-86 -54 Q-124 -52 -120 -22 Q-116 8 -86 -2 Q-104 -28 -86 -54 Z" fill="#14121F" />
+        <path d="M-114 -40 L-132 -56 L-128 -30 Z M-114 -40 L-130 -22 L-110 -24 Z" fill="${RED}" /></g>`;
+    const dwarf = (hat, glowId, lampId) => `<g class="pp">
+        <path d="M-32 0 L-26 -62 Q0 -76 26 -62 L32 0 Z" fill="#3b4a44" />
+        <rect x="-28" y="-30" width="56" height="7" fill="#2a1e18" />
+        <circle cy="-88" r="21" fill="#e9dcc0" />
+        <path d="M-19 -86 Q-20 -50 0 -42 Q20 -50 19 -86 Q10 -76 0 -78 Q-10 -76 -19 -86 Z" fill="${CREAM}" />
+        <path d="M-24 -98 Q-6 -160 24 -146 Q8 -132 22 -98 Z" fill="${hat}" />
+        <path d="M24 -52 L40 -36" stroke="#3b4a44" stroke-width="9" stroke-linecap="round" /></g>
+        <circle id="${glowId}" cx="42" cy="-14" r="80" fill="url(#gWarm3)" />
+        <rect id="${lampId}" x="34" y="-28" width="16" height="22" rx="3" fill="#F2C35A" />`;
+    const HATS = [RED, GREEN, GOLD, DUSK, RED, GREEN, GOLD];
+    const beds = (y) => {
+      let s = "";
+      for (let i = 0; i < 7; i++) {
+        const x = 300 + i * 200;
+        s += `<g class="pp"><rect x="${x}" y="${y - 30}" width="10" height="78" fill="#3a2a26" /><rect x="${x}" y="${y}" width="150" height="48" rx="6" fill="#4a3530" />
+          <rect x="${x + 12}" y="${y - 14}" width="40" height="22" rx="8" fill="#d9cdb4" /><rect x="${x + 48}" y="${y - 6}" width="100" height="30" rx="5" fill="${HATS[i]}" opacity="0.8" /></g>`;
+      }
+      return s;
+    };
+    const room = (wall) => {
+      let s = bg("url(#gRoom3)");
+      for (let i = 0; i < 16; i++) s += `<rect x="${-300 + i * 160}" y="-300" width="150" height="1000" fill="${i % 2 ? wall : "#2a2029"}" />`;
+      s += `<rect class="pp" x="-300" y="110" width="2520" height="34" fill="#3a2a2c" />`;
+      s += `<g class="pp"><rect x="1520" y="200" width="200" height="230" rx="8" fill="#3a3654" /><circle cx="1660" cy="260" r="26" fill="${CREAM}" opacity="0.7" />
+            <rect x="1614" y="200" width="12" height="230" fill="#3a2a2c" /><rect x="1520" y="308" width="200" height="12" fill="#3a2a2c" /></g>`;
+      return s;
+    };
+    const apple = (white, red) => `
+        ${white ? `<g clip-path="url(#cL3)"><path d="${AP}" fill="${CREAM}" /><path d="M-70 -40 Q-82 0 -62 42" stroke="#d6c9a8" stroke-width="6" fill="none" /></g>` : ""}
+        ${red ? red : ""}`;
+    const redHalf = (maskId, shimId) => `<g ${maskId ? `mask="url(#${maskId})"` : ""}><g clip-path="url(#cR3)"><g clip-path="url(#cAp3)">
+        <rect x="0" y="-150" width="140" height="300" fill="${RED}" />
+        <path d="M58 -54 Q82 -30 80 4" stroke="#e05a5a" stroke-width="8" fill="none" opacity="0.6" stroke-linecap="round" />
+        ${shimId ? `<g id="${shimId}" opacity="0">${[0, 1, 2, 3, 4, 5, 6, 7].map((k) => `<path d="M-4 ${-150 + k * 40} Q26 ${-164 + k * 40} 56 ${-150 + k * 40} Q86 ${-136 + k * 40} 120 ${-150 + k * 40}" stroke="#14121F" stroke-width="8" fill="none" opacity="0.6" /><circle cx="${20 + (k * 37) % 80}" cy="${-130 + k * 40}" r="5" fill="#3a1030" />`).join("")}</g>` : ""}
+      </g></g></g>`;
+    const stem = `<path d="M0 -72 Q2 -100 12 -118" stroke="#4a3322" stroke-width="7" fill="none" stroke-linecap="round" />
+        <path d="M8 -104 Q40 -128 62 -104 Q34 -92 8 -104 Z" fill="${GREEN}" />`;
+    const exterior = () => bg("url(#gNight3)") + `<circle class="pp" cx="960" cy="150" r="46" fill="${CREAM}" opacity="0.75" />`
+      + wave(600, 26, 0.004, 1.2, "#2a2843");
+    const flare = (id, at) => {
+      tl.fromTo(`#${id}g`, { opacity: 0.25, scale: 0.8, transformOrigin: "50% 50%" },
+        { opacity: 1, scale: 1.3, duration: 0.6, ease: "power2.out", yoyo: true, repeat: 1 }, at);
+      tl.fromTo(`#${id}f`, { opacity: 0 }, { opacity: 0.75, duration: 0.35, yoyo: true, repeat: 1, ease: "sine.inOut" }, at + 0.1);
+    };
+    const drift = (id, n, dy = -80) => tl.fromTo(`#${id}`, { y: 0 }, { y: dy, duration: shotLen(n) + 0.4, ease: "none" }, shotStart(n) - 0.2);
+
+    // ---------- Shot 1: the mirror flares; the queen fans out into three hooded cut-outs ----------
+    {
+      let s = bg(P[0]) + `<rect x="-300" y="-300" width="2520" height="1180" fill="#1a1729" />`;
+      s += `<g class="pp"><path d="M600 900 L600 360 Q960 20 1320 360 L1320 900 Z" fill="#221e34" /></g>`;
+      s += `<g class="pp"><path d="M690 900 L690 400 Q960 130 1230 400 L1230 900 Z" fill="#191628" /></g>`;
+      [330, 1470].forEach((x) => { s += `<g class="pp"><rect x="${x}" y="80" width="120" height="820" fill="#29243d" /><rect x="${x - 20}" y="60" width="160" height="40" fill="#302a47" /><rect x="${x - 20}" y="860" width="160" height="40" fill="#302a47" /></g>`; });
+      [500, 1350].forEach((x) => { s += `<g class="pp"><path d="M${x} 100 L${x + 70} 100 L${x + 70} 470 L${x + 35} 430 L${x} 470 Z" fill="#7e1a25" /><path d="M${x + 35} 170 l14 26 l-14 26 l-14 -26 Z" fill="${GOLD}" /></g>`; });
+      s += mirror("m1", 960, 370, 1.1);
+      s += wave(880, 6, 0.008, 0.5, "#100e19");
+      s += motes("mo1", 26, 1, "#F6DC8A", 820);
+      s += place("q1", 960, 885, 1.25, queen(GOLD));
+      s += place("d1", 960, 885, 1.2, peddler(GOLD));
+      s += place("d2", 960, 885, 1.2, oldWoman(GOLD, null));
+      s += place("d3", 960, 885, 1.2, peasant(GOLD));
+      byId("v1").innerHTML = s;
+
+      shot(1, "#s1");
+      flare("m1", 0.3);
+      drift("mo1", 1);
+      const t1 = lineStart(0) + 1.0;
+      tl.to("#q1", { opacity: 0, scaleX: 0.15, transformOrigin: "50% 100%", duration: 0.5, ease: "power2.in" }, t1);
+      [["#d1", -360], ["#d2", 0], ["#d3", 360]].forEach(([el, dx], i) => {
+        tl.fromTo(el, { opacity: 0, x: 0, rotate: dx === 0 ? 0 : -Math.sign(dx) * 30, scale: dx === 0 ? 0.85 : 1, svgOrigin: "960 885" },
+          { opacity: 1, x: dx, rotate: 0, scale: 1, duration: 0.9, ease: "back.out(1.4)" }, t1 + 0.3 + i * 0.08);
+      });
+      tl.fromTo("#m1g", { scale: 1, transformOrigin: "50% 50%" }, { scale: 1.15, duration: 0.5, yoyo: true, repeat: 1 }, t1 + 0.4);
+    }
+
+    // ---------- Shot 2: the peddler's laces pull tight; she tips back ----------
+    {
+      let s = exterior();
+      s += wave(660, 22, 0.006, 2.4, "#22403a");
+      [[60, 420, "#22403a"], [200, 360, "#22403a"], [330, 470, GREEN], [470, 380, GREEN], [140, 300, GREEN]].forEach(([x, h, c]) => { s += pine(x, 880, h, c); });
+      s += `<g class="pp"><rect x="900" y="430" width="900" height="440" fill="#4b3a3e" /></g>`;
+      for (let i = 0; i < 7; i++) s += `<rect x="900" y="${470 + i * 58}" width="900" height="3" fill="#3a2c30" />`;
+      s += `<g class="pp"><path d="M850 450 L1340 170 L1850 450 Z" fill="#7e1d27" /><rect x="1560" y="190" width="60" height="140" fill="#3a2c30" /></g>`;
+      s += `<circle cx="1565" cy="595" r="230" fill="url(#gWarm3)" opacity="0.7" />`;
+      s += `<g class="pp"><rect x="1500" y="540" width="130" height="110" fill="#E8C56A" /><rect x="1559" y="540" width="10" height="110" fill="#3a2c30" /><rect x="1500" y="590" width="130" height="10" fill="#3a2c30" /></g>`;
+      s += `<g class="pp"><rect x="1060" y="560" width="190" height="305" fill="#2a1c18" /><path d="M1060 560 L1000 580 L1000 880 L1060 865 Z" fill="#5a3f2c" /></g>`;
+      s += wave(862, 6, 0.01, 0, "#1d332c");
+      s += place("p2", 700, 862, 1.35, peddler(CREAM));
+      const lace = (d, c) => `<path class="lace2" d="${d}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" stroke="${c}" stroke-width="5" fill="none" stroke-linecap="round" />`;
+      s += lace("M824 684 C900 640 1000 740 1120 690", RED) + lace("M824 690 C910 730 1010 640 1120 700", GOLD) + lace("M824 696 C920 690 990 700 1120 712", "#7fc3a5");
+      const bands = `<g id="bands2"><ellipse class="band2" cx="0" cy="-124" rx="27" ry="5" fill="none" stroke="${RED}" stroke-width="4" opacity="0" />
+          <ellipse class="band2" cx="0" cy="-138" rx="24" ry="5" fill="none" stroke="${GOLD}" stroke-width="4" opacity="0" />
+          <ellipse class="band2" cx="0" cy="-152" rx="21" ry="5" fill="none" stroke="#7fc3a5" stroke-width="4" opacity="0" /></g>`;
+      s += `<g id="g2tip"><g id="g2w"><g transform="translate(1155 862) scale(1.35)">${girl(false, bands)}</g></g></g>`;
+      s += wave(965, 18, 0.012, 2, "#16281f");
+      s += motes("mo2", 18, 2, CREAM, 600);
+      byId("v2").innerHTML = s;
+
+      const a = shotStart(2);
+      shot(2, "#s2");
+      drift("mo2", 2, 60);
+      tl.fromTo("#p2", { x: -70 }, { x: 0, duration: 1.0, ease: "power2.out" }, a);
+      tl.fromTo(".lace2", { attr: { "stroke-dashoffset": 1 } }, { attr: { "stroke-dashoffset": 0 }, duration: 1.0, stagger: 0.15, ease: "power2.inOut" }, a + 0.7);
+      tl.to(".band2", { opacity: 1, duration: 0.3, stagger: 0.1 }, a + 1.6);
+      tl.fromTo("#bands2", { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 0.74, duration: 0.22, yoyo: true, repeat: 4, ease: "power2.inOut" }, a + 2.0);
+      tl.to("#g2w", { rotate: -4, svgOrigin: "1155 862", duration: 0.22, yoyo: true, repeat: 5, ease: "sine.inOut" }, a + 2.0);
+      tl.to(".lace2", { opacity: 0, duration: 0.5 }, a + 3.4);
+      // She tips backward about the hem's back corner, so the skirt stays above the ground.
+      tl.fromTo("#g2tip", { rotate: 0, svgOrigin: "1231 862" }, { rotate: 84, duration: 1.0, ease: "power2.in" }, lineStart(1) + 3.9);
+      tl.to("#g2tip", { rotate: 80, duration: 0.25, yoyo: true, repeat: 1, ease: "sine.out" }, lineStart(1) + 4.9);
+    }
+
+    // ---------- Shot 3: lantern light, dwarfs, scissors snip the lace, she breathes ----------
+    {
+      let s = room("#251c24") + beds(590);
+      s += wave(640, 4, 0.006, 1, "#3b2b27");
+      s += `<circle id="fl3" cx="960" cy="650" r="780" fill="url(#gWarm3)" opacity="0" />`;
+      const dw = [[680, 700, 1.1, -460], [1270, 700, 1.1, 460], [1080, 690, 1.0, 460], [480, 850, 1.35, -460], [1450, 850, 1.35, 460]];
+      const back = dw.slice(0, 3), front = dw.slice(3);
+      const dwarfMarkup = (list, off) => list.map(([x, y, sc], i) => `<g id="d3_${i + off}"><g id="d3b_${i + off}"><g transform="translate(${x} ${y}) scale(${sc})">${dwarf(HATS[i + off], `lg3_${i + off}`, `lp3_${i + off}`)}</g></g></g>`).join("");
+      s += dwarfMarkup(back, 0);
+      s += wave(820, 6, 0.01, 2, "#2e211e");
+      s += `<g transform="translate(960 770) scale(1.6)">${legs}</g>`;
+      s += `<g id="t3"><g transform="translate(960 770) scale(1.6)">${torso}</g></g>`;
+      s += place("lu3", 960, 770, 1.6, `<path d="M-30 -50 L-12 -28 L6 -50 M-26 -52 Q-36 -74 -20 -84" stroke="${RED}" stroke-width="4" fill="none" stroke-linecap="round" />`);
+      s += place("ld3", 960, 770, 1.6, `<path d="M-30 -6 L-12 -28 L6 -6" stroke="${RED}" stroke-width="4" fill="none" stroke-linecap="round" />`);
+      s += `<circle id="cg3" cx="914" cy="726" r="120" fill="url(#gWhite3)" opacity="0" />`;
+      const blade = (m) => `<path d="M0 0 L${7 * m} 4 L${3 * m} 92 Z" fill="#cfcbe0" /><path d="M0 0 L${-14 * m} -36" stroke="#cfcbe0" stroke-width="6" />
+          <circle cx="${-19 * m}" cy="-50" r="15" fill="none" stroke="#cfcbe0" stroke-width="6" />`;
+      s += `<g id="sc3" opacity="0" class="pp"><g id="bl1"><g transform="translate(946 606)">${blade(1)}</g></g><g id="bl2"><g transform="translate(946 606)">${blade(-1)}</g></g>
+          <circle cx="946" cy="606" r="5" fill="#8a86a0" /></g>`;
+      s += dwarfMarkup(front, 3);
+      s += motes("mo3", 16, 3, "#FFD98A", 700);
+      byId("v3").innerHTML = s;
+
+      const a = shotStart(3);
+      shot(3, "#s3");
+      drift("mo3", 3, -50);
+      tl.fromTo("#fl3", { opacity: 0 }, { opacity: 0.9, duration: 0.9, ease: "power2.out" }, a);
+      dw.forEach(([, , , fx], i) => {
+        tl.fromTo(`#d3_${i}`, { x: fx, opacity: 0 }, { x: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, a + 0.05 + i * 0.08);
+        tl.fromTo(`#d3b_${i}`, { y: 0 }, { y: -10, duration: 0.15, yoyo: true, repeat: 5, ease: "sine.inOut" }, a + 0.05 + i * 0.08);
+        tl.fromTo(`#lg3_${i}`, { opacity: 0.6 }, { opacity: 1, duration: 0.5, yoyo: true, repeat: 3 }, a + 1.0 + i * 0.1);
+      });
+      tl.fromTo("#sc3", { opacity: 0, y: -90 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }, a + 0.35);
+      tl.set("#bl1", { rotate: 24, svgOrigin: "946 606" }, a);
+      tl.set("#bl2", { rotate: -24, svgOrigin: "946 606" }, a);
+      const tS = Math.max(a + 0.9, lineStart(2) + 0.9);
+      tl.to("#bl1", { rotate: 0, duration: 0.15, ease: "power3.in", yoyo: true, repeat: 1 }, tS);
+      tl.to("#bl2", { rotate: 0, duration: 0.15, ease: "power3.in", yoyo: true, repeat: 1 }, tS);
+      tl.to("#lu3", { y: -60, rotate: -25, opacity: 0, transformOrigin: "50% 50%", duration: 0.7, ease: "power2.out" }, tS + 0.12);
+      tl.to("#ld3", { y: 35, rotate: 20, opacity: 0, transformOrigin: "50% 50%", duration: 0.7, ease: "power2.out" }, tS + 0.12);
+      tl.to("#sc3", { opacity: 0, y: -110, duration: 0.5, ease: "power2.in" }, tS + 0.6);
+      const tB = lineStart(2) + 1.9;
+      tl.fromTo("#cg3", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1.3, duration: 0.8, ease: "power2.out" }, tB);
+      tl.to("#cg3", { opacity: 0.4, duration: 0.5 }, tB + 0.8);
+      tl.fromTo("#t3", { y: 0 }, { y: -6, duration: 0.4, yoyo: true, repeat: 3, ease: "sine.inOut" }, tB);
+    }
+
+    // ---------- Shot 4: page turns; mirror flares again; old woman with the green comb ----------
+    {
+      let s = exterior();
+      for (let i = 0; i < 9; i++) s += pine(80 + i * 130, 700, 180 + (i % 3) * 50, "#24223a");
+      s += `<g class="pp"><rect x="1180" y="270" width="1100" height="610" fill="#3b2e30" /><rect x="1150" y="240" width="1100" height="40" fill="#7e1d27" /></g>`;
+      for (let i = 0; i < 9; i++) s += `<rect x="1180" y="${310 + i * 62}" width="1100" height="3" fill="#2e2326" />`;
+      s += `<g class="pp"><rect x="1300" y="520" width="200" height="345" fill="#5a3f2c" /><circle cx="1330" cy="700" r="8" fill="${GOLD}" /></g>`;
+      s += `<rect x="1494" y="524" width="6" height="338" fill="#F2C35A" />`;
+      s += `<circle cx="1740" cy="540" r="200" fill="url(#gWarm3)" opacity="0.6" /><g class="pp"><rect x="1660" y="470" width="160" height="140" fill="#E8C56A" /><rect x="1734" y="470" width="12" height="140" fill="#3a2c30" /></g>`;
+      s += wave(870, 6, 0.01, 1.4, "#1d332c");
+      s += medallion("m4", 380, 300, 180);
+      s += `<path id="th4" d="M540 380 Q820 300 1110 520" pathLength="1" stroke="${GOLD}" stroke-width="5" stroke-dasharray="0.02 0.03" stroke-dashoffset="0" fill="none" stroke-linecap="round" opacity="0" />`;
+      s += `<g id="w4"><g id="w4b"><g transform="translate(1060 870) scale(1.4)">${oldWoman(CREAM, "cg4")}</g></g></g>`;
+      s += wave(975, 16, 0.012, 0.6, "#16281f");
+      s += motes("mo4", 20, 4, "#F6DC8A", 700);
+      byId("v4").innerHTML = s;
+
+      const a = shotStart(4);
+      shot(4, "#s4");
+      drift("mo4", 4, 50);
+      tl.fromTo("#page4", { scaleX: 1 }, { scaleX: 0, duration: 0.85, ease: "power2.inOut" }, a - 0.1);
+      flare("m4", a + 0.6);
+      tl.fromTo("#th4", { opacity: 0 }, { opacity: 0.8, duration: 0.4 }, a + 0.9);
+      tl.fromTo("#th4", { attr: { "stroke-dashoffset": 0 } }, { attr: { "stroke-dashoffset": -0.6 }, duration: 2.6, ease: "none" }, a + 0.9);
+      tl.fromTo("#w4", { x: -560 }, { x: 0, duration: 1.7, ease: "power1.out" }, a + 0.8);
+      tl.fromTo("#w4b", { y: 0 }, { y: -7, duration: 0.2, yoyo: true, repeat: 7, ease: "sine.inOut" }, a + 0.8);
+      tl.fromTo("#cg4", { opacity: 0.3, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1.25, duration: 0.45, yoyo: true, repeat: 3, ease: "sine.inOut" }, a + 1.9);
+    }
+
+    // ---------- Shot 5: the dwarf's hand draws the comb out; she sits up ----------
+    {
+      let s = room("#241b23");
+      s += wave(700, 5, 0.006, 0.4, "#3b2b27");
+      s += `<circle cx="1590" cy="760" r="420" fill="url(#gWarm3)" opacity="0.6" />`;
+      s += `<g transform="translate(1520 820) scale(1.5)">${dwarf(GREEN, "lg5a", "lp5a")}</g><g transform="translate(1700 850) scale(1.6)">${dwarf(GOLD, "lg5b", "lp5b")}</g>`;
+      s += wave(860, 6, 0.01, 2, "#2e211e");
+      s += `<g transform="translate(1000 780) scale(2.3)">${legs}</g>`;
+      s += `<circle id="wg5" cx="980" cy="560" r="420" fill="url(#gWhite3)" opacity="0" />`;
+      s += `<g id="t5"><g transform="translate(1000 780) scale(2.3)">${torso}</g></g>`;
+      s += `<circle id="gf5" cx="790" cy="690" r="240" fill="url(#gGreen3)" opacity="0.8" />`;
+      s += `<g id="cb5"><g transform="translate(761 650) rotate(-35) scale(1.3)">${comb("cgl5")}</g></g>`;
+      s += `<g id="h5"><g transform="translate(761 650)"><path d="M-760 -560 L-40 -34" stroke="#3b4a44" stroke-width="54" stroke-linecap="round" />
+          <circle cx="-14" cy="-14" r="26" fill="#e9dcc0" /><path d="M-2 -30 L18 -20 M4 -6 L22 4" stroke="#e9dcc0" stroke-width="10" stroke-linecap="round" /></g></g>`;
+      s += motes("mo5", 14, 5, "#FFD98A", 700);
+      byId("v5").innerHTML = s;
+
+      const a = shotStart(5);
+      shot(5, "#s5");
+      drift("mo5", 5, -60);
+      tl.fromTo("#gf5", { opacity: 0.55 }, { opacity: 0.9, duration: 0.4, yoyo: true, repeat: 1 }, a);
+      tl.fromTo("#h5", { x: -420, y: -320 }, { x: 0, y: 0, duration: 0.8, ease: "power2.out" }, a + 0.1);
+      tl.to(["#h5", "#cb5"], { x: -480, y: -360, duration: 0.9, ease: "power2.in" }, a + 1.1);
+      tl.to(["#gf5", "#cgl5"], { opacity: 0, duration: 0.9 }, a + 1.15);
+      tl.to("#t5", { rotate: 86, svgOrigin: "1000 716", duration: 1.1, ease: "power2.inOut" }, a + 1.75);
+      tl.to("#wg5", { opacity: 0.75, duration: 0.8 }, a + 2.3);
+    }
+
+    // ---------- Shot 6: third flare; peasant woman offers the apple; shimmer on the red half ----------
+    {
+      let s = exterior();
+      for (let i = 0; i < 6; i++) s += pine(1250 + i * 150, 880, 260 + (i % 3) * 70, i % 2 ? GREEN : "#22403a");
+      s += `<g class="pp"><rect x="-300" y="250" width="1430" height="630" fill="#3b2e30" /><rect x="-300" y="220" width="1460" height="40" fill="#7e1d27" /></g>`;
+      for (let i = 0; i < 10; i++) s += `<rect x="-300" y="${290 + i * 60}" width="1430" height="3" fill="#2e2326" />`;
+      s += `<circle cx="330" cy="460" r="220" fill="url(#gWarm3)" opacity="0.55" /><g class="pp"><rect x="240" y="380" width="180" height="160" fill="#E8C56A" /><rect x="324" y="380" width="12" height="160" fill="#3a2c30" /><rect x="240" y="455" width="180" height="10" fill="#3a2c30" /></g>`;
+      s += medallion("m6", 1490, 320, 190);
+      s += wave(882, 6, 0.01, 0.2, "#1d332c");
+      s += place("pw6", 600, 885, 1.5, peasant(CREAM));
+      s += `<g id="ap6"><g id="ap6b"><g transform="translate(880 600)">${stem}${apple(true, redHalf(null, "sh6"))}</g></g></g>`;
+      s += wave(975, 16, 0.012, 1.1, "#16281f");
+      s += motes("mo6", 18, 6, "#F6DC8A", 700);
+      byId("v6").innerHTML = s;
+
+      const a = shotStart(6);
+      shot(6, "#s6");
+      drift("mo6", 6, 50);
+      flare("m6", a + 0.15);
+      tl.fromTo("#pw6", { x: -80, opacity: 0.6 }, { x: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, a);
+      tl.fromTo("#ap6", { opacity: 0, scale: 0.5, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.6)" }, a + 0.35);
+      tl.fromTo("#ap6b", { y: 0 }, { y: -10, duration: 0.9, yoyo: true, repeat: 3, ease: "sine.inOut" }, a + 1.1);
+      const tSh = Math.max(a + 1.0, lineStart(5) + 2.7);
+      tl.to("#sh6", { opacity: 1, duration: 0.6 }, tSh);
+      tl.fromTo("#sh6", { y: -40 }, { y: 40, duration: 1.2, yoyo: true, repeat: 2, ease: "sine.inOut" }, tSh);
+    }
+
+    // ---------- Shot 7: the apple splits; she eats the white, the girl bites the red ----------
+    {
+      let s = exterior();
+      s += `<g class="pp"><rect x="-300" y="260" width="2520" height="620" fill="#3b2e30" /><rect x="-300" y="230" width="2520" height="40" fill="#7e1d27" /></g>`;
+      for (let i = 0; i < 10; i++) s += `<rect x="-300" y="${300 + i * 60}" width="2520" height="3" fill="#2e2326" />`;
+      s += `<circle cx="1630" cy="700" r="260" fill="url(#gWarm3)" opacity="0.6" /><g class="pp"><rect x="1540" y="510" width="200" height="370" fill="#2a1c18" /><path d="M1740 510 L1800 530 L1800 890 L1740 880 Z" fill="#5a3f2c" /></g>`;
+      s += `<circle cx="260" cy="440" r="200" fill="url(#gWarm3)" opacity="0.45" /><g class="pp"><rect x="170" y="370" width="170" height="150" fill="#E8C56A" /><rect x="249" y="370" width="12" height="150" fill="#3a2c30" /></g>`;
+      s += wave(884, 6, 0.01, 0.8, "#1d332c");
+      s += place("pw7", 520, 885, 1.5, peasant(CREAM));
+      s += `<g id="g7"><g transform="translate(1420 885) scale(1.5)">${girl(true)}</g></g>`;
+      s += `<g id="w7"><g transform="translate(960 560)">${stem}${apple(true, null)}</g></g>`;
+      s += `<g id="r7"><g transform="translate(960 560)">${redHalf("mBite3", null)}</g></g>`;
+      s += wave(975, 16, 0.012, 2.6, "#16281f");
+      s += motes("mo7", 16, 7, CREAM, 700);
+      byId("v7").innerHTML = s;
+
+      const a = shotStart(7);
+      shot(7, "#s7");
+      drift("mo7", 7, 50);
+      tl.to("#w7", { x: -80, rotate: -12, transformOrigin: "50% 50%", duration: 0.5, ease: "power2.out" }, a + 0.2);
+      tl.to("#r7", { x: 80, rotate: 12, transformOrigin: "50% 50%", duration: 0.5, ease: "power2.out" }, a + 0.2);
+      tl.to("#w7", { x: -335, y: 25, scale: 0.55, rotate: -20, duration: 0.9, ease: "power2.inOut" }, a + 0.75);
+      tl.to("#w7", { y: 12, duration: 0.25, yoyo: true, repeat: 3, ease: "sine.inOut" }, a + 1.7);
+      const tR = Math.max(a + 1.4, lineStart(7) - 0.4);
+      tl.to("#r7", { x: 287, y: 80, scale: 0.6, rotate: -10, duration: 0.8, ease: "power2.inOut" }, tR);
+      tl.fromTo("#biteC3", { attr: { r: 0 } }, { attr: { r: 34 }, duration: 0.25, ease: "power3.out" }, lineStart(7) + 0.6);
+      tl.to("#g7", { rotate: -4, svgOrigin: "1420 885", duration: 0.3, yoyo: true, repeat: 1 }, lineStart(7) + 0.45);
+    }
+
+    // ---------- Shot 8: the red half rolls away; a ring of seven dwarfs; lanterns dim ----------
+    {
+      let s = room("#1f1820") + beds(590);
+      s += wave(640, 4, 0.006, 1.8, "#33251f");
+      s += `<circle id="fl8" cx="960" cy="700" r="820" fill="url(#gWarm3)" opacity="0.85" />`;
+      // Ring on the floor plane: back dwarfs stand just in front of the beds, front ones nearer the camera.
+      const ang = [200, 235, 270, 305, 340, 40, 140];
+      const ring = ang.map((d, i) => {
+        const r = (d * Math.PI) / 180, x = 960 + 540 * Math.cos(r), y = 745 + 110 * Math.sin(r);
+        return { i, x, y, sc: 1.0 + 0.45 * ((y - 635) / 220) };
+      });
+      const dm = (o) => `<g id="d8_${o.i}"><g transform="translate(${o.x.toFixed(1)} ${o.y.toFixed(1)}) scale(${o.sc.toFixed(3)})">${dwarf(HATS[o.i], `lg8_${o.i}`, `lp8_${o.i}`)}</g></g>`;
+      ring.filter((o) => o.y < 745).forEach((o) => { s += dm(o); });
+      s += `<g transform="translate(960 745) scale(1.5)">${legs}</g><g transform="translate(960 745) scale(1.5)">${torso}</g>`;
+      ring.filter((o) => o.y >= 745).forEach((o) => { s += dm(o); });
+      s += `<g id="ap8"><g transform="translate(990 710) scale(0.5)">${redHalf("mBite3b", null)}</g></g>`;
+      s += motes("mo8", 16, 8, "#FFD98A", 700);
+      byId("v8").innerHTML = s;
+
+      const a = shotStart(8);
+      shot(8, "#s8");
+      drift("mo8", 8, -40);
+      tl.fromTo("#ap8", { y: 0 }, { y: 70, duration: 0.6, ease: "bounce.out" }, a + 0.1);
+      tl.fromTo("#ap8", { x: 0, rotate: 0 }, { x: 210, rotate: 380, transformOrigin: "50% 50%", duration: 1.8, ease: "power2.out" }, a + 0.6);
+      const tD = Math.max(a + 0.9, lineStart(8) - 0.4);
+      const order = [6, 0, 1, 2, 3, 4, 5];
+      order.forEach((i, k) => {
+        tl.to(`#lg8_${i}`, { opacity: 0.04, duration: 0.45, ease: "power2.in" }, tD + k * 0.28);
+        tl.to(`#lp8_${i}`, { attr: { fill: "#4a4030" }, duration: 0.45 }, tD + k * 0.28);
+      });
+      tl.to("#fl8", { opacity: 0.12, duration: 2.2, ease: "power1.in" }, tD);
+    }
+  }
+</script>

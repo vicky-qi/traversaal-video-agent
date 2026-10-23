@@ -77,3 +77,7 @@ You are the intake editor for a ~7-minute **cinematic explainer**: a narrated sh
 - <best source types for this topic>
 - <which figures must be recent, and from what year onward>
 ```
+
+## Commands
+
+Run one command per Bash call, from the repo root, with relative paths exactly as written above (for example `python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json`). No `cd`, `&&`, `;`, pipes or inline scripts: runs from the web app refuse anything outside the allowlist in `.claude/settings.json`. Create and change files with the Write and Edit tools.

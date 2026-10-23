@@ -4,6 +4,7 @@
       "Read",
       "Write(runs/**)",
       "Edit(runs/**)",
+      "Edit(tests/log.md)",
       "WebSearch",
       "WebFetch",
       "Agent",
@@ -22,7 +23,12 @@
       "Bash(cp runs/*)",
       "Bash(mkdir -p runs/*)",
       "Bash(date *)",
-      "Bash(diff runs/*)"
+      "Bash(diff runs/*)",
+      "Bash(echo *)",
+      "Bash(cat runs/*)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)"
     ]
   }
 }

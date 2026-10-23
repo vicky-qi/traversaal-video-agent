@@ -112,6 +112,11 @@ def slugify(text):
 
 def pid_alive(pid):
     try:
+        if os.waitpid(pid, os.WNOHANG)[0]:  # a run started by this server has finished: reap it
+            return False
+    except (ChildProcessError, OSError, TypeError):
+        pass  # not our child (started before a server restart)
+    try:
         os.kill(pid, 0)
         return True
     except (OSError, TypeError):
@@ -135,6 +140,8 @@ def log_summary(run):
         try:
             ev = json.loads(line)
         except ValueError:
+            if line.strip():  # Claude Code's own messages (stderr), e.g. a stop or a limit
+                feed.append({"kind": "warn", "text": line.strip()[:600]})
             continue
         if ev.get("type") == "assistant" and not ev.get("parent_tool_use_id"):
             for part in (ev.get("message") or {}).get("content") or []:
@@ -204,7 +211,9 @@ def run_info(slug, full=False):
     job = read_json(run / "job.json", {}) or {}
     stages = stage_status(run)
     feed, result = log_summary(run) if full or job else ([], None)
-    running = bool(job.get("pid")) and pid_alive(job.get("pid")) and result is None
+    running = bool(job.get("pid")) and pid_alive(job.get("pid"))
+    if running:
+        result = None  # helper agents emit their own result events; only the finished process has a final result
     finished = (run / "final.mp4").exists()
     if running:
         state = "running"
@@ -254,12 +263,44 @@ def start_run(prompt, minutes):
         "never ask the user a question; make sensible choices and note them in run_log.md. "
         f"The user's prompt is: \"{prompt}\""
     )
-    log = open(run / "agent_log.jsonl", "w")
+    launch(binary, run, instruction, "w")
+    return slug
+
+
+def resume_run(slug):
+    """Continue a stopped run from its first unfinished stage; finished stages are kept."""
+    binary = find_claude()
+    if not binary:
+        raise RuntimeError("Claude Code was not found. See the setup check.")
+    run = RUNS / slug
+    req = read_json(run / "request.json", {}) or {}
+    job = read_json(run / "job.json", {}) or {}
+    if not req.get("prompt"):
+        raise RuntimeError("Only runs started from this app can be continued.")
+    if job.get("pid") and pid_alive(job["pid"]):
+        raise RuntimeError("This run is still running.")
+    if (run / "final.mp4").exists():
+        raise RuntimeError("This run already has its video.")
+    instruction = (
+        "Resume the make-video workflow: read .claude/skills/make-video/SKILL.md and follow its Resume section, then continue "
+        "from the first unfinished stage to the report. "
+        f"Arguments: --slug {slug} --minutes {req.get('minutes', 2)}. This run is headless (started from the Traversaal Video "
+        "Studio web app): never ask the user a question; make sensible choices and note them in run_log.md. "
+        f"The user's original prompt was: \"{req['prompt']}\""
+    )
+    launch(binary, run, instruction, "a")
+
+
+def launch(binary, run, instruction, log_mode):
+    log = open(run / "agent_log.jsonl", log_mode)
+    # In -p mode Claude Code stops background subagents 10 minutes after the main agent's last turn;
+    # scene builders often need longer, so wait for them.
+    env = {**os.environ, "CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS": "0"}
     proc = subprocess.Popen([binary, "-p", instruction, "--output-format", "stream-json", "--verbose",
                              "--permission-mode", "dontAsk"],
-                            cwd=REPO, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL, start_new_session=True)
+                            cwd=REPO, env=env, stdout=log, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL,
+                            start_new_session=True)
     (run / "job.json").write_text(json.dumps({"pid": proc.pid, "started": time.time(), "claude": binary}))
-    return slug
 
 
 def cancel_run(slug):
@@ -354,6 +395,10 @@ class Handler(BaseHTTPRequestHandler):
             m = re.fullmatch(r"/api/runs/([A-Za-z0-9._-]+)/cancel", path)
             if m and (RUNS / m.group(1)).is_dir():
                 cancel_run(m.group(1))
+                return self.send_json({"ok": True})
+            m = re.fullmatch(r"/api/runs/([A-Za-z0-9._-]+)/resume", path)
+            if m and (RUNS / m.group(1)).is_dir():
+                resume_run(m.group(1))
                 return self.send_json({"ok": True})
             self.send_json({"error": "not found"}, 404)
         except RuntimeError as e:

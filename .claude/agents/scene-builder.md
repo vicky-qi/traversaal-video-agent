@@ -31,3 +31,7 @@ The topic slug and **one scene id**.
 - **HyperFrames rules** (its check enforces them): animate only transforms and opacity (`x`, `y`, `scale`, `rotate`, `opacity`, SVG `attr`), never `left`, `top`, `width` or `height`; keep text inside the frame and not overlapping other text; deterministic animation only (no `Math.random`, no clocks).
 - **Keep the bottom 170px quiet:** subtitles sit there.
 - **Pictures must not say more than the facts:** no brands, logos, specific products or people unless the storyboard asks for them.
+
+## Commands
+
+Run one command per Bash call, from the repo root, with relative paths exactly as written above (for example `python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json`). No `cd`, `&&`, `;`, pipes or inline scripts: runs from the web app refuse anything outside the allowlist in `.claude/settings.json`. Create and change files with the Write and Edit tools.

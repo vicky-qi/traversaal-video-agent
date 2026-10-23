@@ -76,3 +76,7 @@ Note for the fact-checker: quotes come from WebFetch's processed text; check exa
 ```
 
 Source types: official · international · academic · preprint · data service · industry · company · consumer guide · news.
+
+## Commands
+
+Run one command per Bash call, from the repo root, with relative paths exactly as written above (for example `python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json`). No `cd`, `&&`, `;`, pipes or inline scripts: runs from the web app refuse anything outside the allowlist in `.claude/settings.json`. Create and change files with the Write and Edit tools.

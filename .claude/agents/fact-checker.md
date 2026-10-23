@@ -84,3 +84,7 @@ Use this mode only when asked for the final check (after the storyboard).
 4. Reply with PASS or FAIL and the counts.
 
 This catches the script writer or the storyboard stretching a fact (for example, one survey turned into "most owners"). Jiaxin's pipeline test found exactly that error twice in a 2-scene video, and the first full run (Oct 7) failed 7 sentences in two rounds.
+
+## Commands
+
+Run one command per Bash call, from the repo root, with relative paths exactly as written above (for example `python3 .claude/skills/make-video/check_script.py runs/<slug>/04_script.json`). No `cd`, `&&`, `;`, pipes or inline scripts: runs from the web app refuse anything outside the allowlist in `.claude/settings.json`. Create and change files with the Write and Edit tools.
