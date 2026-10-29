@@ -38,9 +38,23 @@ if [ -z "$FOUND" ]; then
 fi
 if [ -n "$FOUND" ]; then
   "$FOUND" --version
-  echo "If you have never used Claude Code on this computer, run it once in a terminal and sign in (a Claude Pro or Max plan is needed)."
+  if command -v claude >/dev/null 2>&1; then
+    RUN="claude"
+  else
+    # Installed, but not on PATH (the native installer's ~/.local/bin, or only the Claude desktop app's copy)
+    RUN="\"$FOUND\""
+    echo "Claude Code is installed, but typing 'claude' will not find it yet. Use the full command below."
+    if [ "$FOUND" = "$HOME/.local/bin/claude" ]; then
+      echo "(To make 'claude' work in new terminals: echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.zshrc )"
+    fi
+  fi
+  echo "First time only: sign in and trust this folder (a Claude Pro or Max plan is needed). Run:"
+  echo "  $RUN"
+  echo "then type /login, sign in, answer Yes to trusting this folder, and type /exit."
 else
-  echo "Claude Code was not found. Install it from https://claude.com/claude-code, sign in once, then run ./setup.sh again."
+  echo "Claude Code was not found. Install it (https://code.claude.com/docs/en/setup):"
+  echo "  curl -fsSL https://claude.ai/install.sh | bash"
+  echo "then open a new terminal, come back to this folder and run ./setup.sh again."
   exit 1
 fi
 

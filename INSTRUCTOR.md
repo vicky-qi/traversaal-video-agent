@@ -31,7 +31,7 @@ To see what the result looks like first, watch the finished example: `examples/s
    ```
 
    It creates the video environment (FFmpeg, Node, Python), downloads HyperFrames and the local voice, and checks Claude Code.
-3. Sign in to Claude Code once **in this folder**: run `claude`, type `/login`, sign in, and answer **Yes** when it asks whether you trust this folder. Then type `/exit`.
+3. Sign in to Claude Code once **in this folder**: run `claude` (or the full command `./setup.sh` printed at the end, if `claude` is not found), type `/login`, sign in, and answer **Yes** when it asks whether you trust this folder. Then type `/exit`.
 
 ## Make a video
 
@@ -69,6 +69,7 @@ Every file a run produces stays in `runs/<run name>/`.
 | What you see | What to do |
 |---|---|
 | A red cross in the setup check | Follow the line under it |
+| `zsh: command not found: claude` | Claude Code is not installed, or its folder is not on your PATH. Run the full command `./setup.sh` printed at the end, or install Claude Code with `curl -fsSL https://claude.ai/install.sh \| bash` and open a new terminal |
 | "Not logged in" in a run | Sign in once in this folder (Set up, step 3) |
 | A run stops partway ("Stopped before the video was finished") | The activity list says why (often Claude's usage limit: wait for it to reset). Then click **Continue this run**: it keeps the finished steps and picks up at the first unfinished one |
 | A run keeps failing at Scenes or Render | Open the run's folder; `run_log.md` says which scene failed and why |
