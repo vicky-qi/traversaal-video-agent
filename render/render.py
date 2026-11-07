@@ -11,6 +11,7 @@ it, joins all scenes, then mixes in a music bed and sound effects (render/sound.
   --check-only  build and check only (with --scene: one scene); no rendering. Scene builders use this.
   --draft       faster, lower-quality render for previews
   --no-check    skip `hyperframes check` (not recommended)
+  --no-music    voice and sound effects only, no music bed
 """
 import argparse
 import json
@@ -103,6 +104,7 @@ def main():
     ap.add_argument("--draft", action="store_true")
     ap.add_argument("--no-check", action="store_true")
     ap.add_argument("--check-only", action="store_true")
+    ap.add_argument("--no-music", action="store_true")
     args = ap.parse_args()
 
     run = Path(args.run_dir).resolve()
@@ -143,7 +145,7 @@ def main():
     joined = join(clips, run)
     final = run / "final.mp4"
     from sound import mix
-    mix(run, joined, final, board, timing)
+    mix(run, joined, final, board, timing, music_on=not args.no_music)
     print(f"final.mp4: {duration(final):.1f}s, {len(clips)} scenes -> {final.relative_to(REPO)}")
 
 

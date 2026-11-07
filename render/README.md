@@ -46,6 +46,7 @@ For each scene it places the scene's fragment into `templates/film/shell.html` w
 
 - `--scene 3`: re-render only scene 3, then join and mix again if every scene is rendered.
 - `--draft`: faster, lower-quality render for previews.
+- `--no-music`: voice and sound effects only, no music bed.
 - It stops at the first scene that fails `hyperframes check` and prints why.
 
 ## Where things go

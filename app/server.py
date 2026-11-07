@@ -233,7 +233,12 @@ def run_info(slug, full=False):
             "created": run_created(run), "stages": stages,
             "video": f"/files/{slug}/final.mp4" if finished else None}
     if full:
-        info.update({"feed": feed, "result": result, "elapsed_s": round(time.time() - info["created"]) if running else None})
+        timing = (read_json(run / "audio" / "timing.json", {}) or {}).get("scenes") or {}
+        info.update({"feed": feed, "result": result, "elapsed_s": round(time.time() - info["created"]) if running else None,
+                     "options": {k: req.get(k) for k in ("audience", "look", "music", "draft")},
+                     "video_s": round(sum(s.get("duration", 0) for s in timing.values()), 1) if timing else None,
+                     "video_mb": round((run / "final.mp4").stat().st_size / 1e6, 1) if finished else None,
+                     "subtitles": f"/files/{slug}/audio/subtitles.srt" if (run / "audio" / "subtitles.srt").exists() else None})
     return info
 
 
@@ -249,17 +254,32 @@ def list_runs():
     return sorted(out, key=lambda r: r["created"], reverse=True)
 
 
-def start_run(prompt, minutes):
+def option_args(req):
+    """The workflow arguments for the request's optional settings."""
+    out = ""
+    if req.get("audience"):
+        out += f' --audience "{req["audience"]}"'
+    if req.get("look") in ("light", "night"):
+        out += f" --look {req['look']}"
+    if req.get("music") is False:
+        out += " --no-music"
+    if req.get("draft"):
+        out += " --draft"
+    return out
+
+
+def start_run(prompt, minutes, options=None):
     binary = find_claude()
     if not binary:
         raise RuntimeError("Claude Code was not found. See the setup check.")
     slug = slugify(prompt)
     run = RUNS / slug
     run.mkdir(parents=True, exist_ok=False)
-    (run / "request.json").write_text(json.dumps({"prompt": prompt, "minutes": minutes, "created": time.time()}, indent=2))
+    req = {"prompt": prompt, "minutes": minutes, **(options or {}), "created": time.time()}
+    (run / "request.json").write_text(json.dumps(req, indent=2))
     instruction = (
         "Run the make-video workflow: read .claude/skills/make-video/SKILL.md and follow it exactly, from step 0 to the report. "
-        f"Arguments: --slug {slug} --minutes {minutes}. This run is headless (started from the Traversaal Video Studio web app): "
+        f"Arguments: --slug {slug} --minutes {minutes}{option_args(req)}. This run is headless (started from the Traversaal Video Studio web app): "
         "never ask the user a question; make sensible choices and note them in run_log.md. "
         f"The user's prompt is: \"{prompt}\""
     )
@@ -284,7 +304,7 @@ def resume_run(slug):
     instruction = (
         "Resume the make-video workflow: read .claude/skills/make-video/SKILL.md and follow its Resume section, then continue "
         "from the first unfinished stage to the report. "
-        f"Arguments: --slug {slug} --minutes {req.get('minutes', 2)}. This run is headless (started from the Traversaal Video "
+        f"Arguments: --slug {slug} --minutes {req.get('minutes', 2)}{option_args(req)}. This run is headless (started from the Traversaal Video "
         "Studio web app): never ask the user a question; make sensible choices and note them in run_log.md. "
         f"The user's original prompt was: \"{req['prompt']}\""
     )
@@ -391,7 +411,11 @@ class Handler(BaseHTTPRequestHandler):
                     return self.send_json({"error": "Write a topic of 8 to 400 characters."}, 400)
                 if minutes not in (2, 7):
                     return self.send_json({"error": "Length must be 2 or 7 minutes."}, 400)
-                return self.send_json({"slug": start_run(prompt, minutes)})
+                audience = str(body.get("audience", "")).strip().replace('"', "'")[:120]
+                look = body.get("look") if body.get("look") in ("light", "night") else None
+                options = {"audience": audience or None, "look": look,
+                           "music": body.get("music") is not False, "draft": body.get("draft") is True}
+                return self.send_json({"slug": start_run(prompt, minutes, options)})
             m = re.fullmatch(r"/api/runs/([A-Za-z0-9._-]+)/cancel", path)
             if m and (RUNS / m.group(1)).is_dir():
                 cancel_run(m.group(1))

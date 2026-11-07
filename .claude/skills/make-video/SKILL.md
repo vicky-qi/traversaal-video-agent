@@ -1,7 +1,7 @@
 ---
 name: make-video
 description: Turn a one-line prompt into a narrated, fact-checked ~7-minute cinematic explainer MP4 (a short documentary-style film, not slides) by running the intake, researcher, fact-checker, scriptwriter, storyboard and scene-builder subagents in order, then the voiceover, render and sound scripts. Use when the user asks to make a video from a prompt, or runs /make-video.
-argument-hint: '"<prompt>" [--minutes 7] [--slug name]'
+argument-hint: '"<prompt>" [--minutes 7] [--slug name] [--audience "..."] [--look light|night] [--no-music] [--draft]'
 ---
 
 # make-video: prompt → cinematic explainer MP4
@@ -22,6 +22,10 @@ Run every command from the repo root. Video tools run through `render/env.sh` (s
 1. The prompt is the text after `/make-video`. If there is none, ask for it and stop.
    - `--minutes N` (default 7): the film's target length. Pass it to the intake agent ("Target length: N minutes") and to every `check_script.py` call (`--minutes N`). A 2-minute film is the quick demo the web app offers.
    - `--slug name`: the web app creates `runs/<name>/` with a `request.json` before starting you; pass the slug to the intake agent so every file lands in that folder.
+   - `--audience "..."`: who is watching. Pass it to the intake agent ("Audience: ...") so the brief, script and storyboard write for them. Default: a general audience.
+   - `--look light|night`: the art direction's overall brightness. Pass it to the intake agent ("Look: light, a bright daytime palette" or "Look: night, a dark palette"). Default: the intake agent chooses.
+   - `--no-music`: pass `--no-music` to every full `render.py` call in step 9 (voice and sound effects only).
+   - `--draft`: pass `--draft` to every full `render.py` call in step 9 (faster, lower-quality render for a first look).
    - When run from the web app (headless, `claude -p`), never stop to ask the user anything: make the sensible choice, note it in `run_log.md`, and go on.
 2. Check the video tools once: `render/env.sh ffmpeg -version`. If it fails, stop and point the user to the setup in `render/README.md`.
 3. Note the start time (`date "+%Y-%m-%d %H:%M:%S"`). After each stage, append one line to `runs/<slug>/run_log.md`: `| <stage> | <start> | <end> | ok/failed | <short note> |` (create the file with a header row after the intake stage, once the slug is known).

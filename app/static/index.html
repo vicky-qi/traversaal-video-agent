@@ -6,124 +6,246 @@
 <title>Traversaal Video Studio</title>
 <style>
   :root {
-    --bg: #0b1020; --panel: #111a2e; --panel2: #16213a; --line: #24324f; --fg: #e8edf5; --muted: #93a1b8;
-    --accent: #38bdf8; --accent2: #f59e0b; --good: #34d399; --bad: #f87171;
+    --bg: #f4f3ee; --card: #ffffff; --soft: #f1f0ea; --line: #e3e1d9; --fg: #1f2421; --muted: #6f746f;
+    --accent: #2f4a3a; --accent-soft: #e6ece5; --good: #3f7a52; --warn: #a15c12; --bad: #b42318;
     --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --mono: ui-monospace, "SF Mono", Menlo, monospace;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font); }
-  header { display: flex; align-items: center; gap: 14px; padding: 18px 28px; border-bottom: 1px solid var(--line); }
-  header .logo { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), #6366f1); }
-  header h1 { font-size: 18px; margin: 0; letter-spacing: -0.01em; }
-  header .sub { color: var(--muted); font-size: 13px; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 var(--font); }
+  header { display: flex; align-items: center; gap: 12px; padding: 16px 28px; }
+  header .logo { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; color: #fff; font-size: 13px; }
+  header h1 { font-size: 16px; margin: 0; }
+  header .sub { color: var(--muted); font-size: 12px; }
   header .spacer { flex: 1; }
-  .layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
-  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-  .card h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 12px; font-weight: 600; }
-  /* minmax(0, 1fr): long run titles must shorten with "…", never widen the column */
-  .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-content: start; min-width: 0; }
-  textarea { width: 100%; min-height: 96px; resize: vertical; background: var(--bg); color: var(--fg); border: 1px solid var(--line);
-             border-radius: 10px; padding: 12px; font: inherit; }
-  textarea:focus, button:focus-visible, .run:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .lengths { display: flex; gap: 8px; margin: 12px 0; }
-  .lengths label { flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 10px; cursor: pointer; }
-  .lengths input { margin-right: 6px; }
-  .lengths small { display: block; color: var(--muted); }
-  .lengths label:has(input:checked) { border-color: var(--accent); background: rgba(56, 189, 248, 0.08); }
-  button { background: var(--accent); color: #04121f; border: 0; border-radius: 10px; padding: 11px 18px; font: 600 15px var(--font); cursor: pointer; }
-  button.secondary { background: transparent; color: var(--fg); border: 1px solid var(--line); }
-  button:disabled { opacity: 0.5; cursor: not-allowed; }
-  .msg { margin-top: 10px; font-size: 13px; color: var(--bad); min-height: 1em; }
-  .examples { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .examples button { background: var(--panel2); color: var(--muted); font-weight: 500; font-size: 12px; padding: 6px 10px; border: 1px solid var(--line); }
-  .runs { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; max-height: 420px; overflow: auto; }
-  .run { text-align: left; background: var(--panel2); color: var(--fg); border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; font: inherit; cursor: pointer; }
-  .run.sel { border-color: var(--accent); }
-  .run .t { font-weight: 600; font-size: 14px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .run .m { color: var(--muted); font-size: 12px; }
-  .chip { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 8px; border-radius: 999px; margin-right: 6px; }
-  .chip.running { background: rgba(56, 189, 248, 0.15); color: var(--accent); }
-  .chip.done { background: rgba(52, 211, 153, 0.15); color: var(--good); }
-  .chip.failed, .chip.cancelled { background: rgba(248, 113, 113, 0.15); color: var(--bad); }
-  .chip.earlier { background: var(--panel); color: var(--muted); }
-  .checks { display: grid; gap: 8px; font-size: 13px; }
-  .checks .row { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
+  .setup-pill { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 12px; font: 500 12px var(--font); color: var(--muted); cursor: pointer; }
+  .setup-pill.ok::before { content: "✓ "; color: var(--good); }
+  .setup-pill.no { color: var(--bad); border-color: #f2c4bf; }
+  .setup-pill.no::before { content: "! "; }
+  .layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 20px; padding: 0 28px 28px; max-width: 1280px; margin: 0 auto; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  .col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; min-width: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+  .sec { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 14px; }
+  .sec h2 { font-size: 13px; font-weight: 600; margin: 0; }
+  .sec h2 span { color: var(--muted); font-weight: 400; margin-right: 8px; font-family: var(--mono); font-size: 11px; }
+  .sec .aside { color: var(--muted); font-size: 12px; }
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; background: var(--soft); border-radius: 10px; padding: 3px; margin-bottom: 16px; }
+  .tabs button { background: transparent; border: 0; border-radius: 8px; padding: 7px; font: 500 12px var(--font); color: var(--muted); cursor: pointer; }
+  .tabs button.on { background: var(--card); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+  label.f { display: block; font-weight: 500; font-size: 12px; margin: 14px 0 6px; }
+  textarea, input[type=text], select { width: 100%; background: var(--card); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font: 13px/1.5 var(--font); }
+  textarea { min-height: 96px; resize: vertical; }
+  textarea:focus, input:focus, select:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hint { color: var(--muted); font-size: 11px; margin-top: 5px; display: flex; justify-content: space-between; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+  .chips .lbl { color: var(--muted); font-size: 11px; }
+  .chips button { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font: 11px var(--font); color: var(--fg); cursor: pointer; }
+  .samples { display: grid; gap: 6px; }
+  .samples button { text-align: left; background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font: 13px var(--font); color: var(--fg); cursor: pointer; }
+  .samples button:hover { border-color: var(--accent); }
+  details.settings { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 12px; }
+  details.settings summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; font-weight: 500; font-size: 12px; }
+  details.settings summary::-webkit-details-marker { display: none; }
+  details.settings summary .aside { color: var(--muted); font-weight: 400; }
+  .set-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; }
+  .set-row b { font-weight: 500; font-size: 12px; display: block; }
+  .set-row small { color: var(--muted); font-size: 11px; display: block; }
+  .seg { display: flex; gap: 4px; }
+  .seg button { border: 1px solid var(--line); background: var(--card); border-radius: 6px; padding: 4px 10px; font: 11px var(--font); color: var(--muted); cursor: pointer; }
+  .seg button.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .switch { position: relative; width: 34px; height: 20px; flex: none; }
+  .switch input { opacity: 0; width: 100%; height: 100%; margin: 0; position: absolute; cursor: pointer; z-index: 1; }
+  .switch span { position: absolute; inset: 0; background: #d5d3cb; border-radius: 999px; transition: background 0.15s; }
+  .switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 0.15s; }
+  .switch input:checked + span { background: var(--accent); }
+  .switch input:checked + span::after { transform: translateX(14px); }
+  .switch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .primary { width: 100%; margin-top: 18px; background: var(--accent); color: #fff; border: 0; border-radius: 10px; padding: 12px; font: 600 13px var(--font); cursor: pointer; }
+  .primary:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border-radius: 8px; padding: 8px 14px; font: 500 12px var(--font); text-decoration: none; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--fg); }
+  .btn.dark { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .msg { color: var(--bad); font-size: 12px; margin-top: 8px; min-height: 1em; }
+  .runs { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; max-height: 320px; overflow: auto; }
+  .run { text-align: left; background: transparent; border: 1px solid transparent; border-radius: 8px; padding: 8px 10px; font: inherit; color: var(--fg); cursor: pointer; min-width: 0; }
+  .run:hover { background: var(--soft); }
+  .run.sel { background: var(--accent-soft); border-color: #cbd6c9; }
+  .run .t { display: block; font-weight: 500; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .run .m { color: var(--muted); font-size: 11px; }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; background: #c9c7bf; vertical-align: 1px; }
+  .dot.done { background: var(--good); } .dot.running { background: #d98b1a; } .dot.failed, .dot.cancelled { background: var(--bad); }
+  .player { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, #eceae3, #f7f6f2); display: grid; place-items: center; color: var(--muted); }
+  .player video { width: 100%; height: 100%; display: block; background: #000; }
+  .player .wait { text-align: center; width: 60%; }
+  .bar { height: 6px; background: #e1dfd7; border-radius: 999px; overflow: hidden; margin: 12px 0 8px; }
+  .bar i { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.4s; }
+  .vtitle { font-size: 17px; font-weight: 600; margin: 16px 0 4px; }
+  .vmeta { color: var(--muted); font-size: 12px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .actions { display: flex; gap: 8px; align-items: center; margin: 14px 0 4px; flex-wrap: wrap; }
+  .actions .right { margin-left: auto; color: var(--muted); font-size: 12px; text-decoration: none; cursor: pointer; background: none; border: 0; font-family: var(--font); }
+  .notice { border: 1px solid #f2c4bf; background: #fdf3f2; color: var(--bad); border-radius: 10px; padding: 10px 12px; font-size: 12px; margin-top: 14px; }
+  .steps-head { display: flex; justify-content: space-between; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; font-weight: 500; font-size: 13px; }
+  .steps-head span { color: var(--muted); font-weight: 400; font-size: 12px; }
+  ol.steps { list-style: none; margin: 8px 0 0; padding: 0; }
+  ol.steps li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 12px; padding: 8px 0; position: relative; }
+  ol.steps li:not(:last-child)::before { content: ""; position: absolute; left: 12px; top: 34px; bottom: -6px; width: 1px; background: var(--line); }
+  .ic { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-size: 12px; background: var(--soft); color: var(--muted); border: 1px solid var(--line); }
+  li.done .ic { background: var(--accent-soft); color: var(--good); border-color: #cbd6c9; }
+  li.now .ic { background: #fff4e3; color: #b26b0c; border-color: #f0d3a3; }
+  li.now .ic::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: 0.3; } }
+  .st b { display: block; font-weight: 500; font-size: 13px; }
+  .st small { color: var(--muted); font-size: 12px; }
+  .st a { color: var(--accent); font-size: 12px; margin-left: 6px; }
+  .state { color: var(--muted); font-size: 12px; align-self: center; }
+  li.now .state { color: #b26b0c; }
+  details.more { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+  details.more summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+  .feed { background: var(--soft); border-radius: 10px; padding: 12px; max-height: 260px; overflow: auto; font-size: 12px; display: grid; gap: 5px; margin-top: 10px; }
+  .feed .tool { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+  .feed .warn { color: var(--bad); font-family: var(--mono); font-size: 11px; }
+  .doc { background: var(--soft); border-radius: 10px; padding: 14px; max-height: 460px; overflow: auto; white-space: pre-wrap; font: 12px/1.55 var(--mono); margin-top: 10px; }
+  .checks { display: grid; gap: 8px; font-size: 12px; margin-top: 4px; }
+  .checks .row { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 8px; }
   .checks .ok { color: var(--good); } .checks .no { color: var(--bad); }
-  .checks .fix { color: var(--muted); grid-column: 2; }
-  .detail h2.title { font-size: 22px; text-transform: none; letter-spacing: -0.01em; color: var(--fg); margin: 0 0 4px; }
-  .detail .meta { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
-  .stepper { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; margin-bottom: 18px; }
-  @media (max-width: 1100px) { .stepper { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .step { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-width: 0; }
-  .step .n { font-size: 12px; color: var(--muted); }
-  .step .l { font-weight: 600; font-size: 13px; }
-  .step .d { font-size: 12px; color: var(--muted); min-height: 1.4em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .step.done { border-color: rgba(52, 211, 153, 0.5); }
-  .step.done .n { color: var(--good); }
-  .step.now { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
-  .step.now .n { color: var(--accent); }
-  .step a { color: var(--accent); font-size: 12px; }
-  video { width: 100%; border-radius: 12px; background: #000; display: block; }
-  .actions { display: flex; gap: 10px; margin: 14px 0; flex-wrap: wrap; }
-  .actions a { color: var(--accent); }
-  .feed { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; max-height: 300px; overflow: auto; font-size: 13px; display: grid; gap: 6px; }
-  .feed .tool { color: var(--muted); font-family: var(--mono); font-size: 12px; }
-  .feed .warn { color: var(--bad); font-family: var(--mono); font-size: 12px; }
-  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
-  .doc { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; max-height: 520px; overflow: auto; white-space: pre-wrap; font: 13px/1.55 var(--mono); }
+  .checks .fix { color: var(--muted); grid-column: 2; overflow-wrap: anywhere; }
+  .sub { color: var(--muted); }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
 <header>
-  <div class="logo" aria-hidden="true"></div>
+  <div class="logo" aria-hidden="true">▶</div>
   <div><h1>Traversaal Video Studio</h1><div class="sub">One prompt in, a fact-checked cinematic explainer out</div></div>
   <div class="spacer"></div>
-  <button class="secondary" id="refreshCheck" type="button">Re-run setup check</button>
+  <button class="setup-pill" id="setupPill" type="button" aria-expanded="false">Checking setup…</button>
 </header>
 
 <div class="layout">
   <div class="col">
+    <section class="card" id="setupCard" hidden>
+      <div class="sec"><h2>Setup check</h2><button class="right btn" id="refreshCheck" type="button">Check again</button></div>
+      <div class="checks" id="checks"></div>
+    </section>
+
     <section class="card">
-      <h2>New video</h2>
-      <label for="prompt" class="sub">What should the video explain?</label>
-      <textarea id="prompt" placeholder="How do electric vehicle batteries work?"></textarea>
-      <div class="examples" id="examples"></div>
-      <div class="lengths" role="radiogroup" aria-label="Length">
-        <label><input type="radio" name="len" value="2" checked>2-minute demo<small>about 40 min to make</small></label>
-        <label><input type="radio" name="len" value="7">7-minute film<small>about 1–1.5 hours to make</small></label>
+      <div class="sec"><h2><span>01</span>The brief</h2><span class="aside">Start with a little curiosity</span></div>
+      <div class="tabs" role="tablist">
+        <button type="button" class="on" id="tabTopic" role="tab" aria-selected="true">Your topic</button>
+        <button type="button" id="tabSample" role="tab" aria-selected="false">Try a sample</button>
       </div>
-      <button id="go" type="button">Generate video</button>
+
+      <div id="paneTopic">
+        <label class="f" for="prompt">What would you like to explain?</label>
+        <textarea id="prompt" maxlength="400" placeholder="Why does opening a second checkout counter cut waiting time?"></textarea>
+        <div class="hint"><span>A specific question makes a better story.</span><span id="count">0/400</span></div>
+        <div class="chips" id="chips"><span class="lbl">Try</span></div>
+      </div>
+      <div id="paneSample" hidden>
+        <label class="f">Pick a sample topic</label>
+        <div class="samples" id="samples"></div>
+      </div>
+
+      <label class="f" for="audience">Who's watching?</label>
+      <input type="text" id="audience" maxlength="120" placeholder="General audience with no technical background">
+
+      <label class="f" for="length">Target length</label>
+      <select id="length">
+        <option value="2">2-minute demo · about 40 min to make</option>
+        <option value="7">7-minute film · about 1–1.5 hours to make</option>
+      </select>
+      <div class="hint"><span>The final length follows the narration and may vary a little.</span></div>
+
+      <details class="settings" id="settings">
+        <summary>Video settings <span class="aside" id="settingsSum"></span></summary>
+        <div class="set-row">
+          <div><b>Visual style</b><small>The film's overall look</small></div>
+          <div class="seg" id="look" role="radiogroup" aria-label="Visual style">
+            <button type="button" data-v="auto" class="on">Auto</button>
+            <button type="button" data-v="light">Light</button>
+            <button type="button" data-v="night">Night</button>
+          </div>
+        </div>
+        <div class="set-row">
+          <div><b>Background music</b><small>A soft soundtrack under the narration</small></div>
+          <label class="switch"><input type="checkbox" id="music" checked aria-label="Background music"><span></span></label>
+        </div>
+        <div class="set-row">
+          <div><b>Quick draft</b><small>Faster, lower-quality render for a first look</small></div>
+          <label class="switch"><input type="checkbox" id="draft" aria-label="Quick draft"><span></span></label>
+        </div>
+        <div class="set-row">
+          <div><b>Fact-check</b><small>Every fact is checked against its source; always on</small></div>
+          <label class="switch"><input type="checkbox" checked disabled aria-label="Fact-check, always on"><span></span></label>
+        </div>
+      </details>
+
+      <button class="primary" id="go" type="button">Generate video →</button>
       <div class="msg" id="msg" role="status"></div>
     </section>
 
     <section class="card">
-      <h2>Setup check</h2>
-      <div class="checks" id="checks"><span class="sub">Checking...</span></div>
-    </section>
-
-    <section class="card">
-      <h2>Your videos</h2>
+      <div class="sec"><h2><span>03</span>Your videos</h2><span class="aside" id="runCount"></span></div>
       <div class="runs" id="runs"><span class="sub">No videos yet.</span></div>
     </section>
   </div>
 
-  <main class="card detail" id="detail">
-    <div class="empty">Start a new video, or pick one from Your videos.</div>
-  </main>
+  <main class="card" id="detail"></main>
 </div>
 
 <script>
 const $ = (s) => document.querySelector(s);
 const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const fmt = (s) => s == null ? "" : (s >= 3600 ? Math.floor(s / 3600) + "h " : "") + Math.floor((s % 3600) / 60) + "m " + String(Math.round(s % 60)).padStart(2, "0") + "s";
-let selected = null, lastRuns = [], docOpen = null;
+const clock = (s) => s == null ? "" : Math.floor(s / 60) + ":" + String(Math.round(s % 60)).padStart(2, "0");
+let selected = null, lastRuns = [], docOpen = null, look = "auto";
 
-const EXAMPLES = ["How do electric vehicle batteries work?", "Why are more companies adopting a four-day work week?",
-  "What caused the 2008 financial crisis?", "How does compound interest help you build wealth?"];
-$("#examples").innerHTML = EXAMPLES.map((e) => `<button type="button">${esc(e)}</button>`).join("");
-$("#examples").addEventListener("click", (e) => { if (e.target.tagName === "BUTTON") $("#prompt").value = e.target.textContent; });
+const CHIPS = ["How GPS works", "The Silk Road", "Leap years", "Compound interest"];
+const SAMPLES = ["How do electric vehicle batteries work?", "Why are more companies adopting a four-day work week?",
+  "What caused the 2008 financial crisis?", "How does compound interest help you build wealth?",
+  "Tell the story of Snow White as the Brothers Grimm wrote it, for a general audience"];
+// Plain-language names for the nine pipeline stages (same order as the server's STAGES).
+const STEPS = [
+  ["Plan the story", "Key questions, a story arc and a look for the film"],
+  ["Gather the facts", "One researcher per question, from pages it opened"],
+  ["Check every fact", "Each fact compared with its source"],
+  ["Write the story", "A three-act script from verified facts only"],
+  ["Bring it to voice", "Natural narration, one line at a time"],
+  ["Plan every shot", "What we see, the camera move, any label"],
+  ["Final fact-check", "Words and pictures checked against the facts"],
+  ["Animate the scenes", "Each scene built in code, in parallel"],
+  ["Put it all together", "Scenes, captions, music and sound"],
+];
+
+$("#chips").insertAdjacentHTML("beforeend", CHIPS.map((c) => `<button type="button">${esc(c)} →</button>`).join(""));
+$("#chips").addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") { $("#prompt").value = "Explain " + e.target.textContent.replace(" →", "").toLowerCase() + " for a general audience"; count(); }
+});
+$("#samples").innerHTML = SAMPLES.map((s) => `<button type="button">${esc(s)}</button>`).join("");
+$("#samples").addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") { $("#prompt").value = e.target.textContent; count(); setTab("topic"); }
+});
+const count = () => { $("#count").textContent = `${$("#prompt").value.length}/400`; };
+$("#prompt").addEventListener("input", count);
+function setTab(t) {
+  $("#tabTopic").classList.toggle("on", t === "topic"); $("#tabSample").classList.toggle("on", t === "sample");
+  $("#tabTopic").setAttribute("aria-selected", t === "topic"); $("#tabSample").setAttribute("aria-selected", t === "sample");
+  $("#paneTopic").hidden = t !== "topic"; $("#paneSample").hidden = t !== "sample";
+}
+$("#tabTopic").onclick = () => setTab("topic");
+$("#tabSample").onclick = () => setTab("sample");
+
+$("#look").addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  look = b.dataset.v;
+  $("#look").querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
+  summary();
+});
+function summary() {
+  const name = { auto: "Auto look", light: "Light", night: "Night" }[look];
+  $("#settingsSum").textContent = `${name} · ${$("#music").checked ? "Music" : "No music"}${$("#draft").checked ? " · Draft" : ""}`;
+}
+$("#music").onchange = summary; $("#draft").onchange = summary; summary();
 
 async function api(path, opts) {
   const r = await fetch(path, opts);
@@ -133,23 +255,33 @@ async function api(path, opts) {
 }
 
 async function loadChecks() {
-  $("#checks").innerHTML = '<span class="sub">Checking...</span>';
+  const pill = $("#setupPill");
+  pill.className = "setup-pill"; pill.textContent = "Checking setup…";
   try {
     const d = await api("/api/doctor");
     $("#checks").innerHTML = d.checks.map((c) => `<div class="row"><span class="${c.ok ? "ok" : "no"}">${c.ok ? "✓" : "✕"}</span>
       <span><b>${esc(c.name)}</b> <span class="sub">${esc(c.detail)}</span></span>${c.fix ? `<span class="fix">${esc(c.fix)}</span>` : ""}</div>`).join("");
+    pill.className = "setup-pill " + (d.ok ? "ok" : "no");
+    pill.textContent = d.ok ? "Ready" : "Setup needed";
+    if (!d.ok) { $("#setupCard").hidden = false; pill.setAttribute("aria-expanded", "true"); }
     $("#go").disabled = !d.ok;
-  } catch (e) { $("#checks").textContent = "Setup check failed: " + e.message; }
+  } catch (e) { pill.className = "setup-pill no"; pill.textContent = "Setup check failed"; }
 }
+$("#setupPill").onclick = () => {
+  const card = $("#setupCard"); card.hidden = !card.hidden;
+  $("#setupPill").setAttribute("aria-expanded", String(!card.hidden));
+};
 $("#refreshCheck").onclick = loadChecks;
 
 $("#go").onclick = async () => {
-  const prompt = $("#prompt").value.trim();
-  const minutes = Number(document.querySelector('input[name="len"]:checked').value);
+  const body = {
+    prompt: $("#prompt").value.trim(), minutes: Number($("#length").value), audience: $("#audience").value.trim(),
+    look: look === "auto" ? null : look, music: $("#music").checked, draft: $("#draft").checked,
+  };
   $("#msg").textContent = "";
   $("#go").disabled = true;
   try {
-    const { slug } = await api("/api/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt, minutes }) });
+    const { slug } = await api("/api/runs", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     selected = slug; docOpen = null;
     await refresh();
   } catch (e) { $("#msg").textContent = e.message; }
@@ -157,13 +289,15 @@ $("#go").onclick = async () => {
 };
 
 function renderRuns(runs) {
+  $("#runCount").textContent = runs.length ? `${runs.length}` : "";
   if (!runs.length) { $("#runs").innerHTML = '<span class="sub">No videos yet.</span>'; return; }
   $("#runs").innerHTML = runs.map((r) => {
-    const st = r.state === "earlier run" ? "earlier" : r.state;
     const doneN = r.stages.filter((s) => s.done).length;
-    return `<button type="button" class="run ${r.slug === selected ? "sel" : ""}" data-slug="${esc(r.slug)}">
+    const what = r.state === "done" ? "Ready" : r.state === "running" ? `Making · ${doneN} of 9` :
+      r.state === "failed" || r.state === "cancelled" ? `Stopped · ${doneN} of 9` : `${doneN} of 9 steps`;
+    return `<button type="button" class="run ${r.slug === selected ? "sel" : ""}" data-slug="${esc(r.slug)}" title="${esc(r.title)}">
       <span class="t">${esc(r.title)}</span>
-      <span class="m"><span class="chip ${st}">${esc(r.state)}</span>${doneN}/9 steps${r.minutes ? " · " + r.minutes + " min" : ""}</span></button>`;
+      <span class="m"><span class="dot ${esc(r.state)}"></span>${what}${r.minutes ? " · " + r.minutes + " min" : ""}</span></button>`;
   }).join("");
 }
 $("#runs").addEventListener("click", (e) => {
@@ -179,45 +313,83 @@ async function openDoc(slug, file) {
   if (box) box.textContent = file.endsWith(".json") ? JSON.stringify(JSON.parse(t), null, 2) : t;
 }
 
+function stepList(stages, state) {
+  const nowIdx = state === "running" ? stages.findIndex((s) => !s.done) : -1;
+  return stages.map((s, i) => {
+    const cls = s.done ? "done" : i === nowIdx ? "now" : "";
+    const st = s.done ? "Done" : i === nowIdx ? "Working…" : state === "failed" || state === "cancelled" ? "Not done" : "Waiting";
+    const link = s.done && s.file && s.file !== "final.mp4" ? `<a href="#" data-file="${esc(s.file)}">View</a>` : "";
+    return `<li class="${cls}"><span class="ic">${s.done ? "✓" : i === nowIdx ? "" : i + 1}</span>
+      <span class="st"><b>${STEPS[i][0]}</b><small>${esc(s.detail || STEPS[i][1])}</small>${link}</span>
+      <span class="state">${st}</span></li>`;
+  }).join("");
+}
+
+function renderEmpty() {
+  $("#detail").innerHTML = `
+    <div class="sec"><h2><span>02</span>Your video</h2></div>
+    <div class="player"><div class="wait">Your video will appear here.</div></div>
+    <div class="steps-head">From idea to explainer <span>9 steps</span></div>
+    <ol class="steps">${STEPS.map((s, i) => `<li><span class="ic">${i + 1}</span><span class="st"><b>${s[0]}</b><small>${s[1]}</small></span><span class="state">Waiting</span></li>`).join("")}</ol>`;
+}
+
 function renderDetail(d) {
-  const nowIdx = d.state === "running" ? d.stages.findIndex((s) => !s.done) : -1;
-  const steps = d.stages.map((s, i) => `<div class="step ${s.done ? "done" : ""} ${i === nowIdx ? "now" : ""}">
-      <div class="n">${s.done ? "✓ " + fmt(s.at_s) : i === nowIdx ? "working…" : "step " + (i + 1)}</div>
-      <div class="l">${esc(s.label)}</div><div class="d">${esc(s.detail || "")}</div>
-      ${s.file && s.file !== "final.mp4" ? `<a href="#" data-file="${esc(s.file)}">open</a>` : ""}</div>`).join("");
+  const doneN = d.stages.filter((s) => s.done).length;
+  const stopped = d.state === "failed" || d.state === "cancelled";
+  const head = d.state === "done" ? "✓ Ready to watch" : d.state === "running" ? `Making · ${Math.round(doneN / 9 * 100)}%` :
+    stopped ? "Stopped" : "Earlier run";
+  const now = d.stages.findIndex((s) => !s.done);
+  const player = d.video ? `<video controls preload="metadata" src="${d.video}"></video>` :
+    `<div class="wait">${d.state === "running" ? `<b>${STEPS[now] ? STEPS[now][0] : "Working"}…</b>
+        <div class="bar"><i style="width:${Math.max(4, doneN / 9 * 100)}%"></i></div>
+        <small>Step ${now + 1} of 9 · running for ${fmt(d.elapsed_s)}. You can close this page; the video keeps going.</small>` :
+      stopped ? "This video stopped before it was finished." : "No video for this run."}</div>`;
+  const o = d.options || {};
+  const settings = [o.audience ? `For: ${o.audience}` : null, o.look ? (o.look === "night" ? "Night look" : "Light look") : null,
+    o.music === false ? "No music" : null, o.draft ? "Draft quality" : null].filter(Boolean).join(" · ");
   const res = d.result;
-  const status = d.state === "running" ? `Running for ${fmt(d.elapsed_s)}` :
-    d.state === "done" ? `Finished${res ? " in " + fmt(res.duration_s) : ""}` :
-    d.state === "failed" ? "Stopped before the video was finished" : esc(d.state);
   const feed = (d.feed || []).slice().reverse().map((f) => `<div class="${f.kind}">${esc(f.text)}</div>`).join("") || '<span class="sub">No activity yet.</span>';
   $("#detail").innerHTML = `
-    <h2 class="title">${esc(d.title)}</h2>
-    <div class="meta">${status}${d.minutes ? " · " + d.minutes + "-minute video" : ""} · folder <code>runs/${esc(d.slug)}</code></div>
-    <div class="stepper">${steps}</div>
-    ${d.video ? `<video controls preload="metadata" src="${d.video}"></video>
-      <div class="actions"><a href="${d.video}" download="${esc(d.slug)}.mp4">Download MP4</a>
-      ${d.stages[2].file ? `<a href="#" data-file="03_checked.md">Sources and checked facts</a>` : ""}
-      ${d.stages[6].file ? `<a href="#" data-file="06_final_check.md">Final fact-check</a>` : ""}</div>` : ""}
-    ${d.state === "running" ? `<div class="actions"><button class="secondary" id="cancel" type="button">Stop this run</button></div>` : ""}
-    ${d.state === "failed" || d.state === "cancelled" ? `<div class="actions"><button id="resume" type="button">Continue this run</button>
-      <span class="sub">Keeps the finished steps and picks up at the first unfinished one.</span></div>` : ""}
-    ${res && !res.ok ? `<p class="msg">${esc(res.text.slice(0, 400))}</p>` : ""}
-    <h2>${docOpen ? esc(docOpen) : "Activity"}</h2>
-    ${docOpen ? `<div class="doc" id="doc">Loading…</div><div class="actions"><a href="#" id="closeDoc">Back to activity</a></div>` : `<div class="feed">${feed}</div>`}`;
-  $("#detail").querySelectorAll("a[data-file]").forEach((a) => a.onclick = (e) => { e.preventDefault(); openDoc(d.slug, a.dataset.file); refresh(); });
+    <div class="sec"><h2><span>02</span>Your video</h2><span class="aside">${head}</span></div>
+    <div class="player">${player}</div>
+    <div class="vtitle">${esc(d.title)}</div>
+    <div class="vmeta">
+      ${d.video_s ? `<span>◷ ${clock(d.video_s)}</span>` : ""}
+      ${d.video ? "<span>1920 × 1080</span>" : ""}
+      ${d.video_mb ? `<span>${d.video_mb >= 1000 ? (d.video_mb / 1000).toFixed(1) + " GB" : Math.round(d.video_mb) + " MB"}</span>` : ""}
+      ${d.minutes ? `<span>Target ${d.minutes}:00${d.video_s ? " · Actual " + clock(d.video_s) : ""}</span>` : ""}
+      ${settings ? `<span>${esc(settings)}</span>` : ""}
+    </div>
+    <div class="actions">
+      ${d.video ? `<a class="btn dark" href="${d.video}" download="${esc(d.slug)}.mp4">↓ Download MP4</a>` : ""}
+      ${d.subtitles && d.video ? `<a class="btn" href="${d.subtitles}" download="${esc(d.slug)}.srt">Subtitles</a>` : ""}
+      ${d.stages[2].file ? `<a class="btn" href="#" data-file="03_checked.md">Sources</a>` : ""}
+      ${d.state === "running" ? `<button class="btn" id="cancel" type="button">Stop</button>` : ""}
+      ${stopped ? `<button class="btn dark" id="resume" type="button">Continue this run</button>` : ""}
+      <button class="right" id="newVideo" type="button">New video ↗</button>
+    </div>
+    ${stopped ? `<div class="notice">${res && !res.ok ? esc(res.text.slice(0, 300)) + "<br>" : ""}Continue keeps the finished steps and picks up at the first unfinished one.</div>` : ""}
+    <div class="steps-head">From idea to explainer <span>${d.state === "done" ? "All done" : `${doneN} of 9 done`}</span></div>
+    <ol class="steps">${stepList(d.stages, d.state)}</ol>
+    <details class="more" ${docOpen ? "open" : ""}>
+      <summary>${docOpen ? esc(docOpen) : "Show details: activity log and files"} · folder runs/${esc(d.slug)}</summary>
+      ${docOpen ? `<div class="doc" id="doc">Loading…</div><div class="actions"><a class="btn" href="#" id="closeDoc">Back to activity</a></div>` : `<div class="feed">${feed}</div>`}
+    </details>`;
+  $("#detail").querySelectorAll("a[data-file]").forEach((a) => a.onclick = (e) => { e.preventDefault(); openDoc(d.slug, a.dataset.file); refresh(true); });
   if (docOpen) openDoc(d.slug, docOpen);
-  const c = $("#closeDoc"); if (c) c.onclick = (e) => { e.preventDefault(); docOpen = null; refresh(); };
+  const c = $("#closeDoc"); if (c) c.onclick = (e) => { e.preventDefault(); docOpen = null; refresh(true); };
   const x = $("#cancel"); if (x) x.onclick = async () => { await api(`/api/runs/${d.slug}/cancel`, { method: "POST" }); refresh(); };
+  $("#newVideo").onclick = () => { selected = null; docOpen = null; renderEmpty(); renderRuns(lastRuns); $("#prompt").focus(); };
   const r = $("#resume"); if (r) r.onclick = async () => {
     r.disabled = true;
     try { await api(`/api/runs/${d.slug}/resume`, { method: "POST" }); }
-    catch (e) { r.disabled = false; r.insertAdjacentHTML("afterend", `<p class="msg">${esc(e.message)}</p>`); }
+    catch (e) { r.disabled = false; r.insertAdjacentHTML("afterend", `<span class="msg">${esc(e.message)}</span>`); }
     refresh();
   };
 }
 
 let lastDetailKey = "";
-async function refresh() {
+async function refresh(force) {
   try {
     lastRuns = await api("/api/runs");
     renderRuns(lastRuns);
@@ -226,13 +398,14 @@ async function refresh() {
       // Re-render only when something changed, so a playing video is never reset.
       const key = JSON.stringify([d.slug, d.state, d.stages, (d.feed || []).length, docOpen, d.video,
                                   d.state === "running" ? Math.floor((d.elapsed_s || 0) / 15) : 0]);
-      if (key !== lastDetailKey) { lastDetailKey = key; renderDetail(d); }
+      if (force || key !== lastDetailKey) { lastDetailKey = key; renderDetail(d); }
     }
   } catch (e) { /* server restarting */ }
 }
+renderEmpty();
 loadChecks();
 refresh();
-setInterval(() => { const running = lastRuns.some((r) => r.state === "running"); if (running || !selected) refresh(); }, 4000);
+setInterval(() => { if (lastRuns.some((r) => r.state === "running")) refresh(); }, 4000);
 </script>
 </body>
 </html>

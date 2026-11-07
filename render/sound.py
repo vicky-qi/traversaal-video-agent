@@ -91,13 +91,19 @@ def cues_from_storyboard(board, timing):
     return cues, offset
 
 
-def mix(run_dir, joined, final, board, timing):
+def mix(run_dir, joined, final, board, timing, music_on=True):
     work = Path(run_dir) / "build" / "sound"
     work.mkdir(parents=True, exist_ok=True)
     cues, total = cues_from_storyboard(board, timing)
     music, sfx = work / "music.wav", work / "sfx.wav"
-    music_bed(music, total, (board.get("music") or {}).get("mood", "calm"), work)
     sfx_track(sfx, total, cues, work)
+    if not music_on:  # voice and effects only
+        run(["ffmpeg", "-v", "error", "-y", "-i", str(joined), "-i", str(sfx), "-filter_complex",
+             "[0:a]aresample=48000[v];[v][1:a]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95[a]",
+             "-map", "0:v", "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(final)])
+        print(f"  sound: no music (switched off); {len(cues)} sound effects mixed under the voice")
+        return
+    music_bed(music, total, (board.get("music") or {}).get("mood", "calm"), work)
     # Voice from the joined video; music ducked under the voice; effects on top; limiter at the end.
     run(["ffmpeg", "-v", "error", "-y", "-i", str(joined), "-i", str(music), "-i", str(sfx), "-filter_complex",
          "[0:a]aresample=48000,asplit=2[v1][v2];"
