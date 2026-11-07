@@ -91,9 +91,10 @@ def join(clips, run):
     concat = run / "build" / "concat.txt"
     concat.write_text("".join(f"file '{c.name}'\n" for c in clips))
     out = run / "build" / "joined.mp4"
+    # The scene clips share one encoding, so the picture is copied as rendered (no second compression);
+    # only the audio is re-encoded, which keeps the joins between scenes click-free.
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(concat),
-                    "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p",
-                    "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
+                    "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)], check=True)
     return out
 
 
@@ -134,6 +135,8 @@ def main():
             continue
         if args.check_only:
             continue
+        # One scene at a time: HyperFrames already spreads each render over several Chrome workers,
+        # and renders running side by side corrupt each other's output.
         subprocess.run(HF + ["render", str(build / name), "-o", str(clip), "--quality", quality, "--quiet"], check=True)
         print(f"  rendered {clip.name}: {duration(clip):.2f}s")
 
