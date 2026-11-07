@@ -68,10 +68,12 @@ If it prints any `FAIL` line, send those lines back for a revision (see **Revisi
 
 ## 5. Length fit (at most 2 rounds)
 
+**Minimum length** (`<M>` below): 420 seconds for a 7-minute film, and 90% of the target for any other length (108 for the 2-minute demo). A film shorter than this is never delivered.
+
 Word counts are only an estimate; the real voice decides. Run:
 
 ```bash
-render/env.sh python render/voiceover.py runs/<slug>
+render/env.sh python render/voiceover.py runs/<slug> --min-seconds <M>
 ```
 
 - Exit 0 (`LENGTH OK`): go on.
@@ -96,9 +98,10 @@ This runs after the length fit and the storyboard, so it checks the final words 
 
 1. Use a **fresh fact-checker** subagent in Mode 2: "Topic slug: <slug>. Final check (Mode 2): script and storyboard." It writes `runs/<slug>/06_final_check.md`.
 2. `PASS`: go to step 8.
-3. `FAIL` on narration: send the scriptwriter a revision (see **Revisions**), run `check_script.py` and `voiceover.py` again (only changed sentences are re-voiced), then ask the storyboard agent to update the shots of the changed scenes, and go back to 1. In round 2, ask the fact-checker to re-check only the changed scenes.
+3. `FAIL` on narration: send the scriptwriter a revision (see **Revisions**), run `check_script.py` and `voiceover.py` again (only changed sentences are re-voiced), then ask the storyboard agent to update the shots of the changed scenes (their sentence numbers may have shifted) and run `check_storyboard.py`, and go back to 1. In round 2, ask the fact-checker to re-check only the changed scenes.
 4. `FAIL` on a shot: send the storyboard agent the failing shots and reasons, run `check_storyboard.py`, then go back to 1.
 5. After 2 rounds, tell the scriptwriter to **delete** every sentence that still fails, and the storyboard agent to remove every shot that still fails. Unverified claims never reach the final film.
+6. **After any change to the narration** (a revision or a deletion), the later files must be redone before step 8: run `check_script.py`, then `voiceover.py --min-seconds <M>` (if it now says `LENGTH SHORT`, ask the scriptwriter to add narration from verified facts and repeat), then have the storyboard agent update the changed scenes' shots, run `check_storyboard.py`, and have the fact-checker check only the changed scenes once more. `render.py` refuses to run when the audio no longer matches the script.
 
 Log `final-check`.
 
@@ -109,10 +112,16 @@ Launch one **scene-builder** subagent per scene, **all in the same message**: "T
 ## 9. Render and sound
 
 ```bash
-render/env.sh python render/render.py runs/<slug>
+render/env.sh python render/render.py runs/<slug> --min-seconds <M>
 ```
 
-It checks and renders each scene, joins them, then mixes a music bed (the storyboard's `music.mood`) and the shots' sound effects under the voice (`render/sound.py`), writing `runs/<slug>/final.mp4`. If a scene fails its check, send the error to a scene builder for that scene ("Fix this check failure: …"), then run `render.py runs/<slug> --scene <N>`. One repair attempt per scene; if it still fails, log `render failed` and report it. Log `render` with the final length.
+It checks and renders each scene, joins them, then mixes a music bed (the storyboard's `music.mood`) and the shots' sound effects under the voice (`render/sound.py`), writing `runs/<slug>/final.mp4`. If a scene fails its check, send the error to a scene builder for that scene ("Fix this check failure: …"), then run `render.py runs/<slug> --scene <N>`. One repair attempt per scene; if it still fails, log `render failed` and report it.
+
+- `Audio out of date for scenes [...]`: the script changed after the voiceover; do step 7.6, rebuild the changed scenes, and render again.
+- `LENGTH SHORT` (exit 3): the film is below `<M>` and was kept as `final.too-short.mp4`, so the app does not show it as finished. Send the scriptwriter a revision adding narration from verified facts (with the shortfall in seconds), then do step 7.6, rebuild the changed scenes and render again. If it is still short after one round, log `render failed: too short` and report it.
+- After rendering, look at `runs/<slug>/build/data_shots.png` (one frame from every shot that shows a number): each number must be readable, complete, not covered, and equal to its storyboard `data` value. Send any problem to that scene's builder ("Fix: …"), then `render.py runs/<slug> --scene <N> --min-seconds <M>`. One repair round.
+
+Log `render` with the final length.
 
 ## 10. Report
 

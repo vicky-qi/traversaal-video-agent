@@ -1,7 +1,7 @@
 """Voiceover stage: turn runs/<slug>/04_script.json into one audio file per scene.
 
 Usage (from the repo root):
-    render/env.sh python render/voiceover.py runs/<slug> [--voice af_heart] [--speed 0.85]
+    render/env.sh python render/voiceover.py runs/<slug> [--voice af_heart] [--speed 0.85] [--min-seconds 420]
 
 For each scene it speaks the narration one sentence at a time with HyperFrames' local
 text-to-speech (Kokoro, free, runs on the Mac), measures each sentence, and joins them
@@ -10,8 +10,8 @@ to runs/<slug>/audio/timing.json so captions match the voice exactly. Sentences 
 text has not changed are not spoken again.
 
 The measured audio length is the scene length. Exit code 2 means the total is more than
-15% away from the script's target (the sum of duration_sec), so the script needs trimming
-or padding.
+15% away from the script's target (the sum of duration_sec), or below --min-seconds (the film's
+hard minimum, 420 for a 7-minute film), so the script needs trimming or padding.
 """
 import argparse
 import hashlib
@@ -50,6 +50,7 @@ def main():
     ap.add_argument("run_dir")
     ap.add_argument("--voice", default="af_heart")
     ap.add_argument("--speed", type=float, default=0.85)
+    ap.add_argument("--min-seconds", type=float, default=0, help="hard minimum for the whole film")
     args = ap.parse_args()
 
     run = Path(args.run_dir).resolve()
@@ -107,6 +108,10 @@ def main():
     print(f"total: {total:.1f}s vs script target {target_total:.0f}s ({off:+.0%})")
     if abs(off) > TOLERANCE:
         print(f"LENGTH {'LONG' if off > 0 else 'SHORT'}: ask the script writer to adjust; per-scene lengths are above.")
+        sys.exit(2)
+    if total < args.min_seconds:
+        print(f"LENGTH SHORT: {total:.1f}s is below the {args.min_seconds:.0f}s minimum; ask the script writer to add "
+              f"about {args.min_seconds - total + 10:.0f}s of narration from verified facts.")
         sys.exit(2)
     print("LENGTH OK")
 

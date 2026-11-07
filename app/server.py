@@ -242,6 +242,65 @@ def run_info(slug, full=False):
     return info
 
 
+FACT_RE = re.compile(r"^- \*\*(Q\d+-F\d+)\*\* (.+)$")
+SOURCE_RE = re.compile(r"^\s+- Source: \[([^\]]+)\]\(([^)]+)\)")
+CHECK_RE = re.compile(r"^\s+- Check: (VERIFIED|OVERSTATED|UNSUPPORTED|UNREACHABLE)")
+REJECT_RE = re.compile(r"^\| (Q\d+-F\d+) \| (OVERSTATED|UNSUPPORTED|UNREACHABLE) \| ([^|]+)\|")
+
+
+def run_facts(slug):
+    """The fact trail: every researched fact, its source, its verdict and when the film shows it.
+    Reads the per-question files as the researchers and checkers write them, so it fills in live."""
+    run = RUNS / slug
+    facts = {}
+    research = sorted(glob.glob(str(run / "research" / "q*.md"))) or [str(run / "02_research.md")]
+    checked = sorted(glob.glob(str(run / "checked" / "q*.md"))) or [str(run / "03_checked.md")]
+    for path in research:
+        cur = None
+        for line in Path(path).read_text(errors="replace").splitlines() if Path(path).exists() else []:
+            m = FACT_RE.match(line)
+            if m:
+                cur = facts.setdefault(m.group(1), {"id": m.group(1), "claim": m.group(2).strip(), "status": "found"})
+                continue
+            m = SOURCE_RE.match(line)
+            if m and cur and "source" not in cur:
+                cur["source"], cur["url"] = m.group(1), m.group(2)
+    for path in checked:
+        cur = None
+        for line in Path(path).read_text(errors="replace").splitlines() if Path(path).exists() else []:
+            m = FACT_RE.match(line)
+            if m:
+                cur = facts.get(m.group(1))
+                continue
+            m = CHECK_RE.match(line)
+            if m and cur:
+                cur["status"] = "verified" if m.group(1) == "VERIFIED" else m.group(1).lower()
+                continue
+            m = REJECT_RE.match(line)
+            if m and m.group(1) in facts:
+                facts[m.group(1)].update(status=m.group(2).lower(), reason=m.group(3).strip()[:300])
+    # When each fact appears in the film: the start of the first storyboard shot that uses it.
+    board = read_json(run / "05_storyboard.json", {}) or {}
+    timing = (read_json(run / "audio" / "timing.json", {}) or {}).get("scenes") or {}
+    offset = 0.0
+    for sc in board.get("scenes") or []:
+        t = timing.get(f"scene_{int(sc['id']):02d}")
+        if not t:
+            break
+        for sh in sc.get("shots") or []:
+            lines = t.get("lines") or []
+            at = offset + (lines[sh["sentence"]]["start"] if sh.get("sentence", 0) < len(lines) else 0) + float(sh.get("offset") or 0)
+            for fid in sh.get("facts") or []:
+                if fid in facts and "at" not in facts[fid]:
+                    facts[fid]["at"] = round(at, 1)
+        offset += t.get("duration", 0)
+    out = list(facts.values())
+    counts = {k: sum(1 for f in out if f["status"] == k) for k in ("found", "verified")}
+    counts["rejected"] = sum(1 for f in out if f["status"] not in ("found", "verified"))
+    counts["in_film"] = sum(1 for f in out if "at" in f)
+    return {"facts": out, "counts": counts}
+
+
 def list_runs():
     out = []
     if RUNS.exists():
@@ -387,6 +446,9 @@ class Handler(BaseHTTPRequestHandler):
             m = re.fullmatch(r"/api/runs/([A-Za-z0-9._-]+)", path)
             if m and (RUNS / m.group(1)).is_dir():
                 return self.send_json(run_info(m.group(1), full=True))
+            m = re.fullmatch(r"/api/runs/([A-Za-z0-9._-]+)/facts", path)
+            if m and (RUNS / m.group(1)).is_dir():
+                return self.send_json(run_facts(m.group(1)))
             m = re.fullmatch(r"/files/([A-Za-z0-9._-]+)/([A-Za-z0-9._/-]+)", path)
             if m:
                 target = (RUNS / m.group(1) / m.group(2)).resolve()

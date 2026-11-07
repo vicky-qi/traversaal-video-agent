@@ -17,6 +17,7 @@
       "Bash(python3 .claude/skills/make-video/check_script.py *)",
       "Bash(python3 .claude/skills/make-video/check_storyboard.py *)",
       "Bash(python3 .claude/skills/make-video/merge_parts.py *)",
+      "Bash(python3 .claude/skills/make-video/scene_brief.py *)",
       "Bash(ls *)",
       "Bash(mv runs/*)",
       "Bash(cp runs/*)",

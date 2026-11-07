@@ -40,7 +40,7 @@ Score each of the six criteria from 1 to 5. Each level has one sentence describi
 
 | Score | What it looks like |
 |---|---|
-| 5 | Hook, context, main points and takeaway flow in a logical order; every scene earns its place; length is 7 minutes ± 30 seconds. |
+| 5 | Hook, context, main points and takeaway flow in a logical order; every scene earns its place; length is 7:00 to 7:30 (shorter than 7:00 is not delivered at all). |
 | 4 | Clear structure; one scene feels out of place or one transition is abrupt. |
 | 3 | The parts are all there but read like separate pieces; or the length is off by 30–60 seconds. |
 | 2 | Order is confusing, scenes repeat each other, or the length is off by more than a minute. |

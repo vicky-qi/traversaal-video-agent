@@ -12,6 +12,10 @@ it, joins all scenes, then mixes in a music bed and sound effects (render/sound.
   --draft       faster, lower-quality render for previews
   --no-check    skip `hyperframes check` (not recommended)
   --no-music    voice and sound effects only, no music bed
+  --min-seconds N  the finished film must be at least N seconds (420 for a 7-minute film); a shorter
+                film is kept as final.too-short.mp4 and the script exits with code 3
+
+It refuses to start if audio/timing.json no longer matches the script's sentences (re-run voiceover.py).
 """
 import argparse
 import json
@@ -87,6 +91,38 @@ def build_film_scene(run, board, board_scene, t, topic, out_dir):
     return t["duration"]
 
 
+def data_sheet(run, board, timing, final):
+    """One frame from every shot that shows a number, tiled into build/data_shots.png, so the
+    finished video itself can be checked: is each number complete, readable and uncovered?"""
+    offset, picks = 0.0, []
+    for bs in board["scenes"]:
+        t = timing[f"scene_{int(bs['id']):02d}"]
+        for sh in film_shots(bs, t):
+            if sh.get("data"):
+                # Near the end of the shot, when a counting number has reached its value.
+                at = offset + max(sh["start"], sh["end"] - 0.6)
+                picks.append((at, f"scene {bs['id']} shot {sh['n']}: {sh['data'].get('value')} {sh['data'].get('unit', '')}"))
+        offset += t["duration"]
+    if not picks:
+        return
+    work = run / "build" / "data_shots"
+    work.mkdir(parents=True, exist_ok=True)
+    frames = []
+    for i, (at, _) in enumerate(picks):
+        f = work / f"{i + 1:02d}.png"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{at:.2f}", "-i", str(final), "-frames:v", "1",
+                        "-vf", "scale=640:-1", str(f)], check=True)
+        frames.append(f)
+    cols = 3 if len(frames) > 4 else 2
+    rows = -(-len(frames) // cols)
+    out = run / "build" / "data_shots.png"
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", "1", "-i", str(work / "%02d.png"),
+                    "-vf", f"tile={cols}x{rows}", "-frames:v", "1", str(out)], check=True)
+    print(f"data_shots.png: {len(frames)} number shots, left to right, top to bottom:")
+    for i, (_, label) in enumerate(picks, 1):
+        print(f"  {i}. {label}")
+
+
 def join(clips, run):
     concat = run / "build" / "concat.txt"
     concat.write_text("".join(f"file '{c.name}'\n" for c in clips))
@@ -106,11 +142,21 @@ def main():
     ap.add_argument("--no-check", action="store_true")
     ap.add_argument("--check-only", action="store_true")
     ap.add_argument("--no-music", action="store_true")
+    ap.add_argument("--min-seconds", type=float, default=0)
     args = ap.parse_args()
 
     run = Path(args.run_dir).resolve()
     timing = json.loads((run / "audio" / "timing.json").read_text())["scenes"]
-    topic = json.loads((run / "04_script.json").read_text()).get("topic", "")
+    script = json.loads((run / "04_script.json").read_text())
+    topic = script.get("topic", "")
+    # The audio must be the voice of the current script: a sentence edited or deleted after the
+    # voiceover would put old words and old timing into the film.
+    from voiceover import sentences
+    stale = [sc["id"] for sc in script["scenes"]
+             if [ln["text"] for ln in (timing.get(f"scene_{int(sc['id']):02d}") or {}).get("lines", [])] != sentences(sc["narration"])]
+    if stale:
+        sys.exit(f"Audio out of date for scenes {stale}: the script changed after the voiceover. "
+                 f"Run render/env.sh python render/voiceover.py {args.run_dir}, update those scenes' shots, then render again.")
     build = run / "build"
     board = json.loads((run / "05_storyboard.json").read_text())
     quality = "draft" if args.draft else "standard"
@@ -149,7 +195,14 @@ def main():
     final = run / "final.mp4"
     from sound import mix
     mix(run, joined, final, board, timing, music_on=not args.no_music)
-    print(f"final.mp4: {duration(final):.1f}s, {len(clips)} scenes -> {final.relative_to(REPO)}")
+    length = duration(final)
+    if length < args.min_seconds:
+        short = final.with_name("final.too-short.mp4")
+        final.replace(short)
+        sys.exit(f"LENGTH SHORT: the film is {length:.1f}s, below the {args.min_seconds:.0f}s minimum. "
+                 f"Kept as {short.relative_to(REPO)}; it is not delivered as final.mp4.")
+    print(f"final.mp4: {length:.1f}s, {len(clips)} scenes -> {final.relative_to(REPO)}")
+    data_sheet(run, board, timing, final)
 
 
 if __name__ == "__main__":

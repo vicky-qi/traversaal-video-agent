@@ -15,8 +15,7 @@ The topic slug and **one scene id**.
    - `templates/film/README.md`: the helpers you can call and the rules HyperFrames enforces.
    - `templates/film/shell.html`: the page your fragment is placed into (helpers: `shot`, `camera`, `reveal`, `hide`, `label`, `bigNumber`, `credit`; timing: `shotStart(n)`, `shotEnd(n)`, `shotLen(n)`, `lineStart(i)`, `S(n)`; palette `P`).
    - `templates/film/example-scene.html`: a finished reference scene. Match its level of detail and motion.
-   - `runs/<slug>/05_storyboard.json`: `art_direction` and your scene's `shots`.
-   - `runs/<slug>/04_script.json`: your scene's narration, for context.
+   - Your scene only, by running `python3 .claude/skills/make-video/scene_brief.py runs/<slug> <id>`: the art direction, your narration with each sentence's timing, your shots, and the shots on either side of your scene. Do not read the whole `05_storyboard.json` or `04_script.json`; they hold every other scene too.
 2. Write `runs/<slug>/scenes/scene_NN/scene.html` (NN = two-digit id): a fragment with a `<style>` block, one element per shot (or one shared "world" kept across several shots with `shot(n, el, { hold: true })` plus `camera(...)` for the later shots), and a `<script>` that adds every animation to `tl`.
 3. Check it: `render/env.sh python render/render.py runs/<slug> --scene <id> --check-only`. Fix every error it prints and run it again until it says `check passed`.
 4. Look at it: `render/env.sh npx --yes hyperframes@0.8.140 check runs/<slug>/build/scene_NN --snapshots`, then open the PNG files it saves under `runs/<slug>/build/scene_NN/snapshots/` with Read. If a frame looks empty, cluttered, off-style or unreadable, improve the scene and repeat steps 3–4 (at most 3 rounds).
